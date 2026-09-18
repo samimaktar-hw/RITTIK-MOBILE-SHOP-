@@ -1,109 +1,146 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Rittik Mobile Shop</title>
-    <meta name="theme-color" content="#FF5722"/>
+    <!-- ডার্ক থিম কালার -->
+    <meta name="theme-color" content="#0f172a"/>
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; }
-        body { background-color: #f4f7f6; padding-bottom: 70px; } /* Bottom Nav clearance */
+        body { background-color: #0f172a; color: #e2e8f0; padding-bottom: 70px; }
         
-        /* Header & Banner */
-        .header { background: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 50; }
-        .header img { height: 30px; }
-        .banner { background: #FF5722; color: white; padding: 30px 20px; text-align: center; border-radius: 0 0 20px 20px; }
+        /* হেডার ও লোগো সেকশন */
+        .header { background: #1e293b; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 50; border-bottom: 2px solid #00e5ff; box-shadow: 0 4px 15px rgba(0, 229, 255, 0.2); }
+        .logo-section { display: flex; align-items: center; text-decoration: none; gap: 10px; }
+        .logo-img { height: 40px; width: 40px; object-fit: contain; border-radius: 5px; }
+        .logo-text { color: #00e5ff; margin: 0; font-size: 18px; text-shadow: 0 0 5px rgba(0,229,255,0.4); font-weight: bold; letter-spacing: 1px;}
         
-        /* Our Services Grid (Cashify Style) */
-        .services-section { padding: 20px; background: white; margin-top: 10px; }
-        .services-section h2 { font-size: 20px; margin-bottom: 15px; color: #333; }
-        .grid-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; text-align: center; }
-        .service-box { text-decoration: none; color: #333; font-size: 12px; font-weight: 500; display: flex; flex-direction: column; align-items: center; }
-        .service-icon { background: #e0f7fa; border-radius: 10px; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; }
-        .service-icon img { width: 45px; height: 45px; object-fit: contain; }
+        .header-actions { display: flex; align-items: center; gap: 10px; }
+        .lang-select { background: #0f172a; color: #00e5ff; border: 1px solid #00e5ff; padding: 5px; border-radius: 5px; outline: none; font-size: 13px;}
+        .login-btn { background: #00e5ff; color: #0f172a; border: none; padding: 6px 12px; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; border: 2px solid #00e5ff; display: none; cursor: pointer; object-fit: cover; }
 
-        /* Latest Products */
+        /* ব্যানার */
+        .banner { background: linear-gradient(135deg, #0284c7, #00e5ff); color: #0f172a; padding: 25px 20px; text-align: center; border-radius: 0 0 20px 20px; box-shadow: 0 10px 20px rgba(0, 229, 255, 0.2);}
+        
+        /* সার্ভিস গ্রিড (Cashify Style) */
+        .services-section { padding: 20px; margin-top: 10px; }
+        .services-section h2 { font-size: 18px; margin-bottom: 15px; color: #00e5ff; }
+        .grid-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; text-align: center; }
+        .service-box { text-decoration: none; color: #e2e8f0; font-size: 12px; font-weight: 500; display: flex; flex-direction: column; align-items: center; }
+        .service-icon { background: #1e293b; border: 1px solid #334155; border-radius: 10px; width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; box-shadow: inset 0 0 10px rgba(0,229,255,0.1); }
+        .service-icon img { width: 35px; height: 35px; object-fit: contain; }
+
+        /* প্রোডাক্ট গ্রিড ও স্লাইডার */
         .products-section { padding: 20px; }
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; }
-        .product-card { background: white; border-radius: 10px; padding: 10px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); cursor: pointer; }
-        .slider-container { width: 100%; height: 150px; display: flex; justify-content: center; align-items: center; overflow: hidden; margin-bottom: 10px; position: relative;}
-        .slider-img { max-width: 100%; max-height: 100%; display: none; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; }
+        .product-card { background: #1e293b; border-radius: 10px; padding: 10px; text-align: center; border: 1px solid #334155; position: relative; transition: 0.3s; }
+        .product-card:hover { border-color: #00e5ff; box-shadow: 0 0 15px rgba(0, 229, 255, 0.3); transform: translateY(-3px);}
+        
+        .slider-container { width: 100%; height: 160px; display: flex; justify-content: center; align-items: center; overflow: hidden; margin-bottom: 10px; background: white; border-radius: 5px; position: relative;}
+        .slider-img { max-width: 100%; max-height: 100%; display: none; object-fit: contain;}
         .slider-img.active { display: block; }
-        .p-title { font-size: 14px; font-weight: bold; color: #333; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
-        .p-price { font-size: 16px; color: #FF5722; font-weight: bold; }
+        .slider-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; padding: 5px 8px; cursor: pointer; border-radius: 50%; font-size: 12px; z-index: 10;}
+        .prev { left: 5px; } .next { right: 5px; }
+
+        .p-title { font-size: 14px; font-weight: bold; color: #e2e8f0; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+        .p-price { font-size: 16px; color: #00e5ff; font-weight: bold; margin-bottom: 10px;}
+        
+        /* বাটন */
+        .action-buttons { display: flex; justify-content: space-between; gap: 5px; }
+        .btn-buy { flex: 1; background: #00e5ff; color: #0f172a; border: none; padding: 8px; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 13px;}
+        .btn-share { background: #334155; color: white; border: none; padding: 8px; border-radius: 5px; cursor: pointer; font-size: 13px;}
 
         /* Bottom Navigation */
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 10px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.05); z-index: 100;}
-        .nav-item { text-align: center; color: #888; text-decoration: none; font-size: 12px; }
-        .nav-item.active { color: #FF5722; }
-        .nav-item img { width: 24px; height: 24px; display: block; margin: 0 auto 3px auto; opacity: 0.6;}
-        .nav-item.active img { opacity: 1; filter: brightness(0) saturate(100%) invert(39%) sepia(85%) saturate(1478%) hue-rotate(345deg) brightness(98%) contrast(93%); }
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #1e293b; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #334155; z-index: 100;}
+        .nav-item { text-align: center; color: #94a3b8; text-decoration: none; font-size: 12px; }
+        .nav-item.active { color: #00e5ff; }
+        .nav-item img { width: 22px; height: 22px; display: block; margin: 0 auto 3px auto; opacity: 0.5; filter: invert(1);}
+        .nav-item.active img { opacity: 1; filter: invert(70%) sepia(45%) saturate(3000%) hue-rotate(150deg) brightness(100%) contrast(100%); }
     </style>
 </head>
 <body>
 
+    <!-- হেডার ও লোগো -->
     <div class="header">
-        <!-- আপনার লোগো বসান -->
-        <h2 style="color: #FF5722; margin:0;">Rittik Mobile</h2>
-        <span style="font-size: 20px;">☰</span>
+        <a href="index.html" class="logo-section">
+            <img src="1000397248.png" alt="Rittik Mobile Shop Logo" class="logo-img">
+            <h2 class="logo-text">Rittik Mobile</h2>
+        </a>
+        <div class="header-actions">
+            <!-- ভাষা পরিবর্তনের অপশন -->
+            <select class="lang-select" id="langSelect" onchange="changeLanguage()">
+                <option value="en">English</option>
+                <option value="bn">বাংলা</option>
+                <option value="hi">हिंदी</option>
+            </select>
+            <!-- গুগল লগিন বাটন ও প্রোফাইল ছবি -->
+            <button class="login-btn" id="loginBtn">Login</button>
+            <img src="" alt="Profile" class="user-avatar" id="userAvatar" onclick="window.location.href='profile.html'">
+        </div>
     </div>
 
+    <!-- ব্যানার -->
     <div class="banner">
-        <h2>সেরা দামে মোবাইল কিনুন ও বিক্রি করুন</h2>
-        <p style="margin-top: 10px; font-size: 14px;">আপনার দোরগোড়ায় বা আমাদের শপ থেকে</p>
+        <h2 id="bannerTitle">Buy & Sell Premium Devices</h2>
+        <p id="bannerSub" style="margin-top: 10px; font-size: 14px; font-weight: 500;">Directly from doorstep or store</p>
     </div>
 
-    <!-- Cashify Style Services -->
+    <!-- ক্যাশিফাই স্টাইল সার্ভিস গ্রিড -->
     <div class="services-section">
-        <h2>Our Services</h2>
+        <h2 id="servicesTitle">Our Services</h2>
         <div class="grid-container">
-            <a href="sell.html" class="service-box">
-                <div class="service-icon"><img src="https://s3ng.cashify.in/builder/cd13764b153e46e19f9c6551ee52b5e6.webp" alt="Sell Phone"></div>
-                Sell Phone
+            <a href="sell.html" class="service-box" onclick="return checkAuth(event)">
+                <div class="service-icon"><img src="https://s3ng.cashify.in/builder/cd13764b153e46e19f9c6551ee52b5e6.webp"></div>
+                <span id="txtSell">Sell Phone</span>
+            </a>
+            <a href="#productGrid" class="service-box">
+                <div class="service-icon"><img src="https://s3ng.cashify.in/builder/caa3a1efa51541a5aa37fd292790ea81.webp"></div>
+                <span id="txtBuy">Buy Phone</span>
             </a>
             <a href="#" class="service-box">
-                <div class="service-icon"><img src="https://s3ng.cashify.in/builder/caa3a1efa51541a5aa37fd292790ea81.webp" alt="Buy Phone"></div>
-                Buy Phone
+                <div class="service-icon"><img src="https://s3ng.cashify.in/builder/f1f0df2917bd410b8da95675c63be2d1.webp"></div>
+                <span id="txtSmartwatch">Smartwatches</span>
             </a>
             <a href="#" class="service-box">
-                <div class="service-icon"><img src="https://s3ng.cashify.in/builder/f1f0df2917bd410b8da95675c63be2d1.webp" alt="Smartwatches"></div>
-                Smartwatches
-            </a>
-            <a href="#" class="service-box">
-                <div class="service-icon"><img src="https://s3ng.cashify.in/builder/75750a866d214239bf52a47ee57e6674.webp" alt="Accessories"></div>
-                Accessories
+                <div class="service-icon"><img src="https://s3ng.cashify.in/builder/75750a866d214239bf52a47ee57e6674.webp"></div>
+                <span id="txtAcc">Accessories</span>
             </a>
         </div>
     </div>
 
+    <!-- প্রোডাক্ট লিস্ট -->
     <div class="products-section">
-        <h2 style="font-size: 20px; margin-bottom: 15px; color: #333;">Buy Refurbished Devices</h2>
+        <h2 id="gadgetsTitle" style="font-size: 18px; margin-bottom: 15px; color: #00e5ff;">Latest Gadgets</h2>
         <div class="product-grid" id="productGrid">
-            <!-- ফায়ারবেস থেকে প্রোডাক্ট এখানে লোড হবে -->
-            <p style="text-align:center; color:#888; width:100%;">প্রোডাক্ট লোড হচ্ছে...</p>
+            <p style="text-align:center; color:#94a3b8; width:100%; grid-column: 1 / -1;">Loading products...</p>
         </div>
     </div>
 
     <!-- Bottom Navigation -->
     <div class="bottom-nav">
         <a href="index.html" class="nav-item active">
-            <img src="https://s3ng.cashify.in/builder/f635449b43954fd1af1d88e7272d5dc2.webp" alt="Home"> Home
+            <img src="https://s3ng.cashify.in/builder/f635449b43954fd1af1d88e7272d5dc2.webp"> <span id="navHome">Home</span>
         </a>
-        <a href="#" class="nav-item">
-            <img src="https://s3ng.cashify.in/builder/42a5409869a84e73921df8c033a81c9d.webp" alt="Buy"> Buy
+        <a href="#productGrid" class="nav-item">
+            <img src="https://s3ng.cashify.in/builder/42a5409869a84e73921df8c033a81c9d.webp"> <span id="navBuy">Buy</span>
         </a>
-        <a href="sell.html" class="nav-item">
-            <img src="https://s3ng.cashify.in/builder/31d6a6d498ca43d4a6eee6cccd421474.webp" alt="Sell"> Sell
+        <a href="sell.html" class="nav-item" onclick="return checkAuth(event)">
+            <img src="https://s3ng.cashify.in/builder/31d6a6d498ca43d4a6eee6cccd421474.webp"> <span id="navSell">Sell</span>
         </a>
-        <a href="#" class="nav-item">
-            <img src="https://s3ng.cashify.in/builder/60cc75a071de4f729b9377681e594821.webp" alt="Profile"> Profile
+        <a href="profile.html" class="nav-item" onclick="return checkAuth(event)">
+            <img src="https://s3ng.cashify.in/builder/60cc75a071de4f729b9377681e594821.webp"> <span id="navProfile">Profile</span>
         </a>
     </div>
 
+    <!-- Firebase ও অন্যান্য লজিক -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
+        // ফায়ারবেস কনফিগারেশন
         const firebaseConfig = {
             apiKey: "AIzaSyBIddmdEKtGl0OI97ky6Q3JJBs2dOzbnbA",
             authDomain: "rittik-mobile-shop-web-1.firebaseapp.com",
@@ -114,46 +151,140 @@
             appId: "1:171512039750:web:639dd1bffdb351bf06fd47"
         };
         const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
         const db = getDatabase(app);
 
-        // শুধুমাত্র এডমিনের আপলোড করা প্রোডাক্টগুলো দেখাবে
+        const loginBtn = document.getElementById('loginBtn');
+        const userAvatar = document.getElementById('userAvatar');
+
+        // লগ-ইন সিস্টেম
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                loginBtn.style.display = 'none';
+                userAvatar.style.display = 'block';
+                userAvatar.src = user.photoURL;
+            } else {
+                loginBtn.style.display = 'block';
+                userAvatar.style.display = 'none';
+            }
+        });
+
+        loginBtn.addEventListener('click', () => {
+            signInWithPopup(auth, provider).catch(error => alert("Login failed!"));
+        });
+
+        window.checkAuth = function(event) {
+            if (!auth.currentUser) {
+                event.preventDefault();
+                alert("Please Login / Sign in with Google first!");
+                signInWithPopup(auth, provider);
+                return false;
+            }
+            return true;
+        }
+
+        // প্রোডাক্ট লোড করা এবং স্লাইডার
+        window.slidersState = {};
+        
         onValue(ref(db, 'products'), (snapshot) => {
             const grid = document.getElementById('productGrid');
             grid.innerHTML = '';
-            
             const data = snapshot.val();
             if (data) {
                 Object.keys(data).reverse().forEach(key => {
                     const prod = data[key];
-                    
-                    // কাস্টমারের বিক্রির আবেদন এখানে দেখাবে না
-                    if(prod.type !== 'admin') return;
+                    // শুধু অ্যাডমিন বা অ্যাপ্রুভ করা প্রোডাক্ট দেখাবে
+                    if(prod.status !== 'approved' && prod.type !== 'admin') return; 
 
-                    let sliderHtml = `<div class="slider-container">`;
+                    const prodId = 'prod_' + key;
+                    window.slidersState[prodId] = 0;
+
+                    let sliderHtml = `<div class="slider-container" id="${prodId}">`;
                     prod.images.forEach((url, index) => {
                         let active = index === 0 ? 'active' : '';
                         sliderHtml += `<img src="${url}" class="slider-img ${active}">`;
                     });
+                    if (prod.images.length > 1) {
+                        sliderHtml += `
+                            <button class="slider-btn prev" onclick="event.stopPropagation(); changeSlide('${prodId}', -1)">❮</button>
+                            <button class="slider-btn next" onclick="event.stopPropagation(); changeSlide('${prodId}', 1)">❯</button>
+                        `;
+                    }
                     sliderHtml += `</div>`;
 
                     const card = document.createElement('div');
                     card.className = 'product-card';
-                    card.onclick = () => {
-                        const encImages = encodeURIComponent(JSON.stringify(prod.images));
-                        window.location.href = `details.html?name=${encodeURIComponent(prod.name)}&price=${encodeURIComponent(prod.price)}&images=${encImages}&id=${key}`;
-                    };
-
                     card.innerHTML = `
-                        ${sliderHtml}
-                        <div class="p-title">${prod.name}</div>
-                        <div class="p-price">৳ ${prod.price}</div>
+                        <div onclick="goToDetails('${key}', '${encodeURIComponent(prod.name)}', '${encodeURIComponent(prod.price)}', '${encodeURIComponent(JSON.stringify(prod.images))}')">
+                            ${sliderHtml}
+                            <div class="p-title">${prod.name}</div>
+                            <div class="p-price">₹ ${prod.price}</div>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="btn-buy" onclick="goToDetails('${key}', '${encodeURIComponent(prod.name)}', '${encodeURIComponent(prod.price)}', '${encodeURIComponent(JSON.stringify(prod.images))}')">Buy</button>
+                            <button class="btn-share" onclick="shareProduct('${key}', '${prod.name}', '${encodeURIComponent(prod.price)}', '${encodeURIComponent(JSON.stringify(prod.images))}')">📤</button>
+                        </div>
                     `;
                     grid.appendChild(card);
                 });
             } else {
-                grid.innerHTML = '<p>কোনো প্রোডাক্ট পাওয়া যায়নি!</p>';
+                grid.innerHTML = '<p style="color:#94a3b8; grid-column: 1 / -1;">No products found!</p>';
             }
         });
+
+        // ডিটেইলস পেজে পাঠানো
+        window.goToDetails = function(id, name, price, images) {
+            window.location.href = `details.html?id=${id}&name=${name}&price=${price}&images=${images}`;
+        }
+
+        // ছবি স্লাইড করার ফাংশন
+        window.changeSlide = function(prodId, direction) {
+            const container = document.getElementById(prodId);
+            const images = container.getElementsByClassName('slider-img');
+            images[window.slidersState[prodId]].classList.remove('active');
+            window.slidersState[prodId] += direction;
+            if (window.slidersState[prodId] >= images.length) window.slidersState[prodId] = 0;
+            else if (window.slidersState[prodId] < 0) window.slidersState[prodId] = images.length - 1;
+            images[window.slidersState[prodId]].classList.add('active');
+        }
+
+        // শেয়ার অপশন (Flipkart Style)
+        window.shareProduct = function(id, name, price, images) {
+            const shareUrl = window.location.origin + window.location.pathname.replace('index.html', '') + `details.html?id=${id}&name=${encodeURIComponent(name)}&price=${price}&images=${images}`;
+            if (navigator.share) {
+                navigator.share({
+                    title: `Check out ${name} at Rittik Mobile Shop!`,
+                    url: shareUrl
+                });
+            } else {
+                navigator.clipboard.writeText(shareUrl);
+                alert("Link copied to clipboard! Share it with your friends.");
+            }
+        }
+
+        // ভাষা পরিবর্তন (Dictionary)
+        const dict = {
+            en: { bannerTitle: "Buy & Sell Premium Devices", bannerSub: "Directly from doorstep or store", servicesTitle: "Our Services", txtSell: "Sell Phone", txtBuy: "Buy Phone", txtSmartwatch: "Smartwatches", txtAcc: "Accessories", gadgetsTitle: "Latest Gadgets", navHome: "Home", navBuy: "Buy", navSell: "Sell", navProfile: "Profile" },
+            bn: { bannerTitle: "সেরা মোবাইল কিনুন ও বিক্রি করুন", bannerSub: "আপনার দোরগোড়ায় বা আমাদের শপ থেকে", servicesTitle: "আমাদের সেবাসমূহ", txtSell: "ফোন বিক্রি", txtBuy: "ফোন কিনুন", txtSmartwatch: "স্মার্টওয়াচ", txtAcc: "এক্সেসরিজ", gadgetsTitle: "লেটেস্ট গ্যাজেট", navHome: "হোম", navBuy: "কিনুন", navSell: "বিক্রি", navProfile: "প্রোফাইল" },
+            hi: { bannerTitle: "मोबाइल खरीदें और बेचें", bannerSub: "घर बैठे या स्टोर से", servicesTitle: "हमारी सेवाएं", txtSell: "फोन बेचें", txtBuy: "फोन खरीदें", txtSmartwatch: "स्मार्ट घड़ियाँ", txtAcc: "एक्सेसरीज", gadgetsTitle: "नवीनतम गैजेट्स", navHome: "होम", navBuy: "खरीदें", navSell: "बेचें", navProfile: "प्रोफ़ाइल" }
+        };
+
+        window.changeLanguage = function() {
+            const lang = document.getElementById('langSelect').value;
+            document.getElementById('bannerTitle').innerText = dict[lang].bannerTitle;
+            document.getElementById('bannerSub').innerText = dict[lang].bannerSub;
+            document.getElementById('servicesTitle').innerText = dict[lang].servicesTitle;
+            document.getElementById('txtSell').innerText = dict[lang].txtSell;
+            document.getElementById('txtBuy').innerText = dict[lang].txtBuy;
+            document.getElementById('txtSmartwatch').innerText = dict[lang].txtSmartwatch;
+            document.getElementById('txtAcc').innerText = dict[lang].txtAcc;
+            document.getElementById('gadgetsTitle').innerText = dict[lang].gadgetsTitle;
+            document.getElementById('navHome').innerText = dict[lang].navHome;
+            document.getElementById('navBuy').innerText = dict[lang].navBuy;
+            document.getElementById('navSell').innerText = dict[lang].navSell;
+            document.getElementById('navProfile').innerText = dict[lang].navProfile;
+        }
     </script>
 </body>
 </html>
