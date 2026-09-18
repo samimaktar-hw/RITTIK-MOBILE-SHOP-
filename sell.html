@@ -1,66 +1,58 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sell Device - Rittik Mobile Shop</title>
+    <meta name="theme-color" content="#0f172a"/>
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0;}
-        body { background-color: #f4f7f6; padding: 20px; padding-bottom: 80px;}
-        .top-bar { display: flex; align-items: center; margin-bottom: 20px; font-weight: bold; font-size: 20px;}
-        .top-bar a { text-decoration: none; color: #333; margin-right: 15px;}
+        body { background-color: #0f172a; color: #e2e8f0; padding-bottom: 80px;}
         
-        .seller-form { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        h3 { color: #FF5722; margin-bottom: 15px; }
+        .header { background: #1e293b; padding: 15px; display: flex; align-items: center; border-bottom: 2px solid #00e5ff; position: sticky; top: 0; z-index: 50;}
+        .header a { text-decoration: none; color: #00e5ff; font-size: 24px; margin-right: 15px; font-weight: bold;}
+        .header h2 { color: #e2e8f0; margin: 0; font-size: 18px; }
+        
+        .seller-form { background: #1e293b; padding: 25px 20px; border-radius: 10px; margin: 20px 15px; border: 1px solid #334155; }
+        h3 { color: #00e5ff; margin-bottom: 10px; }
         .input-group { margin-bottom: 15px; }
-        .input-group label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 14px;}
-        .input-group input, .input-group textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
-        .btn-submit { background-color: #FF5722; color: white; border: none; padding: 12px; width: 100%; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; }
-        #status { text-align: center; margin-top: 10px; font-weight: bold; color: green; display: none; }
+        .input-group label { display: block; margin-bottom: 8px; font-weight: bold; font-size: 14px; color: #cbd5e1;}
+        .input-group input, .input-group textarea { width: 100%; padding: 12px; border: 1px solid #334155; border-radius: 5px; background: #0f172a; color: white; outline: none; }
+        .input-group input[type="file"] { padding: 10px; background: #1e293b; border: 1px dashed #00e5ff; color: #00e5ff;}
+        
+        .btn-submit { background-color: #00e5ff; color: #0f172a; border: none; padding: 14px; width: 100%; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; margin-top: 10px; box-shadow: 0 4px 15px rgba(0,229,255,0.2);}
+        #status { text-align: center; margin-top: 15px; font-weight: bold; color: #00e5ff; display: none; }
     </style>
 </head>
 <body>
 
-    <div class="top-bar">
-        <a href="index.html">←</a> <span>Sell Your Phone</span>
+    <div class="header">
+        <a href="index.html">←</a> <h2>Sell Your Phone</h2>
     </div>
 
     <div class="seller-form">
-        <h3>আপনার পুরনো মোবাইল বিক্রি করুন</h3>
-        <p style="font-size: 13px; color: #666; margin-bottom: 15px;">ফর্মটি পূরণ করুন। আমাদের টিম আপনার দেওয়া নম্বরে যোগাযোগ করবে।</p>
+        <h3>Sell Your Old Device</h3>
+        <p style="font-size: 13px; color: #94a3b8; margin-bottom: 20px;">Fill details below. Admin will review and accept your listing.</p>
         
+        <div class="input-group"><label>Your Name:</label><input type="text" id="sName" placeholder="Enter Full Name"></div>
+        <div class="input-group"><label>Device Brand & Model:</label><input type="text" id="sModel" placeholder="e.g. iPhone 13 Pro"></div>
+        <div class="input-group"><label>Expected Price (₹):</label><input type="number" id="sPrice" placeholder="e.g. 45000"></div>
+        <div class="input-group"><label>Contact Number:</label><input type="number" id="sContact" placeholder="Your Phone Number"></div>
+        <div class="input-group"><label>Pincode:</label><input type="number" id="sPincode" placeholder="Area Pincode"></div>
+        <div class="input-group"><label>Full Address:</label><textarea id="sAddress" placeholder="Your Address" rows="3"></textarea></div>
         <div class="input-group">
-            <label>আপনার নাম:</label>
-            <input type="text" id="sName" placeholder="নাম লিখুন">
-        </div>
-        <div class="input-group">
-            <label>মোবাইলের নাম ও মডেল:</label>
-            <input type="text" id="sModel" placeholder="যেমন: Redmi Note 10 Pro">
-        </div>
-        <div class="input-group">
-            <label>কত দাম চাচ্ছেন? (Expected Price):</label>
-            <input type="number" id="sPrice" placeholder="যেমন: 10000">
-        </div>
-        <div class="input-group">
-            <label>মোবাইল নম্বর:</label>
-            <input type="number" id="sContact" placeholder="ফোন নম্বর">
-        </div>
-        <div class="input-group">
-            <label>পিনকোড ও ঠিকানা:</label>
-            <textarea id="sAddress" placeholder="বিস্তারিত ঠিকানা" rows="3"></textarea>
-        </div>
-        <div class="input-group">
-            <label>মোবাইলের ছবি (সর্বোচ্চ ৪টি):</label>
+            <label>Upload Device Images (Max 4):</label>
             <input type="file" id="sImage" accept="image/*" multiple>
         </div>
         
-        <button class="btn-submit" onclick="submitSellRequest()">রিকোয়েস্ট জমা দিন</button>
-        <div id="status">আপনার আবেদন জমা দেওয়া হচ্ছে...⏳</div>
+        <button class="btn-submit" onclick="submitSellRequest()">SUBMIT REQUEST</button>
+        <div id="status">Uploading images... Please wait ⏳</div>
     </div>
 
     <!-- Firebase -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {
@@ -73,24 +65,36 @@
             appId: "1:171512039750:web:639dd1bffdb351bf06fd47"
         };
         const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
         const db = getDatabase(app);
         const imgBbApiKey = '9c5f00338e35531cea0b042dd08750b6';
+
+        // Page load auth check
+        auth.onAuthStateChanged(user => {
+            if(!user) {
+                alert("Please login from Home page to sell a device.");
+                window.location.href = "index.html";
+            }
+        });
 
         window.submitSellRequest = async function() {
             const name = document.getElementById('sName').value;
             const model = document.getElementById('sModel').value;
             const price = document.getElementById('sPrice').value;
             const contact = document.getElementById('sContact').value;
+            const pincode = document.getElementById('sPincode').value;
             const address = document.getElementById('sAddress').value;
             const imgInput = document.getElementById('sImage');
             const status = document.getElementById('status');
 
-            if (!name || !model || !contact) { alert('নাম, মডেল ও ফোন নম্বর আবশ্যক!'); return; }
+            if (!name || !model || !price || !contact) { alert('Please fill all important fields!'); return; }
+            if (imgInput.files.length === 0) { alert('Please upload at least 1 image!'); return; }
 
+            const user = auth.currentUser;
             status.style.display = 'block';
             let uploadedUrls = [];
 
-            if (imgInput.files.length > 0) {
+            try {
                 for (let i = 0; i < Math.min(imgInput.files.length, 4); i++) {
                     const formData = new FormData();
                     formData.append('image', imgInput.files[i]);
@@ -98,22 +102,30 @@
                     const data = await res.json();
                     if (data.success) uploadedUrls.push(data.data.url);
                 }
+
+                // Push to 'products' table directly, but with 'status: pending'
+                // Admin will change this to 'approved' to show on homepage
+                push(ref(db, 'products'), {
+                    userId: user.uid,
+                    userEmail: user.email,
+                    name: `${model}`,
+                    price: price,
+                    contact: contact,
+                    pincode: pincode,
+                    address: address,
+                    images: uploadedUrls,
+                    type: 'seller',
+                    status: 'pending', 
+                    date: new Date().toLocaleString()
+                });
+
+                status.innerText = "Request submitted successfully! It will show up once admin approves.";
+                status.style.color = "#10b981";
+                setTimeout(() => { window.location.href = 'profile.html'; }, 3000);
+            } catch(e) {
+                status.innerText = "Upload failed. Try again.";
+                status.style.color = "#ef4444";
             }
-
-            // ফায়ারবেস 'sell_requests' ডাটাবেসে সেভ করা হচ্ছে
-            push(ref(db, 'sell_requests'), {
-                sellerName: name,
-                deviceModel: model,
-                expectedPrice: price,
-                contact: contact,
-                address: address,
-                images: uploadedUrls,
-                date: new Date().toLocaleString()
-            });
-
-            status.innerText = "আপনার আবেদন সফলভাবে জমা হয়েছে! আমরা দ্রুত যোগাযোগ করব।";
-            status.style.color = "green";
-            setTimeout(() => { window.location.href = 'index.html'; }, 3000);
         }
     </script>
 </body>
