@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Rittik Mobile Shop</title>
+    <meta name="theme-color" content="#FF5722"/>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; }
+        body { background-color: #f4f7f6; padding-bottom: 70px; } /* Bottom Nav clearance */
+        
+        /* Header & Banner */
+        .header { background: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 50; }
+        .header img { height: 30px; }
+        .banner { background: #FF5722; color: white; padding: 30px 20px; text-align: center; border-radius: 0 0 20px 20px; }
+        
+        /* Our Services Grid (Cashify Style) */
+        .services-section { padding: 20px; background: white; margin-top: 10px; }
+        .services-section h2 { font-size: 20px; margin-bottom: 15px; color: #333; }
+        .grid-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; text-align: center; }
+        .service-box { text-decoration: none; color: #333; font-size: 12px; font-weight: 500; display: flex; flex-direction: column; align-items: center; }
+        .service-icon { background: #e0f7fa; border-radius: 10px; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; }
+        .service-icon img { width: 45px; height: 45px; object-fit: contain; }
+
+        /* Latest Products */
+        .products-section { padding: 20px; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; }
+        .product-card { background: white; border-radius: 10px; padding: 10px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); cursor: pointer; }
+        .slider-container { width: 100%; height: 150px; display: flex; justify-content: center; align-items: center; overflow: hidden; margin-bottom: 10px; position: relative;}
+        .slider-img { max-width: 100%; max-height: 100%; display: none; }
+        .slider-img.active { display: block; }
+        .p-title { font-size: 14px; font-weight: bold; color: #333; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+        .p-price { font-size: 16px; color: #FF5722; font-weight: bold; }
+
+        /* Bottom Navigation */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 10px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.05); z-index: 100;}
+        .nav-item { text-align: center; color: #888; text-decoration: none; font-size: 12px; }
+        .nav-item.active { color: #FF5722; }
+        .nav-item img { width: 24px; height: 24px; display: block; margin: 0 auto 3px auto; opacity: 0.6;}
+        .nav-item.active img { opacity: 1; filter: brightness(0) saturate(100%) invert(39%) sepia(85%) saturate(1478%) hue-rotate(345deg) brightness(98%) contrast(93%); }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <!-- আপনার লোগো বসান -->
+        <h2 style="color: #FF5722; margin:0;">Rittik Mobile</h2>
+        <span style="font-size: 20px;">☰</span>
+    </div>
+
+    <div class="banner">
+        <h2>সেরা দামে মোবাইল কিনুন ও বিক্রি করুন</h2>
+        <p style="margin-top: 10px; font-size: 14px;">আপনার দোরগোড়ায় বা আমাদের শপ থেকে</p>
+    </div>
+
+    <!-- Cashify Style Services -->
+    <div class="services-section">
+        <h2>Our Services</h2>
+        <div class="grid-container">
+            <a href="sell.html" class="service-box">
+                <div class="service-icon"><img src="https://s3ng.cashify.in/builder/cd13764b153e46e19f9c6551ee52b5e6.webp" alt="Sell Phone"></div>
+                Sell Phone
+            </a>
+            <a href="#" class="service-box">
+                <div class="service-icon"><img src="https://s3ng.cashify.in/builder/caa3a1efa51541a5aa37fd292790ea81.webp" alt="Buy Phone"></div>
+                Buy Phone
+            </a>
+            <a href="#" class="service-box">
+                <div class="service-icon"><img src="https://s3ng.cashify.in/builder/f1f0df2917bd410b8da95675c63be2d1.webp" alt="Smartwatches"></div>
+                Smartwatches
+            </a>
+            <a href="#" class="service-box">
+                <div class="service-icon"><img src="https://s3ng.cashify.in/builder/75750a866d214239bf52a47ee57e6674.webp" alt="Accessories"></div>
+                Accessories
+            </a>
+        </div>
+    </div>
+
+    <div class="products-section">
+        <h2 style="font-size: 20px; margin-bottom: 15px; color: #333;">Buy Refurbished Devices</h2>
+        <div class="product-grid" id="productGrid">
+            <!-- ফায়ারবেস থেকে প্রোডাক্ট এখানে লোড হবে -->
+            <p style="text-align:center; color:#888; width:100%;">প্রোডাক্ট লোড হচ্ছে...</p>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <a href="index.html" class="nav-item active">
+            <img src="https://s3ng.cashify.in/builder/f635449b43954fd1af1d88e7272d5dc2.webp" alt="Home"> Home
+        </a>
+        <a href="#" class="nav-item">
+            <img src="https://s3ng.cashify.in/builder/42a5409869a84e73921df8c033a81c9d.webp" alt="Buy"> Buy
+        </a>
+        <a href="sell.html" class="nav-item">
+            <img src="https://s3ng.cashify.in/builder/31d6a6d498ca43d4a6eee6cccd421474.webp" alt="Sell"> Sell
+        </a>
+        <a href="#" class="nav-item">
+            <img src="https://s3ng.cashify.in/builder/60cc75a071de4f729b9377681e594821.webp" alt="Profile"> Profile
+        </a>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBIddmdEKtGl0OI97ky6Q3JJBs2dOzbnbA",
+            authDomain: "rittik-mobile-shop-web-1.firebaseapp.com",
+            databaseURL: "https://rittik-mobile-shop-web-1-default-rtdb.firebaseio.com",
+            projectId: "rittik-mobile-shop-web-1",
+            storageBucket: "rittik-mobile-shop-web-1.firebasestorage.app",
+            messagingSenderId: "171512039750",
+            appId: "1:171512039750:web:639dd1bffdb351bf06fd47"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // শুধুমাত্র এডমিনের আপলোড করা প্রোডাক্টগুলো দেখাবে
+        onValue(ref(db, 'products'), (snapshot) => {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = '';
+            
+            const data = snapshot.val();
+            if (data) {
+                Object.keys(data).reverse().forEach(key => {
+                    const prod = data[key];
+                    
+                    // কাস্টমারের বিক্রির আবেদন এখানে দেখাবে না
+                    if(prod.type !== 'admin') return;
+
+                    let sliderHtml = `<div class="slider-container">`;
+                    prod.images.forEach((url, index) => {
+                        let active = index === 0 ? 'active' : '';
+                        sliderHtml += `<img src="${url}" class="slider-img ${active}">`;
+                    });
+                    sliderHtml += `</div>`;
+
+                    const card = document.createElement('div');
+                    card.className = 'product-card';
+                    card.onclick = () => {
+                        const encImages = encodeURIComponent(JSON.stringify(prod.images));
+                        window.location.href = `details.html?name=${encodeURIComponent(prod.name)}&price=${encodeURIComponent(prod.price)}&images=${encImages}&id=${key}`;
+                    };
+
+                    card.innerHTML = `
+                        ${sliderHtml}
+                        <div class="p-title">${prod.name}</div>
+                        <div class="p-price">৳ ${prod.price}</div>
+                    `;
+                    grid.appendChild(card);
+                });
+            } else {
+                grid.innerHTML = '<p>কোনো প্রোডাক্ট পাওয়া যায়নি!</p>';
+            }
+        });
+    </script>
+</body>
+</html>
