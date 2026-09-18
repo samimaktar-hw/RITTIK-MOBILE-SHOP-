@@ -5,26 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sell Device - Rittik Mobile Shop</title>
     <meta name="theme-color" content="#0f172a"/>
-    <!-- EmailJS CDN যুক্ত করা হয়েছে -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0;}
         body { background-color: #0b1121; color: #e2e8f0; padding-bottom: 80px;}
-        
-        .header { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(10px); padding: 15px; display: flex; align-items: center; border-bottom: 1px solid rgba(0, 229, 255, 0.3); position: sticky; top: 0; z-index: 50; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);}
+        .header { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(10px); padding: 15px; display: flex; align-items: center; border-bottom: 1px solid rgba(0, 229, 255, 0.3); position: sticky; top: 0; z-index: 50;}
         .header a { text-decoration: none; color: #00e5ff; font-size: 24px; margin-right: 15px; font-weight: bold;}
         .header h2 { color: #f8fafc; margin: 0; font-size: 18px; }
-        
-        .seller-form { background: rgba(30, 41, 59, 0.6); padding: 25px 20px; border-radius: 14px; margin: 20px 15px; border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(5px); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);}
+        .seller-form { background: rgba(30, 41, 59, 0.6); padding: 25px 20px; border-radius: 14px; margin: 20px 15px; border: 1px solid rgba(255,255,255,0.05); }
         h3 { color: #00e5ff; margin-bottom: 10px; font-size: 20px;}
         .input-group { margin-bottom: 15px; }
         .input-group label { display: block; margin-bottom: 8px; font-weight: bold; font-size: 14px; color: #cbd5e1;}
-        .input-group input, .input-group textarea { width: 100%; padding: 12px; border: 1px solid #334155; border-radius: 8px; background: #0f172a; color: white; outline: none; font-size: 14px;}
-        .input-group input:focus, .input-group textarea:focus { border-color: #00e5ff; }
-        .input-group input[type="file"] { padding: 10px; background: rgba(15, 23, 42, 0.5); border: 1px dashed #00e5ff; color: #00e5ff;}
-        
-        .btn-submit { background: linear-gradient(90deg, #0284c7, #00e5ff); color: #fff; border: none; padding: 14px; width: 100%; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; margin-top: 10px; box-shadow: 0 4px 15px rgba(0,229,255,0.3); transition: 0.3s;}
-        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,229,255,0.5);}
+        .input-group input, .input-group textarea, .input-group select { width: 100%; padding: 12px; border: 1px solid #334155; border-radius: 8px; background: #0f172a; color: white; outline: none; font-size: 14px;}
+        .row { display: flex; gap: 10px; }
+        .row .input-group { flex: 1; }
+        .btn-submit { background: linear-gradient(90deg, #0284c7, #00e5ff); color: #fff; border: none; padding: 14px; width: 100%; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; margin-top: 10px;}
         #status { text-align: center; margin-top: 15px; font-weight: bold; color: #00e5ff; display: none; }
     </style>
 </head>
@@ -36,11 +31,36 @@
 
     <div class="seller-form">
         <h3>Sell Your Old Device</h3>
-        <p style="font-size: 13px; color: #94a3b8; margin-bottom: 20px;">ফর্মটি পূরণ করুন। আপনার দেওয়া রিকোয়েস্টটি সরাসরি আমাদের ইমেইলে চলে আসবে।</p>
         
         <div class="input-group"><label>Your Name:</label><input type="text" id="sName" placeholder="Enter Full Name"></div>
-        <div class="input-group"><label>Device Brand & Model:</label><input type="text" id="sModel" placeholder="e.g. iPhone 13 Pro"></div>
-        <div class="input-group"><label>Expected Price (₹):</label><input type="number" id="sPrice" placeholder="e.g. 45000"></div>
+        <div class="input-group"><label>Device Brand & Model:</label><input type="text" id="sModel" placeholder="e.g. Vivo T3x 5G"></div>
+        
+        <!-- Dropdown Options for RAM & Storage -->
+        <div class="row">
+            <div class="input-group">
+                <label>RAM:</label>
+                <select id="sRam">
+                    <option value="2GB">2 GB</option>
+                    <option value="3GB">3 GB</option>
+                    <option value="4GB" selected>4 GB</option>
+                    <option value="6GB">6 GB</option>
+                    <option value="8GB">8 GB</option>
+                    <option value="12GB">12 GB</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Storage (ROM):</label>
+                <select id="sStorage">
+                    <option value="32GB">32 GB</option>
+                    <option value="64GB">64 GB</option>
+                    <option value="128GB" selected>128 GB</option>
+                    <option value="256GB">256 GB</option>
+                    <option value="512GB">512 GB</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="input-group"><label>Expected Price (₹):</label><input type="number" id="sPrice" placeholder="e.g. 10000"></div>
         <div class="input-group"><label>Contact Number:</label><input type="number" id="sContact" placeholder="Your Phone Number"></div>
         <div class="input-group"><label>Pincode:</label><input type="number" id="sPincode" placeholder="Area Pincode"></div>
         <div class="input-group"><label>Full Address:</label><textarea id="sAddress" placeholder="Your Address" rows="3"></textarea></div>
@@ -53,31 +73,25 @@
         <div id="status">আপলোড হচ্ছে... দয়া করে অপেক্ষা করুন ⏳</div>
     </div>
 
-    <!-- Firebase & EmailJS Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // ফায়ারবেস কনফিগারেশন
         const firebaseConfig = {
             apiKey: "AIzaSyBIddmdEKtGl0OI97ky6Q3JJBs2dOzbnbA",
             authDomain: "rittik-mobile-shop-web-1.firebaseapp.com",
             databaseURL: "https://rittik-mobile-shop-web-1-default-rtdb.firebaseio.com",
             projectId: "rittik-mobile-shop-web-1",
-            storageBucket: "rittik-mobile-shop-web-1.firebasestorage.app",
-            messagingSenderId: "171512039750",
-            appId: "1:171512039750:web:639dd1bffdb351bf06fd47"
+            storageBucket: "rittik-mobile-shop-web-1.firebasestorage.app"
         };
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getDatabase(app);
         const imgBbApiKey = '9c5f00338e35531cea0b042dd08750b6';
 
-        // আপনার দেওয়া Public Key এখানে বসানো হয়েছে
         emailjs.init("-j9VQfZnjm_Vma6UE");
 
-        // লগইন চেক
         auth.onAuthStateChanged(user => {
             if(!user) {
                 alert("Please login from Home page to sell a device.");
@@ -88,6 +102,8 @@
         window.submitSellRequest = async function() {
             const name = document.getElementById('sName').value;
             const model = document.getElementById('sModel').value;
+            const ram = document.getElementById('sRam').value;
+            const storage = document.getElementById('sStorage').value;
             const price = document.getElementById('sPrice').value;
             const contact = document.getElementById('sContact').value;
             const pincode = document.getElementById('sPincode').value;
@@ -96,41 +112,45 @@
             const status = document.getElementById('status');
 
             if (!name || !model || !price || !contact) { alert('দয়া করে সব তথ্য পূরণ করুন!'); return; }
-            if (imgInput.files.length === 0) { alert('দয়া করে অন্তত একটি ছবি দিন!'); return; }
+            
+            // Full Model Name combining RAM/ROM
+            const fullModelName = `${model} (${ram} RAM, ${storage} ROM)`;
 
             const user = auth.currentUser;
             status.style.display = 'block';
             let uploadedUrls = [];
 
             try {
-                // ১. ImgBB তে ছবি আপলোড
-                for (let i = 0; i < Math.min(imgInput.files.length, 4); i++) {
-                    const formData = new FormData();
-                    formData.append('image', imgInput.files[i]);
-                    const res = await fetch(`https://api.imgbb.com/1/upload?key=${imgBbApiKey}`, { method: 'POST', body: formData });
-                    const data = await res.json();
-                    if (data.success) uploadedUrls.push(data.data.url);
+                if (imgInput.files.length > 0) {
+                    for (let i = 0; i < Math.min(imgInput.files.length, 4); i++) {
+                        const formData = new FormData();
+                        formData.append('image', imgInput.files[i]);
+                        const res = await fetch(`https://api.imgbb.com/1/upload?key=${imgBbApiKey}`, { method: 'POST', body: formData });
+                        const data = await res.json();
+                        if (data.success) uploadedUrls.push(data.data.url);
+                    }
+                } else {
+                    uploadedUrls.push("https://via.placeholder.com/300?text=No+Image");
                 }
 
-                // ২. ফায়ারবেস ডেটাবেসে সেভ (pending স্ট্যাটাস দিয়ে)
                 push(ref(db, 'products'), {
                     userId: user.uid,
                     userEmail: user.email,
-                    name: model,
+                    name: fullModelName,
                     price: price,
                     contact: contact,
                     pincode: pincode,
                     address: address,
                     images: uploadedUrls,
+                    highlights: { ram: ram, rom: storage },
                     type: 'seller',
                     status: 'pending', 
                     date: new Date().toLocaleString()
                 });
 
-                // ৩. আপনার দেওয়া Service ID এবং Template ID দিয়ে ইমেইল পাঠানো
                 const emailParams = {
                     seller_name: name,
-                    device_model: model,
+                    device_model: fullModelName,
                     expected_price: price,
                     contact: contact,
                     address: address
@@ -138,18 +158,18 @@
                 
                 emailjs.send("Service_scphmmm", "template_lrk4tkq", emailParams)
                     .then(() => {
-                        console.log("Email Notification Sent Successfully!");
+                        status.innerText = "রিকোয়েস্ট সফলভাবে জমা হয়েছে!";
+                        status.style.color = "#00e5ff";
+                        setTimeout(() => { window.location.href = 'profile.html'; }, 2000);
                     }).catch((error) => {
-                        console.error("EmailJS Error:", error);
+                        // EmailJS Error Alert
+                        alert("Email Not Sent! Error: " + JSON.stringify(error));
+                        status.innerText = "ডেটাবেসে সেভ হয়েছে, কিন্তু ইমেইল যায়নি!";
                     });
 
-                status.innerText = "রিকোয়েস্ট সফলভাবে জমা হয়েছে! আমরা যোগাযোগ করব।";
-                status.style.color = "#00e5ff";
-                setTimeout(() => { window.location.href = 'profile.html'; }, 3000);
-                
             } catch(e) {
-                status.innerText = "আপলোড ফেইল হয়েছে। আবার চেষ্টা করুন।";
-                status.style.color = "#ef4444";
+                alert("Upload Error: " + e.message);
+                status.style.display = 'none';
             }
         }
     </script>
