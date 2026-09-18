@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Profile - Rittik Mobile Shop</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; }
+        body { background-color: #f4f7f6; padding-bottom: 70px; }
+        
+        .header { background: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 50; }
+        
+        .profile-card { background: white; margin: 20px; padding: 20px; border-radius: 10px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .profile-img { width: 80px; height: 80px; background: #FF5722; color: white; border-radius: 50%; font-size: 30px; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px auto; font-weight: bold; }
+        .profile-name { font-size: 20px; font-weight: bold; color: #333; margin-bottom: 5px; }
+        .profile-phone { font-size: 14px; color: #777; }
+
+        .menu-list { background: white; margin: 0 20px; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .menu-item { display: flex; justify-content: space-between; padding: 15px 20px; border-bottom: 1px solid #f1f1f1; text-decoration: none; color: #333; font-size: 16px; font-weight: 500; }
+        .menu-item:last-child { border-bottom: none; }
+        .menu-item:hover { background: #fafafa; }
+        .menu-item span.arrow { color: #ccc; }
+
+        .logout-btn { display: block; margin: 20px; text-align: center; background: #ffebee; color: #d32f2f; padding: 15px; border-radius: 10px; font-weight: bold; text-decoration: none; border: 1px solid #ffcdd2; }
+
+        /* Bottom Navigation */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 10px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.05); z-index: 100;}
+        .nav-item { text-align: center; color: #888; text-decoration: none; font-size: 12px; }
+        .nav-item.active { color: #FF5722; }
+        .nav-item img { width: 24px; height: 24px; display: block; margin: 0 auto 3px auto; opacity: 0.6;}
+        .nav-item.active img { opacity: 1; filter: brightness(0) saturate(100%) invert(39%) sepia(85%) saturate(1478%) hue-rotate(345deg) brightness(98%) contrast(93%); }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h2 style="color: #FF5722; margin:0;">My Profile</h2>
+    </div>
+
+    <!-- User Profile Details -->
+    <div class="profile-card">
+        <div class="profile-img">U</div>
+        <div class="profile-name">কাস্টমার ইউজার</div>
+        <div class="profile-phone">+91 9876543210</div>
+    </div>
+
+    <!-- Menu List -->
+    <div class="menu-list">
+        <a href="#" class="menu-item" onclick="alert('অর্ডার সেকশনটি পরে অ্যাড করা হবে')">
+            <span>📦 আমার অর্ডার সমূহ (My Orders)</span>
+            <span class="arrow">❯</span>
+        </a>
+        <a href="#" class="menu-item" onclick="alert('আপনার বিক্রয়কৃত ফোনের তথ্য এখানে দেখাবে')">
+            <span>📱 বিক্রি করা মোবাইল (Sell History)</span>
+            <span class="arrow">❯</span>
+        </a>
+        <a href="#" class="menu-item">
+            <span>⚙️ সেটিংস (Settings)</span>
+            <span class="arrow">❯</span>
+        </a>
+        <a href="#" class="menu-item">
+            <span>📞 আমাদের সাথে যোগাযোগ করুন (Contact)</span>
+            <span class="arrow">❯</span>
+        </a>
+    </div>
+
+    <a href="#" class="logout-btn" onclick="alert('আপনি সফলভাবে লগ আউট হয়েছেন!')">লগ আউট (Log Out)</a>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <img src="https://s3ng.cashify.in/builder/f635449b43954fd1af1d88e7272d5dc2.webp" alt="Home"> Home
+        </a>
+        <a href="#" class="nav-item">
+            <img src="https://s3ng.cashify.in/builder/42a5409869a84e73921df8c033a81c9d.webp" alt="Buy"> Buy
+        </a>
+        <a href="sell.html" class="nav-item">
+            <img src="https://s3ng.cashify.in/builder/31d6a6d498ca43d4a6eee6cccd421474.webp" alt="Sell"> Sell
+        </a>
+        <a href="profile.html" class="nav-item active">
+            <img src="https://s3ng.cashify.in/builder/60cc75a071de4f729b9377681e594821.webp" alt="Profile"> Profile
+        </a>
+    </div>
+
+</body>
+</html>
