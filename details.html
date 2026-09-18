@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy Product - Rittik Mobile</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0;}
+        body { background-color: #f4f7f6; padding: 15px; padding-bottom: 80px;}
+        .top-bar { display: flex; align-items: center; margin-bottom: 20px; font-weight: bold;}
+        .top-bar a { text-decoration: none; color: #333; font-size: 20px; margin-right: 15px;}
+        
+        .slider-box { background: white; border-radius: 10px; height: 300px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; margin-bottom: 20px;}
+        .slider-box img { max-width: 100%; max-height: 100%; display: none; }
+        .slider-box img.active { display: block; }
+        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; padding: 10px 15px; border-radius: 50%; }
+        .prev { left: 10px; } .next { right: 10px; }
+
+        .info-box { background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);}
+        .p-title { font-size: 22px; font-weight: bold; margin-bottom: 5px;}
+        .p-price { font-size: 24px; color: #FF5722; font-weight: bold;}
+
+        /* অর্ডার ফর্ম Modal */
+        .order-section { background: white; padding: 20px; border-radius: 10px; margin-top: 20px; display: none;}
+        .order-section h3 { margin-bottom: 15px; color: #333;}
+        .input-group { margin-bottom: 15px; }
+        .input-group input, .input-group textarea, .input-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+        
+        .map-box { display: none; margin-top: 15px; border: 1px solid #ddd; padding: 10px; border-radius: 5px; background: #e0f7fa;}
+        iframe { width: 100%; height: 200px; border: 0; border-radius: 5px; margin-top: 10px;}
+
+        .btn-buy { position: fixed; bottom: 0; left: 0; width: 100%; background: #FF5722; color: white; text-align: center; padding: 15px; font-size: 18px; font-weight: bold; border: none; z-index: 100;}
+        .btn-confirm { background: #28a745; color: white; width: 100%; padding: 12px; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; margin-top: 10px;}
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <a href="index.html">←</a> <span>Product Details</span>
+    </div>
+
+    <div class="slider-box" id="mainSlider"></div>
+
+    <div class="info-box">
+        <div class="p-title" id="pTitle">Loading...</div>
+        <div class="p-price" id="pPrice"></div>
+    </div>
+
+    <button class="btn-buy" id="btnBuy" onclick="showOrderForm()">Buy Now (অর্ডার করুন)</button>
+
+    <!-- অর্ডার ফর্ম (Buy Now এ ক্লিক করলে এটি ওপেন হবে) -->
+    <div class="order-section" id="orderForm">
+        <h3>আপনার ডেলিভারি তথ্য দিন</h3>
+        <div class="input-group">
+            <input type="text" id="cName" placeholder="আপনার নাম">
+        </div>
+        <div class="input-group">
+            <input type="number" id="cPhone" placeholder="মোবাইল নম্বর">
+        </div>
+        <div class="input-group">
+            <select id="deliveryType" onchange="toggleDeliveryOptions()">
+                <option value="home">Home Delivery (বাড়িতে ডেলিভারি)</option>
+                <option value="store">Store Pickup (দোকানে এসে নেব)</option>
+            </select>
+        </div>
+        
+        <div id="homeDeliveryBox">
+            <div class="input-group">
+                <textarea id="cAddress" placeholder="সম্পূর্ণ ঠিকানা" rows="2"></textarea>
+            </div>
+            <div class="input-group">
+                <input type="text" id="cPincode" placeholder="পিনকোড">
+            </div>
+        </div>
+
+        <div id="storePickupBox" class="map-box">
+            <strong>আমাদের দোকানের ঠিকানা:</strong><br>
+            Rittik Mobile Shop, New Market, Kolkata, 700087<br>
+            <!-- আপনার গুগল ম্যাপের লোকেশন লিংক নিচে পরিবর্তন করে দিতে পারেন -->
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3684.275525540306!2d88.3512803149595!3d22.561334985188463!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0277a06c27636d%3A0x6fbcd8a649e3557e!2sNew%20Market!5e0!3m2!1sen!2sin!4v1622648700000!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+
+        <button class="btn-confirm" onclick="confirmOrder()">অর্ডার কনফার্ম করুন</button>
+        <p id="orderStatus" style="color: green; text-align: center; display: none; margin-top: 10px;">অর্ডার সফল হয়েছে! আমরা যোগাযোগ করব।</p>
+    </div>
+
+    <!-- Firebase -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBIddmdEKtGl0OI97ky6Q3JJBs2dOzbnbA",
+            authDomain: "rittik-mobile-shop-web-1.firebaseapp.com",
+            databaseURL: "https://rittik-mobile-shop-web-1-default-rtdb.firebaseio.com",
+            projectId: "rittik-mobile-shop-web-1",
+            storageBucket: "rittik-mobile-shop-web-1.firebasestorage.app",
+            messagingSenderId: "171512039750",
+            appId: "1:171512039750:web:639dd1bffdb351bf06fd47"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        let currentSlide = 0;
+        const urlParams = new URLSearchParams(window.location.search);
+        const pName = decodeURIComponent(urlParams.get('name'));
+        const pPrice = decodeURIComponent(urlParams.get('price'));
+        const imagesList = JSON.parse(decodeURIComponent(urlParams.get('images')));
+
+        document.getElementById('pTitle').innerText = pName;
+        document.getElementById('pPrice').innerText = '৳ ' + pPrice;
+
+        const slider = document.getElementById('mainSlider');
+        let html = '';
+        imagesList.forEach((url, index) => {
+            let active = index === 0 ? 'active' : '';
+            html += `<img src="${url}" class="${active}">`;
+        });
+        if (imagesList.length > 1) {
+            html += `<button class="nav-btn prev" onclick="changeSlide(-1)">❮</button><button class="nav-btn next" onclick="changeSlide(1)">❯</button>`;
+        }
+        slider.innerHTML = html;
+
+        window.changeSlide = function(direction) {
+            const images = slider.getElementsByTagName('img');
+            images[currentSlide].classList.remove('active');
+            currentSlide += direction;
+            if(currentSlide >= images.length) currentSlide = 0;
+            if(currentSlide < 0) currentSlide = images.length - 1;
+            images[currentSlide].classList.add('active');
+        }
+
+        window.showOrderForm = function() {
+            document.getElementById('orderForm').style.display = 'block';
+            document.getElementById('btnBuy').style.display = 'none';
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+
+        window.toggleDeliveryOptions = function() {
+            const type = document.getElementById('deliveryType').value;
+            if(type === 'store') {
+                document.getElementById('homeDeliveryBox').style.display = 'none';
+                document.getElementById('storePickupBox').style.display = 'block';
+            } else {
+                document.getElementById('homeDeliveryBox').style.display = 'block';
+                document.getElementById('storePickupBox').style.display = 'none';
+            }
+        }
+
+        window.confirmOrder = function() {
+            const cName = document.getElementById('cName').value;
+            const cPhone = document.getElementById('cPhone').value;
+            const deliveryType = document.getElementById('deliveryType').value;
+            const cAddress = document.getElementById('cAddress').value;
+            const cPincode = document.getElementById('cPincode').value;
+
+            if(!cName || !cPhone) { alert("নাম ও ফোন নম্বর দিন!"); return; }
+
+            // ফায়ারবেস 'orders' ডাটাবেসে কাস্টমারের অর্ডার সেভ করা হচ্ছে
+            push(ref(db, 'orders'), {
+                productName: pName,
+                productPrice: pPrice,
+                customerName: cName,
+                customerPhone: cPhone,
+                deliveryType: deliveryType,
+                address: cAddress,
+                pincode: cPincode,
+                date: new Date().toLocaleString()
+            });
+
+            document.getElementById('orderStatus').style.display = 'block';
+            setTimeout(() => { window.location.href = 'index.html'; }, 3000);
+        }
+    </script>
+</body>
+</html>
