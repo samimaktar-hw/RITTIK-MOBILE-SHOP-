@@ -4,92 +4,109 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Rittik Mobile Shop</title>
-    <!-- ডার্ক থিম কালার -->
     <meta name="theme-color" content="#0f172a"/>
     <style>
-        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; }
-        body { background-color: #0f172a; color: #e2e8f0; padding-bottom: 70px; }
+        * { box-sizing: border-box; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
+        body { background-color: #0b1121; color: #f8fafc; padding-bottom: 75px; overflow-x: hidden;}
         
-        /* হেডার ও লোগো সেকশন */
-        .header { background: #1e293b; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 50; border-bottom: 2px solid #00e5ff; box-shadow: 0 4px 15px rgba(0, 229, 255, 0.2); }
-        .logo-section { display: flex; align-items: center; text-decoration: none; gap: 10px; }
-        .logo-img { height: 40px; width: 40px; object-fit: contain; border-radius: 5px; }
-        .logo-text { color: #00e5ff; margin: 0; font-size: 18px; text-shadow: 0 0 5px rgba(0,229,255,0.4); font-weight: bold; letter-spacing: 1px;}
+        /* Glassmorphism Header */
+        .header { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(10px); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 50; border-bottom: 1px solid rgba(0, 229, 255, 0.3); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); }
+        .logo-section { display: flex; align-items: center; text-decoration: none; gap: 12px; }
+        .logo-img { height: 40px; width: 40px; object-fit: contain; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 229, 255, 0.5);}
+        .logo-text { color: #ffffff; margin: 0; font-size: 19px; font-weight: 800; letter-spacing: 0.5px;}
+        .logo-text span { color: #00e5ff; text-shadow: 0 0 10px rgba(0,229,255,0.6);}
         
-        .header-actions { display: flex; align-items: center; gap: 10px; }
-        .lang-select { background: #0f172a; color: #00e5ff; border: 1px solid #00e5ff; padding: 5px; border-radius: 5px; outline: none; font-size: 13px;}
-        .login-btn { background: #00e5ff; color: #0f172a; border: none; padding: 6px 12px; border-radius: 5px; font-weight: bold; cursor: pointer; }
-        .user-avatar { width: 32px; height: 32px; border-radius: 50%; border: 2px solid #00e5ff; display: none; cursor: pointer; object-fit: cover; }
+        .header-actions { display: flex; align-items: center; gap: 12px; }
+        .lang-select { background: rgba(255,255,255,0.1); color: #00e5ff; border: 1px solid rgba(0,229,255,0.5); padding: 6px 8px; border-radius: 6px; outline: none; font-size: 13px; font-weight: bold; cursor: pointer;}
+        .login-btn { background: linear-gradient(90deg, #0284c7, #00e5ff); color: #fff; border: none; padding: 7px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,229,255,0.3);}
+        .login-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,229,255,0.5);}
+        .user-avatar { width: 36px; height: 36px; border-radius: 50%; border: 2px solid #00e5ff; display: none; cursor: pointer; object-fit: cover; box-shadow: 0 0 10px rgba(0,229,255,0.5);}
 
-        /* ব্যানার */
-        .banner { background: linear-gradient(135deg, #0284c7, #00e5ff); color: #0f172a; padding: 25px 20px; text-align: center; border-radius: 0 0 20px 20px; box-shadow: 0 10px 20px rgba(0, 229, 255, 0.2);}
-        
-        /* সার্ভিস গ্রিড (Cashify Style) */
-        .services-section { padding: 20px; margin-top: 10px; }
-        .services-section h2 { font-size: 18px; margin-bottom: 15px; color: #00e5ff; }
-        .grid-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; text-align: center; }
-        .service-box { text-decoration: none; color: #e2e8f0; font-size: 12px; font-weight: 500; display: flex; flex-direction: column; align-items: center; }
-        .service-icon { background: #1e293b; border: 1px solid #334155; border-radius: 10px; width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; box-shadow: inset 0 0 10px rgba(0,229,255,0.1); }
-        .service-icon img { width: 35px; height: 35px; object-fit: contain; }
+        /* Modern Banner */
+        .banner { background: radial-gradient(circle at top right, #0284c7, #0f172a 70%); padding: 35px 20px; text-align: center; border-bottom: 1px solid #1e293b; position: relative;}
+        .banner::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, #00e5ff, transparent); }
+        .banner h2 { font-size: 26px; font-weight: 800; margin-bottom: 8px; background: -webkit-linear-gradient(#fff, #00e5ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+        .banner p { font-size: 15px; color: #94a3b8; font-weight: 500; letter-spacing: 0.5px;}
 
-        /* প্রোডাক্ট গ্রিড ও স্লাইডার */
-        .products-section { padding: 20px; }
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; }
-        .product-card { background: #1e293b; border-radius: 10px; padding: 10px; text-align: center; border: 1px solid #334155; position: relative; transition: 0.3s; }
-        .product-card:hover { border-color: #00e5ff; box-shadow: 0 0 15px rgba(0, 229, 255, 0.3); transform: translateY(-3px);}
+        /* Premium Services Grid */
+        .services-section { padding: 25px 20px 10px 20px; }
+        .section-title { font-size: 18px; margin-bottom: 18px; color: #f8fafc; font-weight: 700; display: flex; align-items: center; gap: 8px;}
+        .section-title::before { content: ''; display: inline-block; width: 4px; height: 18px; background: #00e5ff; border-radius: 4px;}
+        .grid-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; text-align: center; }
+        .service-box { text-decoration: none; color: #cbd5e1; font-size: 12px; font-weight: 600; display: flex; flex-direction: column; align-items: center; transition: 0.3s;}
+        .service-box:hover { transform: translateY(-3px); color: #00e5ff;}
+        .service-icon { background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; transition: 0.3s;}
+        .service-box:hover .service-icon { border-color: #00e5ff; box-shadow: 0 0 15px rgba(0,229,255,0.2);}
+        .service-icon img { width: 32px; height: 32px; object-fit: contain; }
+
+        /* Professional Product Cards */
+        .products-section { padding: 10px 20px 30px 20px; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 18px; }
+        .product-card { background: rgba(30, 41, 59, 0.6); border-radius: 14px; padding: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; backdrop-filter: blur(5px);}
+        .product-card:hover { border-color: rgba(0, 229, 255, 0.5); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 229, 255, 0.1); transform: translateY(-5px);}
         
-        .slider-container { width: 100%; height: 160px; display: flex; justify-content: center; align-items: center; overflow: hidden; margin-bottom: 10px; background: white; border-radius: 5px; position: relative;}
-        .slider-img { max-width: 100%; max-height: 100%; display: none; object-fit: contain;}
+        .slider-container { width: 100%; height: 160px; display: flex; justify-content: center; align-items: center; overflow: hidden; margin-bottom: 12px; background: rgba(255,255,255,0.02); border-radius: 10px; position: relative;}
+        .slider-img { max-width: 90%; max-height: 90%; display: none; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));}
         .slider-img.active { display: block; }
-        .slider-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; padding: 5px 8px; cursor: pointer; border-radius: 50%; font-size: 12px; z-index: 10;}
-        .prev { left: 5px; } .next { right: 5px; }
-
-        .p-title { font-size: 14px; font-weight: bold; color: #e2e8f0; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
-        .p-price { font-size: 16px; color: #00e5ff; font-weight: bold; margin-bottom: 10px;}
         
-        /* বাটন */
-        .action-buttons { display: flex; justify-content: space-between; gap: 5px; }
-        .btn-buy { flex: 1; background: #00e5ff; color: #0f172a; border: none; padding: 8px; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 13px;}
-        .btn-share { background: #334155; color: white; border: none; padding: 8px; border-radius: 5px; cursor: pointer; font-size: 13px;}
+        .p-title { font-size: 14px; font-weight: 700; color: #f1f5f9; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+        .p-price { font-size: 17px; color: #00e5ff; font-weight: 800; margin-bottom: 12px;}
+        
+        .action-buttons { display: flex; justify-content: space-between; gap: 8px; }
+        .btn-buy { flex: 1; background: #00e5ff; color: #0f172a; border: none; padding: 9px; border-radius: 8px; font-weight: 800; cursor: pointer; font-size: 13px; transition: 0.2s;}
+        .btn-buy:hover { background: #06b6d4; }
+        .btn-share { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2); padding: 9px; border-radius: 8px; cursor: pointer; font-size: 14px; transition: 0.2s; display: flex; align-items: center; justify-content: center;}
+        .btn-share:hover { background: rgba(255,255,255,0.2); }
 
-        /* Bottom Navigation */
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #1e293b; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #334155; z-index: 100;}
-        .nav-item { text-align: center; color: #94a3b8; text-decoration: none; font-size: 12px; }
+        /* Modern Bottom Navigation */
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px); display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid rgba(255,255,255,0.1); z-index: 100;}
+        .nav-item { text-align: center; color: #64748b; text-decoration: none; font-size: 12px; font-weight: 600; transition: 0.3s;}
         .nav-item.active { color: #00e5ff; }
-        .nav-item img { width: 22px; height: 22px; display: block; margin: 0 auto 3px auto; opacity: 0.5; filter: invert(1);}
-        .nav-item.active img { opacity: 1; filter: invert(70%) sepia(45%) saturate(3000%) hue-rotate(150deg) brightness(100%) contrast(100%); }
+        .nav-item img { width: 22px; height: 22px; display: block; margin: 0 auto 4px auto; opacity: 0.5; filter: invert(1); transition: 0.3s;}
+        .nav-item.active img { opacity: 1; filter: invert(70%) sepia(45%) saturate(3000%) hue-rotate(150deg) brightness(100%) contrast(100%); transform: translateY(-2px);}
+
+        /* Auth Modal (Login / Sign Up) */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); justify-content: center; align-items: center; }
+        .modal-content { background: #1e293b; padding: 30px; border-radius: 16px; width: 90%; max-width: 400px; border: 1px solid rgba(0,229,255,0.3); box-shadow: 0 10px 40px rgba(0,0,0,0.5); text-align: center; position: relative;}
+        .close-modal { position: absolute; top: 15px; right: 20px; color: #94a3b8; font-size: 24px; font-weight: bold; cursor: pointer; }
+        .modal-content h3 { color: #fff; margin-bottom: 20px; font-size: 22px; }
+        .auth-input { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; outline: none; font-size: 15px;}
+        .auth-input:focus { border-color: #00e5ff; }
+        .auth-btn { width: 100%; background: #00e5ff; color: #0f172a; padding: 12px; border: none; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; margin-bottom: 15px;}
+        .toggle-text { color: #94a3b8; font-size: 14px; cursor: pointer; margin-bottom: 20px; text-decoration: underline;}
+        .google-btn { width: 100%; background: white; color: #333; padding: 12px; border: none; border-radius: 8px; font-weight: bold; font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;}
+        .google-btn img { width: 20px; }
     </style>
 </head>
 <body>
 
-    <!-- হেডার ও লোগো -->
+    <!-- Header & Logo -->
     <div class="header">
         <a href="index.html" class="logo-section">
-            <img src="1000397248.png" alt="Rittik Mobile Shop Logo" class="logo-img">
-            <h2 class="logo-text">Rittik Mobile</h2>
+            <img src="logo.png" alt="Rittik Mobile Shop Logo" class="logo-img">
+            <h2 class="logo-text">Rittik <span>Mobile</span></h2>
         </a>
         <div class="header-actions">
-            <!-- ভাষা পরিবর্তনের অপশন -->
+            <!-- Language Selection -->
             <select class="lang-select" id="langSelect" onchange="changeLanguage()">
                 <option value="en">English</option>
                 <option value="bn">বাংলা</option>
                 <option value="hi">हिंदी</option>
             </select>
-            <!-- গুগল লগিন বাটন ও প্রোফাইল ছবি -->
-            <button class="login-btn" id="loginBtn">Login</button>
+            <button class="login-btn" id="loginBtn" onclick="openAuthModal()">Login</button>
             <img src="" alt="Profile" class="user-avatar" id="userAvatar" onclick="window.location.href='profile.html'">
         </div>
     </div>
 
-    <!-- ব্যানার -->
+    <!-- Banner -->
     <div class="banner">
         <h2 id="bannerTitle">Buy & Sell Premium Devices</h2>
-        <p id="bannerSub" style="margin-top: 10px; font-size: 14px; font-weight: 500;">Directly from doorstep or store</p>
+        <p id="bannerSub">আপনার বাড়িতে বসে বা আমাদের দোকান থেকে</p>
     </div>
 
-    <!-- ক্যাশিফাই স্টাইল সার্ভিস গ্রিড -->
+    <!-- Services Grid -->
     <div class="services-section">
-        <h2 id="servicesTitle">Our Services</h2>
+        <h2 class="section-title" id="servicesTitle">Our Services</h2>
         <div class="grid-container">
             <a href="sell.html" class="service-box" onclick="return checkAuth(event)">
                 <div class="service-icon"><img src="https://s3ng.cashify.in/builder/cd13764b153e46e19f9c6551ee52b5e6.webp"></div>
@@ -110,37 +127,86 @@
         </div>
     </div>
 
-    <!-- প্রোডাক্ট লিস্ট -->
+    <!-- Product Grid -->
     <div class="products-section">
-        <h2 id="gadgetsTitle" style="font-size: 18px; margin-bottom: 15px; color: #00e5ff;">Latest Gadgets</h2>
+        <h2 class="section-title" id="gadgetsTitle">Latest Gadgets</h2>
         <div class="product-grid" id="productGrid">
-            <p style="text-align:center; color:#94a3b8; width:100%; grid-column: 1 / -1;">Loading products...</p>
+            
+            <!-- Dummy Test Product 1 -->
+            <div class="product-card">
+                <div onclick="goToDetails('test_1', 'iPhone 14 Pro Max', '85000', encodeURIComponent(JSON.stringify(['https://s3ng.cashify.in/cashify/product/img/xxhdpi/e87178f4-0773.jpg'])))">
+                    <div class="slider-container">
+                        <img src="https://s3ng.cashify.in/cashify/product/img/xxhdpi/e87178f4-0773.jpg" class="slider-img active">
+                    </div>
+                    <div class="p-title">iPhone 14 Pro Max</div>
+                    <div class="p-price">₹ 85,000</div>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn-buy" onclick="goToDetails('test_1', 'iPhone 14 Pro Max', '85000', encodeURIComponent(JSON.stringify(['https://s3ng.cashify.in/cashify/product/img/xxhdpi/e87178f4-0773.jpg'])))">BUY NOW</button>
+                    <button class="btn-share" onclick="shareProduct('test_1', 'iPhone 14 Pro Max', '85000', encodeURIComponent(JSON.stringify(['https://s3ng.cashify.in/cashify/product/img/xxhdpi/e87178f4-0773.jpg'])))">📤</button>
+                </div>
+            </div>
+
+            <!-- Dummy Test Product 2 -->
+            <div class="product-card">
+                <div onclick="goToDetails('test_2', 'Samsung Galaxy S23 Ultra', '75000', encodeURIComponent(JSON.stringify(['https://s3ng.cashify.in/cashify/product/img/xxhdpi/cd2da442-a50c.jpg'])))">
+                    <div class="slider-container">
+                        <img src="https://s3ng.cashify.in/cashify/product/img/xxhdpi/cd2da442-a50c.jpg" class="slider-img active">
+                    </div>
+                    <div class="p-title">Samsung Galaxy S23 Ultra</div>
+                    <div class="p-price">₹ 75,000</div>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn-buy" onclick="goToDetails('test_2', 'Samsung Galaxy S23 Ultra', '75000', encodeURIComponent(JSON.stringify(['https://s3ng.cashify.in/cashify/product/img/xxhdpi/cd2da442-a50c.jpg'])))">BUY NOW</button>
+                    <button class="btn-share" onclick="shareProduct('test_2', 'Samsung Galaxy S23 Ultra', '75000', encodeURIComponent(JSON.stringify(['https://s3ng.cashify.in/cashify/product/img/xxhdpi/cd2da442-a50c.jpg'])))">📤</button>
+                </div>
+            </div>
+
+            <!-- Dynamic products will load here -->
+        </div>
+    </div>
+
+    <!-- Custom Auth Modal (Login / Sign Up) -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeAuthModal()">&times;</span>
+            <h3 id="authTitle">Create Account</h3>
+            
+            <input type="text" id="authName" class="auth-input" placeholder="Full Name">
+            <input type="email" id="authEmail" class="auth-input" placeholder="Email Address">
+            <input type="password" id="authPass" class="auth-input" placeholder="Password">
+            <input type="password" id="authConfirm" class="auth-input" placeholder="Confirm Password">
+            
+            <button class="auth-btn" id="authSubmitBtn" onclick="handleEmailAuth()">Sign Up</button>
+            <p class="toggle-text" id="authToggleText" onclick="toggleAuthMode()">Already have an account? Login here.</p>
+            
+            <div style="display:flex; align-items:center; margin-bottom: 20px;">
+                <hr style="flex:1; border:none; border-top:1px solid #334155;">
+                <span style="padding: 0 10px; color: #94a3b8; font-size: 12px;">OR</span>
+                <hr style="flex:1; border:none; border-top:1px solid #334155;">
+            </div>
+
+            <button class="google-btn" onclick="googleLogin()">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="G"> 
+                Continue with Google
+            </button>
         </div>
     </div>
 
     <!-- Bottom Navigation -->
     <div class="bottom-nav">
-        <a href="index.html" class="nav-item active">
-            <img src="https://s3ng.cashify.in/builder/f635449b43954fd1af1d88e7272d5dc2.webp"> <span id="navHome">Home</span>
-        </a>
-        <a href="#productGrid" class="nav-item">
-            <img src="https://s3ng.cashify.in/builder/42a5409869a84e73921df8c033a81c9d.webp"> <span id="navBuy">Buy</span>
-        </a>
-        <a href="sell.html" class="nav-item" onclick="return checkAuth(event)">
-            <img src="https://s3ng.cashify.in/builder/31d6a6d498ca43d4a6eee6cccd421474.webp"> <span id="navSell">Sell</span>
-        </a>
-        <a href="profile.html" class="nav-item" onclick="return checkAuth(event)">
-            <img src="https://s3ng.cashify.in/builder/60cc75a071de4f729b9377681e594821.webp"> <span id="navProfile">Profile</span>
-        </a>
+        <a href="index.html" class="nav-item active"><img src="https://s3ng.cashify.in/builder/f635449b43954fd1af1d88e7272d5dc2.webp"> <span id="navHome">Home</span></a>
+        <a href="#productGrid" class="nav-item"><img src="https://s3ng.cashify.in/builder/42a5409869a84e73921df8c033a81c9d.webp"> <span id="navBuy">Buy</span></a>
+        <a href="sell.html" class="nav-item" onclick="return checkAuth(event)"><img src="https://s3ng.cashify.in/builder/31d6a6d498ca43d4a6eee6cccd421474.webp"> <span id="navSell">Sell</span></a>
+        <a href="profile.html" class="nav-item" onclick="return checkAuth(event)"><img src="https://s3ng.cashify.in/builder/60cc75a071de4f729b9377681e594821.webp"> <span id="navProfile">Profile</span></a>
     </div>
 
-    <!-- Firebase ও অন্যান্য লজিক -->
+    <!-- Firebase & Logic Scripts -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // ফায়ারবেস কনফিগারেশন
         const firebaseConfig = {
             apiKey: "AIzaSyBIddmdEKtGl0OI97ky6Q3JJBs2dOzbnbA",
             authDomain: "rittik-mobile-shop-web-1.firebaseapp.com",
@@ -155,46 +221,89 @@
         const provider = new GoogleAuthProvider();
         const db = getDatabase(app);
 
+        // UI Elements
         const loginBtn = document.getElementById('loginBtn');
         const userAvatar = document.getElementById('userAvatar');
+        const authModal = document.getElementById('authModal');
+        let isLoginMode = false;
 
-        // লগ-ইন সিস্টেম
+        // Check Login State
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 loginBtn.style.display = 'none';
                 userAvatar.style.display = 'block';
-                userAvatar.src = user.photoURL;
+                // Show default icon if no photoURL
+                userAvatar.src = user.photoURL || "https://ui-avatars.com/api/?name=" + (user.displayName || "User") + "&background=00e5ff&color=0f172a";
+                closeAuthModal();
             } else {
                 loginBtn.style.display = 'block';
                 userAvatar.style.display = 'none';
             }
         });
 
-        loginBtn.addEventListener('click', () => {
-            signInWithPopup(auth, provider).catch(error => alert("Login failed!"));
-        });
+        // Modal Logic
+        window.openAuthModal = () => { authModal.style.display = 'flex'; }
+        window.closeAuthModal = () => { authModal.style.display = 'none'; }
+        
+        window.toggleAuthMode = () => {
+            isLoginMode = !isLoginMode;
+            document.getElementById('authTitle').innerText = isLoginMode ? "Welcome Back!" : "Create Account";
+            document.getElementById('authName').style.display = isLoginMode ? "none" : "block";
+            document.getElementById('authConfirm').style.display = isLoginMode ? "none" : "block";
+            document.getElementById('authSubmitBtn').innerText = isLoginMode ? "Login" : "Sign Up";
+            document.getElementById('authToggleText').innerText = isLoginMode ? "Don't have an account? Sign up here." : "Already have an account? Login here.";
+        }
+
+        // Custom Email Login/Signup
+        window.handleEmailAuth = () => {
+            const email = document.getElementById('authEmail').value;
+            const pass = document.getElementById('authPass').value;
+            
+            if(isLoginMode) {
+                // Login
+                signInWithEmailAndPassword(auth, email, pass)
+                .then(() => { alert("Login Successful!"); })
+                .catch(error => { alert("Error: " + error.message); });
+            } else {
+                // Signup
+                const name = document.getElementById('authName').value;
+                const confirmPass = document.getElementById('authConfirm').value;
+                if(!name || !email || !pass) return alert("Please fill all fields!");
+                if(pass !== confirmPass) return alert("Passwords do not match!");
+                
+                createUserWithEmailAndPassword(auth, email, pass)
+                .then((userCredential) => {
+                    updateProfile(userCredential.user, { displayName: name }).then(() => {
+                        alert("Account created successfully!");
+                        window.location.reload();
+                    });
+                })
+                .catch(error => { alert("Error: " + error.message); });
+            }
+        }
+
+        // Google Login
+        window.googleLogin = () => {
+            signInWithPopup(auth, provider).catch(error => alert("Google Login failed: " + error.message));
+        }
 
         window.checkAuth = function(event) {
             if (!auth.currentUser) {
                 event.preventDefault();
-                alert("Please Login / Sign in with Google first!");
-                signInWithPopup(auth, provider);
+                openAuthModal();
                 return false;
             }
             return true;
         }
 
-        // প্রোডাক্ট লোড করা এবং স্লাইডার
+        // Fetch Dynamic Products
         window.slidersState = {};
-        
         onValue(ref(db, 'products'), (snapshot) => {
             const grid = document.getElementById('productGrid');
-            grid.innerHTML = '';
             const data = snapshot.val();
             if (data) {
                 Object.keys(data).reverse().forEach(key => {
                     const prod = data[key];
-                    // শুধু অ্যাডমিন বা অ্যাপ্রুভ করা প্রোডাক্ট দেখাবে
                     if(prod.status !== 'approved' && prod.type !== 'admin') return; 
 
                     const prodId = 'prod_' + key;
@@ -206,10 +315,8 @@
                         sliderHtml += `<img src="${url}" class="slider-img ${active}">`;
                     });
                     if (prod.images.length > 1) {
-                        sliderHtml += `
-                            <button class="slider-btn prev" onclick="event.stopPropagation(); changeSlide('${prodId}', -1)">❮</button>
-                            <button class="slider-btn next" onclick="event.stopPropagation(); changeSlide('${prodId}', 1)">❯</button>
-                        `;
+                        sliderHtml += `<button class="slider-btn prev" onclick="event.stopPropagation(); changeSlide('${prodId}', -1)">❮</button>
+                                       <button class="slider-btn next" onclick="event.stopPropagation(); changeSlide('${prodId}', 1)">❯</button>`;
                     }
                     sliderHtml += `</div>`;
 
@@ -222,23 +329,19 @@
                             <div class="p-price">₹ ${prod.price}</div>
                         </div>
                         <div class="action-buttons">
-                            <button class="btn-buy" onclick="goToDetails('${key}', '${encodeURIComponent(prod.name)}', '${encodeURIComponent(prod.price)}', '${encodeURIComponent(JSON.stringify(prod.images))}')">Buy</button>
+                            <button class="btn-buy" onclick="goToDetails('${key}', '${encodeURIComponent(prod.name)}', '${encodeURIComponent(prod.price)}', '${encodeURIComponent(JSON.stringify(prod.images))}')">BUY NOW</button>
                             <button class="btn-share" onclick="shareProduct('${key}', '${prod.name}', '${encodeURIComponent(prod.price)}', '${encodeURIComponent(JSON.stringify(prod.images))}')">📤</button>
                         </div>
                     `;
                     grid.appendChild(card);
                 });
-            } else {
-                grid.innerHTML = '<p style="color:#94a3b8; grid-column: 1 / -1;">No products found!</p>';
             }
         });
 
-        // ডিটেইলস পেজে পাঠানো
         window.goToDetails = function(id, name, price, images) {
             window.location.href = `details.html?id=${id}&name=${name}&price=${price}&images=${images}`;
         }
 
-        // ছবি স্লাইড করার ফাংশন
         window.changeSlide = function(prodId, direction) {
             const container = document.getElementById(prodId);
             const images = container.getElementsByClassName('slider-img');
@@ -249,25 +352,28 @@
             images[window.slidersState[prodId]].classList.add('active');
         }
 
-        // শেয়ার অপশন (Flipkart Style)
+        // Share Feature Link Generation
         window.shareProduct = function(id, name, price, images) {
-            const shareUrl = window.location.origin + window.location.pathname.replace('index.html', '') + `details.html?id=${id}&name=${encodeURIComponent(name)}&price=${price}&images=${images}`;
+            const decodedName = decodeURIComponent(name);
+            const shareUrl = window.location.origin + window.location.pathname.replace('index.html', '') + `details.html?id=${id}&name=${name}&price=${price}&images=${images}`;
+            
             if (navigator.share) {
                 navigator.share({
-                    title: `Check out ${name} at Rittik Mobile Shop!`,
+                    title: `Buy ${decodedName} at Rittik Mobile Shop!`,
+                    text: `Check out this amazing deal for ₹${decodeURIComponent(price)}`,
                     url: shareUrl
                 });
             } else {
                 navigator.clipboard.writeText(shareUrl);
-                alert("Link copied to clipboard! Share it with your friends.");
+                alert("Link copied! Paste it anywhere to share.");
             }
         }
 
-        // ভাষা পরিবর্তন (Dictionary)
+        // Dictionary for Language Toggle
         const dict = {
             en: { bannerTitle: "Buy & Sell Premium Devices", bannerSub: "Directly from doorstep or store", servicesTitle: "Our Services", txtSell: "Sell Phone", txtBuy: "Buy Phone", txtSmartwatch: "Smartwatches", txtAcc: "Accessories", gadgetsTitle: "Latest Gadgets", navHome: "Home", navBuy: "Buy", navSell: "Sell", navProfile: "Profile" },
-            bn: { bannerTitle: "সেরা মোবাইল কিনুন ও বিক্রি করুন", bannerSub: "আপনার দোরগোড়ায় বা আমাদের শপ থেকে", servicesTitle: "আমাদের সেবাসমূহ", txtSell: "ফোন বিক্রি", txtBuy: "ফোন কিনুন", txtSmartwatch: "স্মার্টওয়াচ", txtAcc: "এক্সেসরিজ", gadgetsTitle: "লেটেস্ট গ্যাজেট", navHome: "হোম", navBuy: "কিনুন", navSell: "বিক্রি", navProfile: "প্রোফাইল" },
-            hi: { bannerTitle: "मोबाइल खरीदें और बेचें", bannerSub: "घर बैठे या स्टोर से", servicesTitle: "हमारी सेवाएं", txtSell: "फोन बेचें", txtBuy: "फोन खरीदें", txtSmartwatch: "स्मार्ट घड़ियाँ", txtAcc: "एक्सेसरीज", gadgetsTitle: "नवीनतम गैजेट्स", navHome: "होम", navBuy: "खरीदें", navSell: "बेचें", navProfile: "प्रोफ़ाइल" }
+            bn: { bannerTitle: "সেরা মোবাইল কিনুন ও বিক্রি করুন", bannerSub: "আপনার বাড়িতে বসে বা আমাদের দোকান থেকে", servicesTitle: "আমাদের সেবাসমূহ", txtSell: "ফোন বিক্রি", txtBuy: "ফোন কিনুন", txtSmartwatch: "স্মার্টওয়াচ", txtAcc: "এক্সেসরিজ", gadgetsTitle: "লেটেস্ট গ্যাজেট", navHome: "হোম", navBuy: "কিনুন", navSell: "বিক্রি", navProfile: "প্রোফাইল" },
+            hi: { bannerTitle: "मोबाइल खरीदें और बेचें", bannerSub: "घर बैठे या हमारे स्टोर से", servicesTitle: "हमारी सेवाएं", txtSell: "फोन बेचें", txtBuy: "फोन खरीदें", txtSmartwatch: "स्मार्ट घड़ियाँ", txtAcc: "एक्सेसरीज", gadgetsTitle: "नवीनतम गैजेट्स", navHome: "होम", navBuy: "खरीदें", navSell: "बेचें", navProfile: "प्रोफ़ाइल" }
         };
 
         window.changeLanguage = function() {
