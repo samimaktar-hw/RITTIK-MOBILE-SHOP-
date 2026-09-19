@@ -6,390 +6,215 @@
     <title>Rittik Mobile Shop</title>
     <meta name="theme-color" content="#0f172a"/>
     <style>
-        * { box-sizing: border-box; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
+        * { box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 0; }
         body { background-color: #0b1121; color: #f8fafc; padding-bottom: 75px; overflow-x: hidden;}
         
-        /* Glassmorphism Header */
-        .header { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(10px); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 50; border-bottom: 1px solid rgba(0, 229, 255, 0.3); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); }
+        /* Header */
+        .header { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 50; border-bottom: 1px solid rgba(0, 229, 255, 0.3);}
         .logo-section { display: flex; align-items: center; text-decoration: none; gap: 12px; }
-        .logo-img { height: 40px; width: 40px; object-fit: contain; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 229, 255, 0.5);}
-        .logo-text { color: #ffffff; margin: 0; font-size: 19px; font-weight: 800; letter-spacing: 0.5px;}
-        .logo-text span { color: #00e5ff; text-shadow: 0 0 10px rgba(0,229,255,0.6);}
-        
+        .logo-img { height: 35px; width: 35px; object-fit: contain; border-radius: 8px;}
+        .logo-text { color: #ffffff; margin: 0; font-size: 18px; font-weight: 800;}
+        .logo-text span { color: #00e5ff; }
         .header-actions { display: flex; align-items: center; gap: 12px; }
-        .lang-select { background: rgba(255,255,255,0.1); color: #00e5ff; border: 1px solid rgba(0,229,255,0.5); padding: 6px 8px; border-radius: 6px; outline: none; font-size: 13px; font-weight: bold; cursor: pointer;}
-        .login-btn { background: linear-gradient(90deg, #0284c7, #00e5ff); color: #fff; border: none; padding: 7px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,229,255,0.3);}
-        .login-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,229,255,0.5);}
-        .user-avatar { width: 36px; height: 36px; border-radius: 50%; border: 2px solid #00e5ff; display: none; cursor: pointer; object-fit: cover; box-shadow: 0 0 10px rgba(0,229,255,0.5);}
-
-        /* Modern Banner */
-        .banner { background: radial-gradient(circle at top right, #0284c7, #0f172a 70%); padding: 35px 20px; text-align: center; border-bottom: 1px solid #1e293b; position: relative;}
-        .banner::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, #00e5ff, transparent); }
-        .banner h2 { font-size: 26px; font-weight: 800; margin-bottom: 8px; background: -webkit-linear-gradient(#fff, #00e5ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
-        .banner p { font-size: 15px; color: #94a3b8; font-weight: 500; letter-spacing: 0.5px;}
-
-        /* Premium Services Grid */
-        .services-section { padding: 25px 20px 10px 20px; }
-        .section-title { font-size: 18px; margin-bottom: 18px; color: #f8fafc; font-weight: 700; display: flex; align-items: center; gap: 8px;}
-        .section-title::before { content: ''; display: inline-block; width: 4px; height: 18px; background: #00e5ff; border-radius: 4px;}
-        .grid-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; text-align: center; }
-        .service-box { text-decoration: none; color: #cbd5e1; font-size: 12px; font-weight: 600; display: flex; flex-direction: column; align-items: center; transition: 0.3s;}
-        .service-box:hover { transform: translateY(-3px); color: #00e5ff;}
-        .service-icon { background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; transition: 0.3s;}
-        .service-box:hover .service-icon { border-color: #00e5ff; box-shadow: 0 0 15px rgba(0,229,255,0.2);}
-        .service-icon img { width: 32px; height: 32px; object-fit: contain; }
-
-        /* Professional Product Cards */
-        .products-section { padding: 10px 20px 30px 20px; }
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 18px; }
-        .product-card { background: rgba(30, 41, 59, 0.6); border-radius: 14px; padding: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; backdrop-filter: blur(5px);}
-        .product-card:hover { border-color: rgba(0, 229, 255, 0.5); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 229, 255, 0.1); transform: translateY(-5px);}
+        .login-btn { background: #00e5ff; color: #0f172a; border: none; padding: 6px 12px; border-radius: 5px; font-weight: bold; cursor: pointer;}
         
-        .slider-container { width: 100%; height: 160px; display: flex; justify-content: center; align-items: center; overflow: hidden; margin-bottom: 12px; background: rgba(255,255,255,0.02); border-radius: 10px; position: relative;}
-        .slider-img { max-width: 90%; max-height: 90%; display: none; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));}
-        .slider-img.active { display: block; }
-        
-        .p-title { font-size: 14px; font-weight: 700; color: #f1f5f9; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
-        .p-price { font-size: 17px; color: #00e5ff; font-weight: 800; margin-bottom: 12px;}
-        
-        .action-buttons { display: flex; justify-content: space-between; gap: 8px; }
-        .btn-buy { flex: 1; background: #00e5ff; color: #0f172a; border: none; padding: 9px; border-radius: 8px; font-weight: 800; cursor: pointer; font-size: 13px; transition: 0.2s;}
-        .btn-buy:hover { background: #06b6d4; }
-        .btn-share { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2); padding: 9px; border-radius: 8px; cursor: pointer; font-size: 14px; transition: 0.2s; display: flex; align-items: center; justify-content: center;}
-        .btn-share:hover { background: rgba(255,255,255,0.2); }
+        /* Avatar Text */
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; display: none; cursor: pointer; object-fit: cover; border: 2px solid #00e5ff;}
+        .text-avatar { width: 32px; height: 32px; border-radius: 50%; background: #00e5ff; color: #0f172a; font-weight: bold; display: none; align-items: center; justify-content: center; font-size: 14px; cursor: pointer;}
 
-        /* Modern Bottom Navigation */
-        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px); display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid rgba(255,255,255,0.1); z-index: 100;}
-        .nav-item { text-align: center; color: #64748b; text-decoration: none; font-size: 12px; font-weight: 600; transition: 0.3s;}
+        /* Search Bar (New) */
+        .search-container { padding: 10px 20px; background: #0f172a; position: sticky; top: 59px; z-index: 40; border-bottom: 1px solid #1e293b;}
+        .search-box { width: 100%; padding: 10px 15px; border-radius: 8px; border: 1px solid #334155; background: #1e293b; color: white; outline: none; font-size: 14px;}
+        .search-box:focus { border-color: #00e5ff; }
+
+        /* Banner & Services */
+        .banner { background: radial-gradient(circle at top right, #0284c7, #0f172a 70%); padding: 30px 20px; text-align: center; }
+        .banner h2 { font-size: 22px; margin-bottom: 8px; color: #00e5ff;}
+        .services-section { padding: 20px; }
+        .grid-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; text-align: center; }
+        .service-icon { background: #1e293b; border-radius: 12px; width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px auto; border: 1px solid #334155;}
+        .service-icon img { width: 28px; height: 28px; object-fit: contain; }
+        .service-box { text-decoration: none; color: #cbd5e1; font-size: 11px; font-weight: 600; }
+
+        /* Product Cards */
+        .products-section { padding: 10px 20px; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
+        .product-card { background: #1e293b; border-radius: 12px; padding: 10px; text-align: center; border: 1px solid #334155; position: relative; transition: 0.3s;}
+        
+        /* Fav Icon (Love Button) */
+        .fav-btn { position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.5); width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; font-size: 16px; color: #fff;}
+        .fav-btn.active { color: #ef4444; }
+
+        .slider-container { width: 100%; height: 140px; display: flex; justify-content: center; align-items: center; background: white; border-radius: 8px; margin-bottom: 10px;}
+        .slider-container img { max-width: 90%; max-height: 90%; object-fit: contain;}
+        .p-title { font-size: 13px; font-weight: 700; color: #f1f5f9; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+        .p-price { font-size: 16px; color: #00e5ff; font-weight: bold;}
+        
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #1e293b; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #334155; z-index: 100;}
+        .nav-item { text-align: center; color: #64748b; text-decoration: none; font-size: 11px; font-weight: 600;}
         .nav-item.active { color: #00e5ff; }
-        .nav-item img { width: 22px; height: 22px; display: block; margin: 0 auto 4px auto; opacity: 0.5; filter: invert(1); transition: 0.3s;}
-        .nav-item.active img { opacity: 1; filter: invert(70%) sepia(45%) saturate(3000%) hue-rotate(150deg) brightness(100%) contrast(100%); transform: translateY(-2px);}
-
-        /* Auth Modal (Login / Sign Up) */
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); justify-content: center; align-items: center; }
-        .modal-content { background: #1e293b; padding: 30px; border-radius: 16px; width: 90%; max-width: 400px; border: 1px solid rgba(0,229,255,0.3); box-shadow: 0 10px 40px rgba(0,0,0,0.5); text-align: center; position: relative;}
-        .close-modal { position: absolute; top: 15px; right: 20px; color: #94a3b8; font-size: 24px; font-weight: bold; cursor: pointer; }
-        .modal-content h3 { color: #fff; margin-bottom: 20px; font-size: 22px; }
-        .auth-input { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; outline: none; font-size: 15px;}
-        .auth-input:focus { border-color: #00e5ff; }
-        .auth-btn { width: 100%; background: #00e5ff; color: #0f172a; padding: 12px; border: none; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; margin-bottom: 15px;}
-        .toggle-text { color: #94a3b8; font-size: 14px; cursor: pointer; margin-bottom: 20px; text-decoration: underline;}
-        .google-btn { width: 100%; background: white; color: #333; padding: 12px; border: none; border-radius: 8px; font-weight: bold; font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;}
-        .google-btn img { width: 20px; }
+        .nav-item img { width: 20px; height: 20px; display: block; margin: 0 auto 4px auto; filter: invert(0.5);}
+        .nav-item.active img { filter: invert(70%) sepia(45%) saturate(3000%) hue-rotate(150deg); }
     </style>
 </head>
 <body>
 
-    <!-- Header & Logo -->
     <div class="header">
         <a href="index.html" class="logo-section">
-            <img src="logo.png" alt="Rittik Mobile Shop Logo" class="logo-img">
-            <h2 class="logo-text">Rittik <span>Mobile shop</span></h2>
+            <img src="logo.png" alt="Logo" class="logo-img">
+            <h2 class="logo-text">Rittik <span>Mobile</span></h2>
         </a>
         <div class="header-actions">
-            <!-- Language Selection -->
-            <select class="lang-select" id="langSelect" onchange="changeLanguage()">
-                <option value="en">English</option>
-                <option value="bn">বাংলা</option>
-                <option value="hi">हिंदी</option>
-            </select>
-            <button class="login-btn" id="loginBtn" onclick="openAuthModal()">Login</button>
-            <img src="" alt="Profile" class="user-avatar" id="userAvatar" onclick="window.location.href='profile.html'">
+            <button class="login-btn" id="loginBtn" onclick="googleLogin()">Login</button>
+            <img src="" class="user-avatar" id="userAvatar" onclick="window.location.href='profile.html'">
+            <div class="text-avatar" id="textAvatar" onclick="window.location.href='profile.html'"></div>
         </div>
     </div>
 
-    <!-- Banner -->
-    <div class="banner">
-        <h2 id="bannerTitle">Buy & Sell Premium Devices</h2>
-        <p id="bannerSub">আপনার বাড়িতে বসে বা আমাদের দোকান থেকে</p>
+    <!-- Search Bar -->
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-box" placeholder="Search mobiles, brands..." onkeyup="searchProducts()">
     </div>
 
-    <!-- Services Grid -->
+    <div class="banner">
+        <h2>Premium Devices</h2>
+        <p style="font-size:14px; color:#94a3b8;">আপনার বাড়িতে বসে বা আমাদের দোকান থেকে</p>
+    </div>
+
     <div class="services-section">
-        <h2 class="section-title" id="servicesTitle">Our Services</h2>
         <div class="grid-container">
-            <a href="sell.html" class="service-box" onclick="return checkAuth(event)">
-                <div class="service-icon"><img src="https://s3ng.cashify.in/builder/cd13764b153e46e19f9c6551ee52b5e6.webp"></div>
-                <span id="txtSell">Sell Phone</span>
+            <a href="sell.html" class="service-box">
+                <div class="service-icon"><img src="https://s3ng.cashify.in/builder/cd13764b153e46e19f9c6551ee52b5e6.webp"></div>Sell
             </a>
             <a href="#productGrid" class="service-box">
-                <div class="service-icon"><img src="https://s3ng.cashify.in/builder/caa3a1efa51541a5aa37fd292790ea81.webp"></div>
-                <span id="txtBuy">Buy Phone</span>
+                <div class="service-icon"><img src="https://s3ng.cashify.in/builder/caa3a1efa51541a5aa37fd292790ea81.webp"></div>Buy
             </a>
             <a href="#" class="service-box">
-                <div class="service-icon"><img src="https://s3ng.cashify.in/builder/f1f0df2917bd410b8da95675c63be2d1.webp"></div>
-                <span id="txtSmartwatch">Smartwatches</span>
+                <div class="service-icon"><img src="https://s3ng.cashify.in/builder/f1f0df2917bd410b8da95675c63be2d1.webp"></div>Watch
             </a>
             <a href="#" class="service-box">
-                <div class="service-icon"><img src="https://s3ng.cashify.in/builder/75750a866d214239bf52a47ee57e6674.webp"></div>
-                <span id="txtAcc">Accessories</span>
+                <div class="service-icon"><img src="https://s3ng.cashify.in/builder/75750a866d214239bf52a47ee57e6674.webp"></div>Accs
             </a>
         </div>
     </div>
 
-    <!-- Product Grid -->
     <div class="products-section">
-        <h2 class="section-title" id="gadgetsTitle">Latest Gadgets</h2>
+        <h3 style="color:#fff; margin-bottom: 15px;">Latest Gadgets</h3>
         <div class="product-grid" id="productGrid">
-            
-            <!-- Dummy Test Product 1 -->
-            <div class="product-card">
-                <div onclick="goToDetails('test_1', 'iPhone 14 Pro Max', '85000', encodeURIComponent(JSON.stringify(['https://s3ng.cashify.in/cashify/product/img/xxhdpi/e87178f4-0773.jpg'])))">
-                    <div class="slider-container">
-                        <img src="https://s3ng.cashify.in/cashify/product/img/xxhdpi/e87178f4-0773.jpg" class="slider-img active">
-                    </div>
-                    <div class="p-title">iPhone 14 Pro Max</div>
-                    <div class="p-price">₹ 85,000</div>
-                </div>
-                <div class="action-buttons">
-                    <button class="btn-buy" onclick="goToDetails('test_1', 'iPhone 14 Pro Max', '85000', encodeURIComponent(JSON.stringify(['https://s3ng.cashify.in/cashify/product/img/xxhdpi/e87178f4-0773.jpg'])))">BUY NOW</button>
-                    <button class="btn-share" onclick="shareProduct('test_1', 'iPhone 14 Pro Max', '85000', encodeURIComponent(JSON.stringify(['https://s3ng.cashify.in/cashify/product/img/xxhdpi/e87178f4-0773.jpg'])))">📤</button>
-                </div>
-            </div>
-
-            <!-- Dummy Test Product 2 -->
-            <div class="product-card">
-                <div onclick="goToDetails('test_2', 'Samsung Galaxy S23 Ultra', '75000', encodeURIComponent(JSON.stringify(['https://s3ng.cashify.in/cashify/product/img/xxhdpi/cd2da442-a50c.jpg'])))">
-                    <div class="slider-container">
-                        <img src="https://s3ng.cashify.in/cashify/product/img/xxhdpi/cd2da442-a50c.jpg" class="slider-img active">
-                    </div>
-                    <div class="p-title">Samsung Galaxy S23 Ultra</div>
-                    <div class="p-price">₹ 75,000</div>
-                </div>
-                <div class="action-buttons">
-                    <button class="btn-buy" onclick="goToDetails('test_2', 'Samsung Galaxy S23 Ultra', '75000', encodeURIComponent(JSON.stringify(['https://s3ng.cashify.in/cashify/product/img/xxhdpi/cd2da442-a50c.jpg'])))">BUY NOW</button>
-                    <button class="btn-share" onclick="shareProduct('test_2', 'Samsung Galaxy S23 Ultra', '75000', encodeURIComponent(JSON.stringify(['https://s3ng.cashify.in/cashify/product/img/xxhdpi/cd2da442-a50c.jpg'])))">📤</button>
-                </div>
-            </div>
-
-            <!-- Dynamic products will load here -->
+            <p style="color:#94a3b8; text-align:center; width:100%;">Loading products...</p>
         </div>
     </div>
 
-    <!-- Custom Auth Modal (Login / Sign Up) -->
-    <div id="authModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeAuthModal()">&times;</span>
-            <h3 id="authTitle">Create Account</h3>
-            
-            <input type="text" id="authName" class="auth-input" placeholder="Full Name">
-            <input type="email" id="authEmail" class="auth-input" placeholder="Email Address">
-            <input type="password" id="authPass" class="auth-input" placeholder="Password">
-            <input type="password" id="authConfirm" class="auth-input" placeholder="Confirm Password">
-            
-            <button class="auth-btn" id="authSubmitBtn" onclick="handleEmailAuth()">Sign Up</button>
-            <p class="toggle-text" id="authToggleText" onclick="toggleAuthMode()">Already have an account? Login here.</p>
-            
-            <div style="display:flex; align-items:center; margin-bottom: 20px;">
-                <hr style="flex:1; border:none; border-top:1px solid #334155;">
-                <span style="padding: 0 10px; color: #94a3b8; font-size: 12px;">OR</span>
-                <hr style="flex:1; border:none; border-top:1px solid #334155;">
-            </div>
-
-            <button class="google-btn" onclick="googleLogin()">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="G"> 
-                Continue with Google
-            </button>
-        </div>
-    </div>
-
-    <!-- Bottom Navigation -->
     <div class="bottom-nav">
-        <a href="index.html" class="nav-item active"><img src="https://s3ng.cashify.in/builder/f635449b43954fd1af1d88e7272d5dc2.webp"> <span id="navHome">Home</span></a>
-        <a href="#productGrid" class="nav-item"><img src="https://s3ng.cashify.in/builder/42a5409869a84e73921df8c033a81c9d.webp"> <span id="navBuy">Buy</span></a>
-        <a href="sell.html" class="nav-item" onclick="return checkAuth(event)"><img src="https://s3ng.cashify.in/builder/31d6a6d498ca43d4a6eee6cccd421474.webp"> <span id="navSell">Sell</span></a>
-        <a href="profile.html" class="nav-item" onclick="return checkAuth(event)"><img src="https://s3ng.cashify.in/builder/60cc75a071de4f729b9377681e594821.webp"> <span id="navProfile">Profile</span></a>
+        <a href="index.html" class="nav-item active"><img src="https://s3ng.cashify.in/builder/f635449b43954fd1af1d88e7272d5dc2.webp"> Home</a>
+        <a href="#productGrid" class="nav-item"><img src="https://s3ng.cashify.in/builder/42a5409869a84e73921df8c033a81c9d.webp"> Buy</a>
+        <a href="sell.html" class="nav-item"><img src="https://s3ng.cashify.in/builder/31d6a6d498ca43d4a6eee6cccd421474.webp"> Sell</a>
+        <a href="profile.html" class="nav-item"><img src="https://s3ng.cashify.in/builder/60cc75a071de4f729b9377681e594821.webp"> Profile</a>
     </div>
 
-    <!-- Firebase & Logic Scripts -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getDatabase, ref, onValue, set, remove, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBIddmdEKtGl0OI97ky6Q3JJBs2dOzbnbA",
             authDomain: "rittik-mobile-shop-web-1.firebaseapp.com",
             databaseURL: "https://rittik-mobile-shop-web-1-default-rtdb.firebaseio.com",
-            projectId: "rittik-mobile-shop-web-1",
-            storageBucket: "rittik-mobile-shop-web-1.firebasestorage.app",
-            messagingSenderId: "171512039750",
-            appId: "1:171512039750:web:639dd1bffdb351bf06fd47"
+            projectId: "rittik-mobile-shop-web-1"
         };
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
         const db = getDatabase(app);
 
-        // UI Elements
-        const loginBtn = document.getElementById('loginBtn');
-        const userAvatar = document.getElementById('userAvatar');
-        const authModal = document.getElementById('authModal');
-        let isLoginMode = false;
-
-        // Check Login State
+        // Auth State & Avatar Logic
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                loginBtn.style.display = 'none';
-                userAvatar.style.display = 'block';
-                // Show default icon if no photoURL
-                userAvatar.src = user.photoURL || "https://ui-avatars.com/api/?name=" + (user.displayName || "User") + "&background=00e5ff&color=0f172a";
-                closeAuthModal();
-            } else {
-                loginBtn.style.display = 'block';
-                userAvatar.style.display = 'none';
+                document.getElementById('loginBtn').style.display = 'none';
+                if (user.photoURL) {
+                    document.getElementById('userAvatar').src = user.photoURL;
+                    document.getElementById('userAvatar').style.display = 'block';
+                } else {
+                    // Show 2 letter initials if no photo
+                    const initials = user.displayName ? user.displayName.substring(0,2).toUpperCase() : 'US';
+                    document.getElementById('textAvatar').innerText = initials;
+                    document.getElementById('textAvatar').style.display = 'flex';
+                }
             }
         });
 
-        // Modal Logic
-        window.openAuthModal = () => { authModal.style.display = 'flex'; }
-        window.closeAuthModal = () => { authModal.style.display = 'none'; }
-        
-        window.toggleAuthMode = () => {
-            isLoginMode = !isLoginMode;
-            document.getElementById('authTitle').innerText = isLoginMode ? "Welcome Back!" : "Create Account";
-            document.getElementById('authName').style.display = isLoginMode ? "none" : "block";
-            document.getElementById('authConfirm').style.display = isLoginMode ? "none" : "block";
-            document.getElementById('authSubmitBtn').innerText = isLoginMode ? "Login" : "Sign Up";
-            document.getElementById('authToggleText').innerText = isLoginMode ? "Don't have an account? Sign up here." : "Already have an account? Login here.";
+        window.googleLogin = () => { signInWithPopup(auth, provider); }
+
+        // Search Function
+        window.searchProducts = function() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let cards = document.getElementsByClassName('product-card');
+            for (let i = 0; i < cards.length; i++) {
+                let title = cards[i].getElementsByClassName('p-title')[0].innerText.toLowerCase();
+                if (title.includes(input)) {
+                    cards[i].style.display = "";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
         }
 
-        // Custom Email Login/Signup
-        window.handleEmailAuth = () => {
-            const email = document.getElementById('authEmail').value;
-            const pass = document.getElementById('authPass').value;
+        // Toggle Favorite (Love)
+        window.toggleFav = async function(event, prodId, prodName) {
+            event.stopPropagation(); // Prevents clicking the card
+            if(!auth.currentUser) return alert("Please login to add to favorites!");
             
-            if(isLoginMode) {
-                // Login
-                signInWithEmailAndPassword(auth, email, pass)
-                .then(() => { alert("Login Successful!"); })
-                .catch(error => { alert("Error: " + error.message); });
+            const btn = event.currentTarget;
+            const favRef = ref(db, `users/${auth.currentUser.uid}/favorites/${prodId}`);
+            
+            const snapshot = await get(favRef);
+            if(snapshot.exists()) {
+                remove(favRef);
+                btn.innerHTML = '♡';
+                btn.classList.remove('active');
             } else {
-                // Signup
-                const name = document.getElementById('authName').value;
-                const confirmPass = document.getElementById('authConfirm').value;
-                if(!name || !email || !pass) return alert("Please fill all fields!");
-                if(pass !== confirmPass) return alert("Passwords do not match!");
-                
-                createUserWithEmailAndPassword(auth, email, pass)
-                .then((userCredential) => {
-                    updateProfile(userCredential.user, { displayName: name }).then(() => {
-                        alert("Account created successfully!");
-                        window.location.reload();
-                    });
-                })
-                .catch(error => { alert("Error: " + error.message); });
+                set(favRef, { name: prodName, addedAt: Date.now() });
+                btn.innerHTML = '❤️';
+                btn.classList.add('active');
             }
         }
 
-        // Google Login
-        window.googleLogin = () => {
-            signInWithPopup(auth, provider).catch(error => alert("Google Login failed: " + error.message));
-        }
-
-        window.checkAuth = function(event) {
-            if (!auth.currentUser) {
-                event.preventDefault();
-                openAuthModal();
-                return false;
-            }
-            return true;
-        }
-
-        // Fetch Dynamic Products
-        window.slidersState = {};
-        onValue(ref(db, 'products'), (snapshot) => {
+        // Load Products
+        onValue(ref(db, 'products'), async (snapshot) => {
             const grid = document.getElementById('productGrid');
+            grid.innerHTML = '';
             const data = snapshot.val();
+            
+            // Check favs for active state
+            let favs = {};
+            if(auth.currentUser) {
+                const favSnap = await get(ref(db, `users/${auth.currentUser.uid}/favorites`));
+                if(favSnap.exists()) favs = favSnap.val();
+            }
+
             if (data) {
                 Object.keys(data).reverse().forEach(key => {
                     const prod = data[key];
                     if(prod.status !== 'approved' && prod.type !== 'admin') return; 
 
-                    const prodId = 'prod_' + key;
-                    window.slidersState[prodId] = 0;
+                    let isFav = favs[key] ? 'active' : '';
+                    let heartIcon = favs[key] ? '❤️' : '♡';
 
-                    let sliderHtml = `<div class="slider-container" id="${prodId}">`;
-                    prod.images.forEach((url, index) => {
-                        let active = index === 0 ? 'active' : '';
-                        sliderHtml += `<img src="${url}" class="slider-img ${active}">`;
-                    });
-                    if (prod.images.length > 1) {
-                        sliderHtml += `<button class="slider-btn prev" onclick="event.stopPropagation(); changeSlide('${prodId}', -1)">❮</button>
-                                       <button class="slider-btn next" onclick="event.stopPropagation(); changeSlide('${prodId}', 1)">❯</button>`;
-                    }
-                    sliderHtml += `</div>`;
-
-                    const card = document.createElement('div');
-                    card.className = 'product-card';
-                    card.innerHTML = `
-                        <div onclick="goToDetails('${key}', '${encodeURIComponent(prod.name)}', '${encodeURIComponent(prod.price)}', '${encodeURIComponent(JSON.stringify(prod.images))}')">
-                            ${sliderHtml}
+                    grid.innerHTML += `
+                        <div class="product-card" onclick="goToDetails('${key}')">
+                            <div class="fav-btn ${isFav}" onclick="toggleFav(event, '${key}', '${prod.name}')">${heartIcon}</div>
+                            <div class="slider-container"><img src="${prod.images[0]}"></div>
                             <div class="p-title">${prod.name}</div>
                             <div class="p-price">₹ ${prod.price}</div>
                         </div>
-                        <div class="action-buttons">
-                            <button class="btn-buy" onclick="goToDetails('${key}', '${encodeURIComponent(prod.name)}', '${encodeURIComponent(prod.price)}', '${encodeURIComponent(JSON.stringify(prod.images))}')">BUY NOW</button>
-                            <button class="btn-share" onclick="shareProduct('${key}', '${prod.name}', '${encodeURIComponent(prod.price)}', '${encodeURIComponent(JSON.stringify(prod.images))}')">📤</button>
-                        </div>
                     `;
-                    grid.appendChild(card);
                 });
             }
         });
 
-        window.goToDetails = function(id, name, price, images) {
-            window.location.href = `details.html?id=${id}&name=${name}&price=${price}&images=${images}`;
-        }
-
-        window.changeSlide = function(prodId, direction) {
-            const container = document.getElementById(prodId);
-            const images = container.getElementsByClassName('slider-img');
-            images[window.slidersState[prodId]].classList.remove('active');
-            window.slidersState[prodId] += direction;
-            if (window.slidersState[prodId] >= images.length) window.slidersState[prodId] = 0;
-            else if (window.slidersState[prodId] < 0) window.slidersState[prodId] = images.length - 1;
-            images[window.slidersState[prodId]].classList.add('active');
-        }
-
-        // Share Feature Link Generation
-        window.shareProduct = function(id, name, price, images) {
-            const decodedName = decodeURIComponent(name);
-            const shareUrl = window.location.origin + window.location.pathname.replace('index.html', '') + `details.html?id=${id}&name=${name}&price=${price}&images=${images}`;
-            
-            if (navigator.share) {
-                navigator.share({
-                    title: `Buy ${decodedName} at Rittik Mobile Shop!`,
-                    text: `Check out this amazing deal for ₹${decodeURIComponent(price)}`,
-                    url: shareUrl
-                });
-            } else {
-                navigator.clipboard.writeText(shareUrl);
-                alert("Link copied! Paste it anywhere to share.");
-            }
-        }
-
-        // Dictionary for Language Toggle
-        const dict = {
-            en: { bannerTitle: "Buy & Sell Premium Devices", bannerSub: "Directly from doorstep or store", servicesTitle: "Our Services", txtSell: "Sell Phone", txtBuy: "Buy Phone", txtSmartwatch: "Smartwatches", txtAcc: "Accessories", gadgetsTitle: "Latest Gadgets", navHome: "Home", navBuy: "Buy", navSell: "Sell", navProfile: "Profile" },
-            bn: { bannerTitle: "সেরা মোবাইল কিনুন ও বিক্রি করুন", bannerSub: "আপনার বাড়িতে বসে বা আমাদের দোকান থেকে", servicesTitle: "আমাদের সেবাসমূহ", txtSell: "ফোন বিক্রি", txtBuy: "ফোন কিনুন", txtSmartwatch: "স্মার্টওয়াচ", txtAcc: "এক্সেসরিজ", gadgetsTitle: "লেটেস্ট গ্যাজেট", navHome: "হোম", navBuy: "কিনুন", navSell: "বিক্রি", navProfile: "প্রোফাইল" },
-            hi: { bannerTitle: "मोबाइल खरीदें और बेचें", bannerSub: "घर बैठे या हमारे स्टोर से", servicesTitle: "हमारी सेवाएं", txtSell: "फोन बेचें", txtBuy: "फोन खरीदें", txtSmartwatch: "स्मार्ट घड़ियाँ", txtAcc: "एक्सेसरीज", gadgetsTitle: "नवीनतम गैजेट्स", navHome: "होम", navBuy: "खरीदें", navSell: "बेचें", navProfile: "प्रोफ़ाइल" }
-        };
-
-        window.changeLanguage = function() {
-            const lang = document.getElementById('langSelect').value;
-            document.getElementById('bannerTitle').innerText = dict[lang].bannerTitle;
-            document.getElementById('bannerSub').innerText = dict[lang].bannerSub;
-            document.getElementById('servicesTitle').innerText = dict[lang].servicesTitle;
-            document.getElementById('txtSell').innerText = dict[lang].txtSell;
-            document.getElementById('txtBuy').innerText = dict[lang].txtBuy;
-            document.getElementById('txtSmartwatch').innerText = dict[lang].txtSmartwatch;
-            document.getElementById('txtAcc').innerText = dict[lang].txtAcc;
-            document.getElementById('gadgetsTitle').innerText = dict[lang].gadgetsTitle;
-            document.getElementById('navHome').innerText = dict[lang].navHome;
-            document.getElementById('navBuy').innerText = dict[lang].navBuy;
-            document.getElementById('navSell').innerText = dict[lang].navSell;
-            document.getElementById('navProfile').innerText = dict[lang].navProfile;
+        window.goToDetails = function(id) {
+            window.location.href = `details.html?id=${id}`;
         }
     </script>
 </body>
