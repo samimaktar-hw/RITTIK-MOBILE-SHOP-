@@ -4,39 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Rittik Mobile Shop</title>
+    
+    <!-- Open Graph for Link Preview (WhatsApp/Facebook) -->
+    <meta property="og:title" content="Rittik Mobile Shop">
+    <meta property="og:description" content="Buy and Sell Premium Devices easily.">
+    <meta property="og:image" content="https://samimaktar-hw.github.io/RITTIK/logo.png">
     <meta name="theme-color" content="#0f172a"/>
+
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
         body { background-color: #0b1121; color: #f8fafc; padding-bottom: 75px; overflow-x: hidden;}
         
+        /* Splash Screen Animation */
+        #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0b1121; display: flex; align-items: center; justify-content: center; z-index: 9999; animation: fadeOut 0.5s ease 2s forwards; }
+        #splashScreen img { width: 100px; height: 100px; animation: popIn 0.8s ease forwards; }
+        @keyframes popIn { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes fadeOut { 100% { opacity: 0; visibility: hidden; } }
+
+        /* Main Content wrapper (hidden initially) */
+        #mainContent { opacity: 0; animation: fadeIn 0.5s ease 2.5s forwards; }
+        @keyframes fadeIn { 100% { opacity: 1; } }
+
         /* Glassmorphism Header */
-        .header { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(10px); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 50; border-bottom: 1px solid rgba(0, 229, 255, 0.3); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); }
-        .logo-section { display: flex; align-items: center; text-decoration: none; gap: 12px; }
-        .logo-img { height: 40px; width: 40px; object-fit: contain; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 229, 255, 0.5);}
-        .logo-text { color: #ffffff; margin: 0; font-size: 19px; font-weight: 800; letter-spacing: 0.5px;}
-        .logo-text span { color: #00e5ff; text-shadow: 0 0 10px rgba(0,229,255,0.6);}
+        .header { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 50; border-bottom: 1px solid rgba(0, 229, 255, 0.3); }
+        .logo-section { display: flex; align-items: center; text-decoration: none; gap: 10px; }
+        .logo-img { height: 35px; width: 35px; object-fit: contain; border-radius: 6px; }
+        .logo-text { color: #ffffff; margin: 0; font-size: 18px; font-weight: 800; }
+        .logo-text span { color: #00e5ff; }
         
         .header-actions { display: flex; align-items: center; gap: 12px; }
-        .lang-select { background: rgba(255,255,255,0.1); color: #00e5ff; border: 1px solid rgba(0,229,255,0.5); padding: 6px 8px; border-radius: 6px; outline: none; font-size: 13px; font-weight: bold; cursor: pointer;}
+        .login-btn { background: #00e5ff; color: #0f172a; border: none; padding: 6px 12px; border-radius: 5px; font-weight: bold; cursor: pointer;}
         
-        /* Login / Avatar */
-        .login-btn { background: linear-gradient(90deg, #0284c7, #00e5ff); color: #fff; border: none; padding: 7px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,229,255,0.3);}
-        .login-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,229,255,0.5);}
-        .user-avatar { width: 36px; height: 36px; border-radius: 50%; border: 2px solid #00e5ff; display: none; cursor: pointer; object-fit: cover; box-shadow: 0 0 10px rgba(0,229,255,0.5);}
-        .text-avatar { width: 36px; height: 36px; border-radius: 50%; background: #00e5ff; color: #0f172a; font-weight: bold; display: none; align-items: center; justify-content: center; font-size: 15px; cursor: pointer; border: 2px solid #fff; box-shadow: 0 0 10px rgba(0,229,255,0.5);}
+        /* Avatar Text */
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; display: none; cursor: pointer; object-fit: cover; border: 2px solid #00e5ff;}
+        .text-avatar { width: 32px; height: 32px; border-radius: 50%; background: #00e5ff; color: #0f172a; font-weight: bold; display: none; align-items: center; justify-content: center; font-size: 14px; cursor: pointer;}
 
-        /* Flipkart Style Search Bar */
-        .search-container { padding: 10px 20px; background: rgba(15, 23, 42, 0.95); position: sticky; top: 65px; z-index: 40; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center;}
-        .search-box { width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid rgba(0,229,255,0.3); background: rgba(0,0,0,0.3); color: white; outline: none; font-size: 14px; transition: 0.3s;}
-        .search-box:focus { border-color: #00e5ff; box-shadow: 0 0 10px rgba(0,229,255,0.2); }
+        /* Live Search Bar */
+        .search-container { padding: 10px 20px; background: #0f172a; position: relative; z-index: 40; border-bottom: 1px solid #1e293b;}
+        .search-box { width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid #334155; background: #1e293b; color: white; outline: none; font-size: 14px;}
+        .search-box:focus { border-color: #00e5ff; }
+        
+        /* Search Dropdown */
+        .search-dropdown { position: absolute; top: 55px; left: 20px; right: 20px; background: #1e293b; border-radius: 8px; border: 1px solid #334155; max-height: 250px; overflow-y: auto; display: none; z-index: 100;}
+        .search-item { display: flex; align-items: center; padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); cursor: pointer; text-decoration: none; color: white;}
+        .search-item img { width: 30px; height: 30px; object-fit: contain; margin-right: 15px;}
 
-        /* Modern Banner */
-        .banner { background: radial-gradient(circle at top right, #0284c7, #0f172a 70%); padding: 35px 20px; text-align: center; border-bottom: 1px solid #1e293b; position: relative;}
-        .banner::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, #00e5ff, transparent); }
-        .banner h2 { font-size: 26px; font-weight: 800; margin-bottom: 8px; background: -webkit-linear-gradient(#fff, #00e5ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
-        .banner p { font-size: 15px; color: #94a3b8; font-weight: 500; letter-spacing: 0.5px;}
+        /* Scrolling Brands */
+        .brand-scroll { display: flex; overflow-x: auto; padding: 15px 20px; gap: 15px; background: rgba(30, 41, 59, 0.4); border-bottom: 1px solid #1e293b; }
+        .brand-scroll::-webkit-scrollbar { display: none; }
+        .brand-icon { width: 50px; height: 50px; background: #1e293b; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid #334155;}
+        .brand-icon img { width: 30px; height: 30px; object-fit: contain; }
 
-        /* Premium Services Grid */
+        /* Banner */
+        .banner { background: radial-gradient(circle at top right, #0284c7, #0f172a 70%); padding: 30px 20px; text-align: center; }
+        .banner h2 { font-size: 22px; margin-bottom: 8px; color: #00e5ff;}
+        .banner p { font-size:14px; color:#94a3b8; }
+
+        /* Premium Services Grid (Restored) */
         .services-section { padding: 25px 20px 10px 20px; }
         .section-title { font-size: 18px; margin-bottom: 18px; color: #f8fafc; font-weight: 700; display: flex; align-items: center; gap: 8px;}
         .section-title::before { content: ''; display: inline-block; width: 4px; height: 18px; background: #00e5ff; border-radius: 4px;}
@@ -47,165 +71,114 @@
         .service-box:hover .service-icon { border-color: #00e5ff; box-shadow: 0 0 15px rgba(0,229,255,0.2);}
         .service-icon img { width: 32px; height: 32px; object-fit: contain; }
 
-        /* Professional Product Cards */
+        /* Product Cards */
         .products-section { padding: 10px 20px 30px 20px; }
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 18px; }
-        .product-card { background: rgba(30, 41, 59, 0.6); border-radius: 14px; padding: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; backdrop-filter: blur(5px); position: relative;}
-        .product-card:hover { border-color: rgba(0, 229, 255, 0.5); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 229, 255, 0.1); transform: translateY(-5px);}
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
+        .product-card { background: #1e293b; border-radius: 12px; padding: 10px; text-align: center; border: 1px solid #334155; position: relative;}
         
-        /* Fav Icon (Love Button) on Image */
-        .fav-btn { position: absolute; top: 12px; right: 12px; background: rgba(15,23,42,0.7); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; font-size: 18px; color: #fff; border: 1px solid rgba(255,255,255,0.1); transition: 0.3s;}
-        .fav-btn.active { color: #ef4444; border-color: #ef4444; background: rgba(239, 68, 68, 0.1);}
-        
-        .slider-container { width: 100%; height: 160px; display: flex; justify-content: center; align-items: center; overflow: hidden; margin-bottom: 12px; background: rgba(255,255,255,0.02); border-radius: 10px; position: relative;}
-        .slider-img { max-width: 90%; max-height: 90%; display: none; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));}
-        .slider-img.active { display: block; }
-        
-        .p-title { font-size: 14px; font-weight: 700; color: #f1f5f9; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
-        .p-price { font-size: 17px; color: #00e5ff; font-weight: 800; margin-bottom: 12px;}
-        
-        /* Buy Button (Share moved to details.html) */
-        .action-buttons { display: flex; justify-content: center; gap: 8px; }
-        .btn-buy { width: 100%; background: #00e5ff; color: #0f172a; border: none; padding: 10px; border-radius: 8px; font-weight: 800; cursor: pointer; font-size: 14px; transition: 0.2s;}
-        .btn-buy:hover { background: #06b6d4; }
+        /* Fav Icon (Love Button) */
+        .fav-btn { position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.5); width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; font-size: 16px; color: #fff;}
+        .fav-btn.active { color: #ef4444; }
 
-        /* Modern Bottom Navigation */
-        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px); display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid rgba(255,255,255,0.1); z-index: 100;}
-        .nav-item { text-align: center; color: #64748b; text-decoration: none; font-size: 12px; font-weight: 600; transition: 0.3s;}
+        .slider-container { width: 100%; height: 140px; display: flex; justify-content: center; align-items: center; background: white; border-radius: 8px; margin-bottom: 10px; position: relative;}
+        .slider-container img { max-width: 90%; max-height: 90%; object-fit: contain;}
+        .p-title { font-size: 13px; font-weight: 700; color: #f1f5f9; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+        .p-price { font-size: 16px; color: #00e5ff; font-weight: bold;}
+        
+        /* Bottom Navigation */
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #1e293b; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #334155; z-index: 100;}
+        .nav-item { text-align: center; color: #64748b; text-decoration: none; font-size: 11px; font-weight: 600;}
         .nav-item.active { color: #00e5ff; }
-        .nav-item img { width: 22px; height: 22px; display: block; margin: 0 auto 4px auto; opacity: 0.5; filter: invert(1); transition: 0.3s;}
-        .nav-item.active img { opacity: 1; filter: invert(70%) sepia(45%) saturate(3000%) hue-rotate(150deg) brightness(100%) contrast(100%); transform: translateY(-2px);}
-
-        /* Auth Modal */
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); justify-content: center; align-items: center; }
-        .modal-content { background: #1e293b; padding: 30px; border-radius: 16px; width: 90%; max-width: 400px; border: 1px solid rgba(0,229,255,0.3); box-shadow: 0 10px 40px rgba(0,0,0,0.5); text-align: center; position: relative;}
-        .close-modal { position: absolute; top: 15px; right: 20px; color: #94a3b8; font-size: 24px; font-weight: bold; cursor: pointer; }
-        .auth-input { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; outline: none;}
-        .auth-btn { width: 100%; background: #00e5ff; color: #0f172a; padding: 12px; border: none; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; margin-bottom: 15px;}
-        .toggle-text { color: #94a3b8; font-size: 14px; cursor: pointer; margin-bottom: 20px; text-decoration: underline;}
+        .nav-item img { width: 20px; height: 20px; display: block; margin: 0 auto 4px auto; filter: invert(0.5);}
+        .nav-item.active img { filter: invert(70%) sepia(45%) saturate(3000%) hue-rotate(150deg); }
     </style>
 </head>
 <body>
 
-    <!-- Header & Logo -->
-    <div class="header">
-        <a href="index.html" class="logo-section">
-            <img src="logo.png" alt="Rittik Mobile Shop Logo" class="logo-img">
-            <h2 class="logo-text">Rittik <span>Mobile</span></h2>
-        </a>
-        <div class="header-actions">
-            <select class="lang-select" id="langSelect" onchange="changeLanguage()">
-                <option value="en">English</option>
-                <option value="bn">বাংলা</option>
-                <option value="hi">हिंदी</option>
-            </select>
-            <button class="login-btn" id="loginBtn" onclick="openAuthModal()">Login</button>
-            <img src="" alt="Profile" class="user-avatar" id="userAvatar" onclick="window.location.href='profile.html'">
-            <div class="text-avatar" id="textAvatar" onclick="window.location.href='profile.html'"></div>
-        </div>
+    <!-- Splash Screen -->
+    <div id="splashScreen">
+        <img src="logo.png" alt="Rittik Mobile Shop">
     </div>
 
-    <!-- Search Bar -->
-    <div class="search-container">
-        <input type="text" id="searchInput" class="search-box" placeholder="Search mobiles, brands..." onkeyup="searchProducts()">
-    </div>
-
-    <!-- Banner -->
-    <div class="banner">
-        <h2 id="bannerTitle">Buy & Sell Premium Devices</h2>
-        <p id="bannerSub">আপনার বাড়িতে বসে বা আমাদের দোকান থেকে</p>
-    </div>
-
-    <!-- Services Grid -->
-    <div class="services-section">
-        <h2 class="section-title" id="servicesTitle">Our Services</h2>
-        <div class="grid-container">
-            <a href="sell.html" class="service-box" onclick="return checkAuth(event)">
-                <div class="service-icon"><img src="https://s3ng.cashify.in/builder/cd13764b153e46e19f9c6551ee52b5e6.webp"></div>
-                <span id="txtSell">Sell Phone</span>
+    <!-- Main Content -->
+    <div id="mainContent">
+        <!-- Header -->
+        <div class="header">
+            <a href="index.html" class="logo-section">
+                <img src="logo.png" alt="Logo" class="logo-img">
+                <h2 class="logo-text">Rittik <span>Mobile Shop</span></h2>
             </a>
-            <a href="#productGrid" class="service-box">
-                <div class="service-icon"><img src="https://s3ng.cashify.in/builder/caa3a1efa51541a5aa37fd292790ea81.webp"></div>
-                <span id="txtBuy">Buy Phone</span>
-            </a>
-            <a href="#" class="service-box">
-                <div class="service-icon"><img src="https://s3ng.cashify.in/builder/f1f0df2917bd410b8da95675c63be2d1.webp"></div>
-                <span id="txtSmartwatch">Smartwatches</span>
-            </a>
-            <a href="#" class="service-box">
-                <div class="service-icon"><img src="https://s3ng.cashify.in/builder/75750a866d214239bf52a47ee57e6674.webp"></div>
-                <span id="txtAcc">Accessories</span>
-            </a>
-        </div>
-    </div>
-
-    <!-- Product Grid -->
-    <div class="products-section">
-        <h2 class="section-title" id="gadgetsTitle">Latest Gadgets</h2>
-        <div class="product-grid" id="productGrid">
-            
-            <!-- Dummy Test Product 1 -->
-            <div class="product-card" data-title="iPhone 14 Pro Max">
-                <div class="fav-btn" onclick="toggleFav(event, 'test_1', 'iPhone 14 Pro Max')">♡</div>
-                <div onclick="goToDetails('test_1', 'iPhone 14 Pro Max', '85000', encodeURIComponent(JSON.stringify(['https://s3ng.cashify.in/cashify/product/img/xxhdpi/e87178f4-0773.jpg'])))">
-                    <div class="slider-container">
-                        <img src="https://s3ng.cashify.in/cashify/product/img/xxhdpi/e87178f4-0773.jpg" class="slider-img active">
-                    </div>
-                    <div class="p-title">iPhone 14 Pro Max</div>
-                    <div class="p-price">₹ 85,000</div>
-                </div>
-                <div class="action-buttons">
-                    <button class="btn-buy" onclick="goToDetails('test_1', 'iPhone 14 Pro Max', '85000', encodeURIComponent(JSON.stringify(['https://s3ng.cashify.in/cashify/product/img/xxhdpi/e87178f4-0773.jpg'])))">BUY NOW</button>
-                </div>
+            <div class="header-actions">
+                <button class="login-btn" id="loginBtn" onclick="googleLogin()">Login</button>
+                <img src="" class="user-avatar" id="userAvatar" onclick="window.location.href='profile.html'">
+                <div class="text-avatar" id="textAvatar" onclick="window.location.href='profile.html'"></div>
             </div>
+        </div>
 
-            <!-- Dummy Test Product 2 -->
-            <div class="product-card" data-title="Samsung Galaxy S23 Ultra">
-                <div class="fav-btn" onclick="toggleFav(event, 'test_2', 'Samsung Galaxy S23 Ultra')">♡</div>
-                <div onclick="goToDetails('test_2', 'Samsung Galaxy S23 Ultra', '75000', encodeURIComponent(JSON.stringify(['https://s3ng.cashify.in/cashify/product/img/xxhdpi/cd2da442-a50c.jpg'])))">
-                    <div class="slider-container">
-                        <img src="https://s3ng.cashify.in/cashify/product/img/xxhdpi/cd2da442-a50c.jpg" class="slider-img active">
-                    </div>
-                    <div class="p-title">Samsung Galaxy S23 Ultra</div>
-                    <div class="p-price">₹ 75,000</div>
-                </div>
-                <div class="action-buttons">
-                    <button class="btn-buy" onclick="goToDetails('test_2', 'Samsung Galaxy S23 Ultra', '75000', encodeURIComponent(JSON.stringify(['https://s3ng.cashify.in/cashify/product/img/xxhdpi/cd2da442-a50c.jpg'])))">BUY NOW</button>
-                </div>
+        <!-- Search Bar with Live Dropdown -->
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-box" placeholder="Search mobiles, brands..." onkeyup="liveSearch()">
+            <div id="searchDropdown" class="search-dropdown"></div>
+        </div>
+
+        <!-- Scrolling Brands -->
+        <div class="brand-scroll">
+            <div class="brand-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" style="filter:invert(1);"></div>
+            <div class="brand-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Samsung_wordmark.svg" style="filter:invert(1);"></div>
+            <div class="brand-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/Vivo_mobile_logo.png"></div>
+            <div class="brand-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Realme_logo.png"></div>
+            <div class="brand-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d4/Oppo_logo_2019.png"></div>
+            <div class="brand-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/2/29/Xiaomi_logo.svg"></div>
+        </div>
+
+        <!-- Banner -->
+        <div class="banner">
+            <h2>Premium Devices</h2>
+            <p>আপনার বাড়িতে বসে বা আমাদের দোকান থেকে</p>
+        </div>
+
+        <!-- Services Grid (Restored) -->
+        <div class="services-section">
+            <h2 class="section-title">Our Services</h2>
+            <div class="grid-container">
+                <a href="sell.html" class="service-box">
+                    <div class="service-icon"><img src="https://s3ng.cashify.in/builder/cd13764b153e46e19f9c6551ee52b5e6.webp"></div>
+                    <span>Sell Phone</span>
+                </a>
+                <a href="#productGrid" class="service-box">
+                    <div class="service-icon"><img src="https://s3ng.cashify.in/builder/caa3a1efa51541a5aa37fd292790ea81.webp"></div>
+                    <span>Buy Phone</span>
+                </a>
+                <a href="#" class="service-box">
+                    <div class="service-icon"><img src="https://s3ng.cashify.in/builder/f1f0df2917bd410b8da95675c63be2d1.webp"></div>
+                    <span>Smartwatches</span>
+                </a>
+                <a href="#" class="service-box">
+                    <div class="service-icon"><img src="https://s3ng.cashify.in/builder/75750a866d214239bf52a47ee57e6674.webp"></div>
+                    <span>Accessories</span>
+                </a>
             </div>
+        </div>
 
-            <!-- Dynamic products will load here -->
+        <!-- Product Grid -->
+        <div class="products-section">
+            <h2 class="section-title">Latest Gadgets</h2>
+            <div class="product-grid" id="productGrid">
+                <p style="color:#94a3b8; text-align:center; width:100%;">Loading products...</p>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="index.html" class="nav-item active"><img src="https://s3ng.cashify.in/builder/f635449b43954fd1af1d88e7272d5dc2.webp"> Home</a>
+            <a href="sell.html" class="nav-item"><img src="https://s3ng.cashify.in/builder/31d6a6d498ca43d4a6eee6cccd421474.webp"> Sell</a>
+            <a href="profile.html" class="nav-item"><img src="https://s3ng.cashify.in/builder/60cc75a071de4f729b9377681e594821.webp"> Profile</a>
         </div>
     </div>
 
-    <!-- Auth Modal -->
-    <div id="authModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeAuthModal()">&times;</span>
-            <h3 id="authTitle" style="color:#fff;">Create Account</h3>
-            
-            <input type="text" id="authName" class="auth-input" placeholder="Full Name">
-            <input type="email" id="authEmail" class="auth-input" placeholder="Email Address">
-            <input type="password" id="authPass" class="auth-input" placeholder="Password">
-            <input type="password" id="authConfirm" class="auth-input" placeholder="Confirm Password">
-            
-            <button class="auth-btn" id="authSubmitBtn" onclick="handleEmailAuth()">Sign Up</button>
-            <p class="toggle-text" id="authToggleText" onclick="toggleAuthMode()">Already have an account? Login here.</p>
-        </div>
-    </div>
-
-    <!-- Bottom Navigation -->
-    <div class="bottom-nav">
-        <a href="index.html" class="nav-item active"><img src="https://s3ng.cashify.in/builder/f635449b43954fd1af1d88e7272d5dc2.webp"> <span id="navHome">Home</span></a>
-        <a href="#productGrid" class="nav-item"><img src="https://s3ng.cashify.in/builder/42a5409869a84e73921df8c033a81c9d.webp"> <span id="navBuy">Buy</span></a>
-        <a href="sell.html" class="nav-item" onclick="return checkAuth(event)"><img src="https://s3ng.cashify.in/builder/31d6a6d498ca43d4a6eee6cccd421474.webp"> <span id="navSell">Sell</span></a>
-        <a href="profile.html" class="nav-item" onclick="return checkAuth(event)"><img src="https://s3ng.cashify.in/builder/60cc75a071de4f729b9377681e594821.webp"> <span id="navProfile">Profile</span></a>
-    </div>
-
-    <!-- Firebase & Logic Scripts -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, GoogleAuthProvider, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { getDatabase, ref, onValue, set, remove, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {
@@ -216,53 +189,59 @@
         };
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
         const db = getDatabase(app);
 
-        // UI Elements
-        const loginBtn = document.getElementById('loginBtn');
-        const userAvatar = document.getElementById('userAvatar');
-        const textAvatar = document.getElementById('textAvatar');
-        const authModal = document.getElementById('authModal');
-        let isLoginMode = false;
+        let allProducts = [];
 
-        // Login State & Name initials for avatar
+        // Auth State & Avatar Logic
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                loginBtn.style.display = 'none';
+                document.getElementById('loginBtn').style.display = 'none';
                 if (user.photoURL) {
-                    userAvatar.src = user.photoURL;
-                    userAvatar.style.display = 'block';
+                    document.getElementById('userAvatar').src = user.photoURL;
+                    document.getElementById('userAvatar').style.display = 'block';
                 } else {
-                    const name = user.displayName || user.email || "User";
-                    textAvatar.innerText = name.substring(0, 2).toUpperCase();
-                    textAvatar.style.display = 'flex';
+                    const initials = user.displayName ? user.displayName.substring(0,2).toUpperCase() : 'US';
+                    document.getElementById('textAvatar').innerText = initials;
+                    document.getElementById('textAvatar').style.display = 'flex';
                 }
-                closeAuthModal();
-            } else {
-                loginBtn.style.display = 'block';
-                userAvatar.style.display = 'none';
-                textAvatar.style.display = 'none';
             }
         });
 
-        // Search Function
-        window.searchProducts = function() {
+        window.googleLogin = () => { signInWithPopup(auth, provider); }
+
+        // Live Search Dropdown Logic
+        window.liveSearch = function() {
             let input = document.getElementById('searchInput').value.toLowerCase();
-            let cards = document.getElementsByClassName('product-card');
-            for (let i = 0; i < cards.length; i++) {
-                let title = cards[i].getAttribute('data-title').toLowerCase();
-                if (title.includes(input)) {
-                    cards[i].style.display = "block";
-                } else {
-                    cards[i].style.display = "none";
-                }
+            let dropdown = document.getElementById('searchDropdown');
+            dropdown.innerHTML = '';
+            
+            if(input.length === 0) {
+                dropdown.style.display = 'none';
+                return;
             }
+
+            let hasResult = false;
+            allProducts.forEach(prod => {
+                if (prod.name.toLowerCase().includes(input)) {
+                    hasResult = true;
+                    dropdown.innerHTML += `
+                        <div class="search-item" onclick="goToDetails('${prod.id}')">
+                            <img src="${prod.image}">
+                            <span>${prod.name}</span>
+                        </div>
+                    `;
+                }
+            });
+
+            dropdown.style.display = hasResult ? 'block' : 'none';
         }
 
-        // Toggle Favorite (Love Button)
+        // Toggle Favorite (Love)
         window.toggleFav = async function(event, prodId, prodName) {
             event.stopPropagation();
-            if(!auth.currentUser) return openAuthModal();
+            if(!auth.currentUser) return alert("Please login to add to favorites!");
             
             const btn = event.currentTarget;
             const favRef = ref(db, `users/${auth.currentUser.uid}/favorites/${prodId}`);
@@ -279,9 +258,11 @@
             }
         }
 
-        // Load Products with Favorite State Check
+        // Load Products
         onValue(ref(db, 'products'), async (snapshot) => {
             const grid = document.getElementById('productGrid');
+            grid.innerHTML = '';
+            allProducts = []; // Reset for search
             const data = snapshot.val();
             
             let favs = {};
@@ -291,70 +272,34 @@
             }
 
             if (data) {
-                // Clear existing dynamic elements except dummies
-                document.querySelectorAll('.dynamic-card').forEach(e => e.remove());
-
                 Object.keys(data).reverse().forEach(key => {
                     const prod = data[key];
                     if(prod.status !== 'approved' && prod.type !== 'admin') return; 
 
                     let isFav = favs[key] ? 'active' : '';
                     let heartIcon = favs[key] ? '❤️' : '♡';
-                    let firstImg = prod.images ? prod.images[0] : '';
+                    
+                    // Out of stock logic
+                    let stockBadge = prod.outOfStock ? `<div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); background:rgba(0,0,0,0.7); color:white; padding:5px 10px; border-radius:5px; font-weight:bold; z-index:5;">Out of Stock</div>` : '';
+                    let imgOpacity = prod.outOfStock ? 'opacity: 0.5;' : '';
 
-                    let cardHtml = `
-                        <div class="product-card dynamic-card" data-title="${prod.name}">
+                    allProducts.push({ id: key, name: prod.name, image: prod.images[0] });
+
+                    grid.innerHTML += `
+                        <div class="product-card" onclick="${prod.outOfStock ? '' : `goToDetails('${key}')`}">
                             <div class="fav-btn ${isFav}" onclick="toggleFav(event, '${key}', '${prod.name}')">${heartIcon}</div>
-                            <div onclick="goToDetails('${key}', '${encodeURIComponent(prod.name)}', '${encodeURIComponent(prod.price)}', '${encodeURIComponent(JSON.stringify(prod.images))}')">
-                                <div class="slider-container"><img src="${firstImg}" class="active"></div>
-                                <div class="p-title">${prod.name}</div>
-                                <div class="p-price">₹ ${prod.price}</div>
-                            </div>
-                            <div class="action-buttons">
-                                <button class="btn-buy" onclick="goToDetails('${key}', '${encodeURIComponent(prod.name)}', '${encodeURIComponent(prod.price)}', '${encodeURIComponent(JSON.stringify(prod.images))}')">BUY NOW</button>
-                            </div>
+                            ${stockBadge}
+                            <div class="slider-container" style="${imgOpacity}"><img src="${prod.images[0]}"></div>
+                            <div class="p-title">${prod.name}</div>
+                            <div class="p-price">₹ ${prod.price}</div>
                         </div>
                     `;
-                    grid.insertAdjacentHTML('beforeend', cardHtml);
                 });
             }
         });
 
-        // Navigation
-        window.goToDetails = function(id, name, price, images) {
-            window.location.href = `details.html?id=${id}&name=${name}&price=${price}&images=${images}`;
-        }
-
-        // Auth Logic
-        window.openAuthModal = () => { authModal.style.display = 'flex'; }
-        window.closeAuthModal = () => { authModal.style.display = 'none'; }
-        window.checkAuth = function(event) {
-            if (!auth.currentUser) {
-                event.preventDefault(); openAuthModal(); return false;
-            } return true;
-        }
-        window.toggleAuthMode = () => {
-            isLoginMode = !isLoginMode;
-            document.getElementById('authTitle').innerText = isLoginMode ? "Welcome Back!" : "Create Account";
-            document.getElementById('authName').style.display = isLoginMode ? "none" : "block";
-            document.getElementById('authConfirm').style.display = isLoginMode ? "none" : "block";
-            document.getElementById('authSubmitBtn').innerText = isLoginMode ? "Login" : "Sign Up";
-            document.getElementById('authToggleText').innerText = isLoginMode ? "Don't have an account? Sign up here." : "Already have an account? Login here.";
-        }
-
-        window.handleEmailAuth = () => {
-            const email = document.getElementById('authEmail').value;
-            const pass = document.getElementById('authPass').value;
-            
-            if(isLoginMode) {
-                signInWithEmailAndPassword(auth, email, pass).then(() => { alert("Login Successful!"); }).catch(e => alert(e.message));
-            } else {
-                const name = document.getElementById('authName').value;
-                if(pass !== document.getElementById('authConfirm').value) return alert("Passwords mismatch!");
-                createUserWithEmailAndPassword(auth, email, pass).then((cred) => {
-                    updateProfile(cred.user, { displayName: name }).then(() => window.location.reload());
-                }).catch(e => alert(e.message));
-            }
+        window.goToDetails = function(id) {
+            window.location.href = `details.html?id=${id}`;
         }
     </script>
 </body>
