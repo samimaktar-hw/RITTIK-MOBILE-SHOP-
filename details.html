@@ -3,211 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Product Details - Rittik Mobile Shop</title>
-    <meta name="theme-color" content="#0f172a"/>
+    <title>Product Details - Flipkart Style</title>
+    <meta name="theme-color" content="#ffffff"/>
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0;}
-        body { background-color: #0f172a; color: #e2e8f0; padding-bottom: 80px;}
+        body { background-color: #f1f5f9; color: #0f172a; padding-bottom: 80px;}
         
-        .header { background: #1e293b; padding: 15px; display: flex; align-items: center; border-bottom: 2px solid #00e5ff; position: sticky; top: 0; z-index: 50;}
-        .header a { text-decoration: none; color: #00e5ff; font-size: 24px; margin-right: 15px; font-weight: bold;}
-        .header h2 { color: #e2e8f0; margin: 0; font-size: 18px; }
+        /* Top Navigation */
+        .top-nav { background: #fff; padding: 15px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 50; box-shadow: 0 2px 5px rgba(0,0,0,0.05);}
+        .back-btn { font-size: 24px; color: #333; text-decoration: none; font-weight: bold;}
+        .share-btn { font-size: 20px; background: none; border: none; cursor: pointer; color: #333;}
+        
+        /* Product Image Box */
+        .img-container { background: #fff; height: 350px; display: flex; justify-content: center; align-items: center; position: relative;}
+        .img-container img { max-width: 90%; max-height: 90%; object-fit: contain;}
+        
+        /* Product Info Box */
+        .info-box { background: #fff; padding: 20px; margin-bottom: 8px;}
+        .p-name { font-size: 16px; color: #333; margin-bottom: 10px; line-height: 1.4;}
+        .rating { background: #10b981; color: #fff; padding: 3px 6px; border-radius: 4px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 10px;}
+        
+        /* Price Area */
+        .price-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 15px;}
+        .discount { color: #10b981; font-weight: bold; font-size: 18px;}
+        .mrp { text-decoration: line-through; color: #94a3b8; font-size: 16px;}
+        .final-price { font-size: 28px; font-weight: bold; color: #000;}
 
-        .slider-box { background: white; height: 320px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; border-bottom: 1px solid #334155;}
-        .slider-box img { max-width: 100%; max-height: 100%; display: none; object-fit: contain;}
-        .slider-box img.active { display: block; }
-        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: #fff; border: none; padding: 10px 15px; border-radius: 50%; cursor: pointer;}
-        .prev { left: 10px; } .next { right: 10px; }
+        /* Variant Selector (Flipkart Style) */
+        .variant-section { margin-top: 15px; }
+        .v-title { font-size: 14px; font-weight: bold; color: #64748b; margin-bottom: 10px;}
+        .v-grid { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px;}
+        .v-box { border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px 12px; text-align: center; min-width: 110px; cursor: pointer; transition: 0.2s;}
+        .v-box.active { border: 2px solid #2874f0; background: rgba(40, 116, 240, 0.05);}
+        .v-box .v-ram { font-size: 12px; font-weight: bold; color: #333;}
+        .v-box .v-prc { font-size: 13px; color: #2874f0; margin-top: 3px; font-weight: bold;}
 
-        .info-box { background: #1e293b; padding: 20px; margin-bottom: 10px; }
-        .p-title { font-size: 20px; font-weight: bold; margin-bottom: 8px; color: #fff;}
-        .p-price { font-size: 24px; color: #00e5ff; font-weight: bold;}
-        .discount-badge { font-size: 12px; background: #10b981; padding: 2px 6px; border-radius: 4px; color: white; margin-left: 10px; vertical-align: middle;}
+        /* Highlights Section */
+        .highlight-box { background: #fff; padding: 20px; margin-bottom: 8px;}
+        .h-title { font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #000;}
+        .hl-list { list-style: none; }
+        .hl-list li { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 15px; font-size: 14px; color: #333;}
+        .hl-icon { width: 20px; height: 20px; filter: opacity(0.6);} /* SVG Placeholder */
 
-        /* Flipkart Style Highlights */
-        .highlights-box { background: #1e293b; padding: 20px; margin-bottom: 10px; }
-        .highlights-box h3 { font-size: 16px; color: #fff; margin-bottom: 15px; }
-        .hl-item { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 14px; color: #cbd5e1;}
-        .hl-item span { background: rgba(0,229,255,0.1); padding: 5px; border-radius: 5px; color: #00e5ff; font-size: 12px;}
-
-        /* Flipkart Style Similar Products */
-        .similar-section { background: #1e293b; padding: 20px; margin-bottom: 20px;}
-        .similar-grid { display: flex; overflow-x: auto; gap: 15px; padding-bottom: 10px;}
-        .similar-card { min-width: 140px; background: #0f172a; border-radius: 8px; padding: 10px; text-align: center; border: 1px solid #334155;}
-        .similar-card img { height: 100px; object-fit: contain; margin-bottom: 10px;}
-        .similar-title { font-size: 12px; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 5px;}
-        .similar-price { font-size: 14px; color: #00e5ff; font-weight: bold;}
-
-        /* Order Form */
-        .order-section { background: #1e293b; padding: 20px; margin-bottom: 20px; display: none;}
-        .input-group { margin-bottom: 15px; }
-        .input-group input, .input-group textarea, .input-group select { width: 100%; padding: 12px; border: 1px solid #334155; border-radius: 5px; background: #0f172a; color: white; outline: none;}
-        .btn-buy { position: fixed; bottom: 0; left: 0; width: 100%; background: #00e5ff; color: #0f172a; text-align: center; padding: 18px; font-size: 18px; font-weight: bold; border: none; z-index: 100; cursor: pointer;}
-        .btn-confirm { background: #00e5ff; color: #0f172a; width: 100%; padding: 14px; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer;}
+        /* Buy Button Bottom */
+        .bottom-action { position: fixed; bottom: 0; left: 0; width: 100%; display: flex; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); z-index: 100;}
+        .btn-cart { flex: 1; background: #fff; color: #000; padding: 18px; text-align: center; font-weight: bold; font-size: 16px; border: none; border-top: 1px solid #ddd;}
+        .btn-buy { flex: 1; background: #ff9f00; color: #fff; padding: 18px; text-align: center; font-weight: bold; font-size: 16px; border: none;}
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <a href="index.html">←</a> <h2>Product Details</h2>
+    <div class="top-nav">
+        <a href="index.html" class="back-btn">←</a>
+        <button class="share-btn" onclick="shareProduct()">🔗</button>
     </div>
 
-    <div class="slider-box" id="mainSlider"></div>
+    <div class="img-container">
+        <img id="mainImg" src="" alt="Product">
+    </div>
 
     <div class="info-box">
-        <div class="p-title" id="pTitle">Loading...</div>
-        <div>
-            <span class="p-price" id="pPrice"></span>
-            <span class="discount-badge">Best Deal</span>
+        <div class="rating">4.2 ★</div>
+        <div class="p-name" id="pName">Loading Details...</div>
+        
+        <div class="price-row">
+            <span class="discount">↓40%</span>
+            <span class="mrp" id="pMrp">₹33,999</span>
+            <span class="final-price" id="pPrice">₹0</span>
+        </div>
+
+        <!-- Variants Section -->
+        <div class="variant-section">
+            <div class="v-title">Variant</div>
+            <div class="v-grid" id="variantBox">
+                <!-- Variants will be generated here -->
+            </div>
         </div>
     </div>
 
-    <!-- Product Highlights (Flipkart Style) -->
-    <div class="highlights-box">
-        <h3>Product Highlights</h3>
-        <div class="hl-item"><span>RAM/ROM</span> <div id="hlRamRom">4 GB RAM | 128 GB ROM</div></div>
-        <div class="hl-item"><span>Processor</span> <div>High Performance Octa Core</div></div>
-        <div class="hl-item"><span>Condition</span> <div>Tested & Certified Refurbished</div></div>
-        <div class="hl-item"><span>Warranty</span> <div>7-day Brand Support</div></div>
+    <!-- Product Highlights -->
+    <div class="highlight-box">
+        <div class="h-title">Product Highlights</div>
+        <ul class="hl-list">
+            <li><span class="hl-icon">💾</span> <span id="hlRam">4 GB RAM | 128 GB ROM</span></li>
+            <li><span class="hl-icon">⚙️</span> <span>Dimensity 6300 5G | Octa Core Processor</span></li>
+            <li><span class="hl-icon">📸</span> <span>50MP + 0.08MP Rear Camera</span></li>
+            <li><span class="hl-icon">🤳</span> <span>5MP Front Camera</span></li>
+            <li><span class="hl-icon">📱</span> <span>6.74 inch Display</span></li>
+            <li><span class="hl-icon">🔋</span> <span>6500 mAh Battery</span></li>
+        </ul>
     </div>
 
-    <div class="highlights-box" id="sellerBox" style="display: none;">
-        <h3>Seller Details</h3>
-        <div class="hl-item" style="display:block;">
-            <p><strong>Name:</strong> <span id="sNameText"></span></p>
-            <p><strong>Contact:</strong> <span id="sContactText"></span></p>
-            <p><strong>Location:</strong> <span id="sAddressText"></span> - <span id="sPincodeText"></span></p>
-        </div>
-    </div>
-
-    <!-- Similar Products Grid -->
-    <div class="similar-section">
-        <h3 style="font-size: 16px; color: #fff; margin-bottom: 15px;">Similar Products</h3>
-        <div class="similar-grid" id="similarGrid">
-            <p style="color: #94a3b8; font-size: 12px;">Loading...</p>
-        </div>
-    </div>
-
-    <button class="btn-buy" id="btnBuy" onclick="showOrderForm()">BUY NOW</button>
-
-    <div class="order-section" id="orderForm">
-        <h3 style="color: #00e5ff; margin-bottom: 15px;">Delivery Details</h3>
-        <div class="input-group"><input type="text" id="cName" placeholder="Full Name"></div>
-        <div class="input-group"><input type="number" id="cPhone" placeholder="Mobile Number"></div>
-        <div class="input-group">
-            <select id="deliveryType" onchange="toggleDeliveryOptions()">
-                <option value="home">Home Delivery</option>
-                <option value="store">Store Pickup</option>
-            </select>
-        </div>
-        <div id="homeDeliveryBox">
-            <div class="input-group"><textarea id="cAddress" placeholder="Full Address" rows="3"></textarea></div>
-            <div class="input-group"><input type="text" id="cPincode" placeholder="Pincode"></div>
-        </div>
-        <button class="btn-confirm" onclick="confirmOrder()">Confirm Order</button>
-        <p id="orderStatus" style="color: #10b981; text-align: center; display: none; margin-top: 15px; font-weight: bold;">Order Placed Successfully!</p>
+    <div class="bottom-action">
+        <button class="btn-cart" onclick="alert('Added to Cart!')">Add to Cart</button>
+        <button class="btn-buy" onclick="window.location.href='index.html'">Buy Now</button>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBIddmdEKtGl0OI97ky6Q3JJBs2dOzbnbA",
-            authDomain: "rittik-mobile-shop-web-1.firebaseapp.com",
             databaseURL: "https://rittik-mobile-shop-web-1-default-rtdb.firebaseio.com",
             projectId: "rittik-mobile-shop-web-1"
         };
         const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
         const db = getDatabase(app);
 
-        let currentSlide = 0;
         const urlParams = new URLSearchParams(window.location.search);
         const pId = urlParams.get('id');
-        const pName = decodeURIComponent(urlParams.get('name') || '');
-        const pPrice = decodeURIComponent(urlParams.get('price') || '');
-        const imagesList = JSON.parse(decodeURIComponent(urlParams.get('images') || '[]'));
+
+        // Dummy Data for Variants (You can store these in Firebase later)
+        const dummyVariants = [
+            { ram: "4 GB", rom: "128 GB", price: 20499, mrp: 33999 },
+            { ram: "6 GB", rom: "128 GB", price: 22999, mrp: 38499 },
+            { ram: "6 GB", rom: "256 GB", price: 26999, mrp: 42499 }
+        ];
+
+        async function loadData() {
+            if(!pId) return;
+            const snapshot = await get(ref(db, `products/${pId}`));
+            if(snapshot.exists()){
+                const prod = snapshot.val();
+                document.getElementById('pName').innerText = prod.name;
+                document.getElementById('mainImg').src = prod.images[0];
+                
+                // Override base price with first variant if exists
+                updatePriceUI(dummyVariants[0].price, dummyVariants[0].mrp);
+                renderVariants();
+            }
+        }
         
-        document.getElementById('pTitle').innerText = pName;
-        document.getElementById('pPrice').innerText = '₹ ' + pPrice;
-
-        // Auto extract RAM/ROM from Name if formatting exists
-        if(pName.includes('RAM')) {
-            document.getElementById('hlRamRom').innerText = pName.split('(')[1].replace(')', '');
+        function renderVariants() {
+            const vBox = document.getElementById('variantBox');
+            vBox.innerHTML = '';
+            dummyVariants.forEach((v, index) => {
+                let activeClass = index === 0 ? 'active' : '';
+                vBox.innerHTML += `
+                    <div class="v-box ${activeClass}" onclick="changeVariant(this, ${v.price}, ${v.mrp}, '${v.ram}', '${v.rom}')">
+                        <div class="v-ram">${v.rom} + ${v.ram}</div>
+                        <div class="v-prc">₹${v.price.toLocaleString('en-IN')}</div>
+                    </div>
+                `;
+            });
         }
 
-        // Load Slider
-        const slider = document.getElementById('mainSlider');
-        let html = '';
-        imagesList.forEach((url, index) => {
-            let active = index === 0 ? 'active' : '';
-            html += `<img src="${url}" class="${active}">`;
-        });
-        if (imagesList.length > 1) {
-            html += `<button class="nav-btn prev" onclick="changeSlide(-1)">❮</button><button class="nav-btn next" onclick="changeSlide(1)">❯</button>`;
-        }
-        slider.innerHTML = html;
-
-        window.changeSlide = function(direction) {
-            const images = slider.getElementsByTagName('img');
-            images[currentSlide].classList.remove('active');
-            currentSlide += direction;
-            if(currentSlide >= images.length) currentSlide = 0;
-            if(currentSlide < 0) currentSlide = images.length - 1;
-            images[currentSlide].classList.add('active');
+        window.changeVariant = function(element, price, mrp, ram, rom) {
+            // Remove active class from all
+            document.querySelectorAll('.v-box').forEach(el => el.classList.remove('active'));
+            // Add active class to clicked
+            element.classList.add('active');
+            
+            updatePriceUI(price, mrp);
+            // Update Highlight Text
+            document.getElementById('hlRam').innerText = `${ram} RAM | ${rom} ROM`;
         }
 
-        // Fetch Similar Products
-        onValue(ref(db, 'products'), (snapshot) => {
-            const grid = document.getElementById('similarGrid');
-            grid.innerHTML = '';
-            const data = snapshot.val();
-            let count = 0;
-            if (data) {
-                Object.keys(data).reverse().forEach(key => {
-                    const prod = data[key];
-                    if(key !== pId && (prod.status === 'approved' || prod.type === 'admin') && count < 5) {
-                        count++;
-                        grid.innerHTML += `
-                            <div class="similar-card" onclick="window.location.href='details.html?id=${key}&name=${encodeURIComponent(prod.name)}&price=${prod.price}&images=${encodeURIComponent(JSON.stringify(prod.images))}'">
-                                <img src="${prod.images[0]}">
-                                <div class="similar-title">${prod.name}</div>
-                                <div class="similar-price">₹ ${prod.price}</div>
-                            </div>
-                        `;
-                    }
+        function updatePriceUI(price, mrp) {
+            document.getElementById('pPrice').innerText = '₹' + price.toLocaleString('en-IN');
+            document.getElementById('pMrp').innerText = '₹' + mrp.toLocaleString('en-IN');
+        }
+
+        window.shareProduct = function() {
+            const name = document.getElementById('pName').innerText;
+            if (navigator.share) {
+                navigator.share({
+                    title: `Buy ${name}`,
+                    url: window.location.href
                 });
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                alert("Link copied!");
             }
-            if(count === 0) grid.innerHTML = '<p style="color: #94a3b8; font-size: 12px;">No similar items found.</p>';
-        });
-
-        window.showOrderForm = function() {
-            if(!auth.currentUser) {
-                alert("Please login from the Home page first to place an order!");
-                window.location.href = "index.html";
-                return;
-            }
-            document.getElementById('orderForm').style.display = 'block';
-            document.getElementById('btnBuy').style.display = 'none';
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
         }
 
-        window.toggleDeliveryOptions = function() {
-            document.getElementById('homeDeliveryBox').style.display = document.getElementById('deliveryType').value === 'home' ? 'block' : 'none';
-        }
-
-        window.confirmOrder = function() {
-            const cName = document.getElementById('cName').value;
-            const cPhone = document.getElementById('cPhone').value;
-            if(!cName || !cPhone) { alert("Please enter Name and Phone Number!"); return; }
-
-            push(ref(db, 'orders'), {
-                userId: auth.currentUser.uid,
-                productName: pName,
-                productPrice: pPrice,
-                customerName: cName,
+        loadData();
+    </script>
+</body>
+</html>
                 customerPhone: cPhone,
                 deliveryType: document.getElementById('deliveryType').value,
                 status: 'Ordered',
