@@ -9,51 +9,52 @@
         * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0;}
         body { background-color: #f1f5f9; color: #0f172a; padding-bottom: 80px;}
         
-        /* Top Navigation */
         .top-nav { background: #fff; padding: 15px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 50; box-shadow: 0 2px 5px rgba(0,0,0,0.05);}
         .back-btn { font-size: 24px; color: #333; text-decoration: none; font-weight: bold;}
         .share-btn { font-size: 20px; background: none; border: none; cursor: pointer; color: #333;}
         
-        /* Product Image Box */
-        .img-container { background: #fff; height: 350px; display: flex; justify-content: center; align-items: center; position: relative;}
-        .img-container img { max-width: 90%; max-height: 90%; object-fit: contain;}
+        /* Proper Slider */
+        .slider-wrapper { background: #fff; position: relative; padding: 20px 0; border-bottom: 1px solid #e2e8f0;}
+        .img-container { height: 300px; display: flex; justify-content: center; align-items: center; overflow: hidden; position: relative;}
+        .img-container img { max-width: 90%; max-height: 90%; object-fit: contain; display: none;}
+        .img-container img.active { display: block;}
+        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: #fff; border: none; padding: 10px 15px; border-radius: 50%; cursor: pointer; font-size: 16px; z-index: 10;}
+        .prev { left: 10px; } .next { right: 10px; }
         
-        /* Product Info Box */
         .info-box { background: #fff; padding: 20px; margin-bottom: 8px;}
-        .p-name { font-size: 16px; color: #333; margin-bottom: 10px; line-height: 1.4; font-weight: bold;}
-        .rating { background: #10b981; color: #fff; padding: 3px 6px; border-radius: 4px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 10px;}
+        .p-name { font-size: 18px; color: #333; margin-bottom: 10px; line-height: 1.4; font-weight: bold;}
+        .badges { display: flex; gap: 10px; margin-bottom: 10px;}
+        .rating { background: #10b981; color: #fff; padding: 3px 6px; border-radius: 4px; font-size: 12px; font-weight: bold;}
+        .condition-badge { background: #3b82f6; color: #fff; padding: 3px 8px; border-radius: 4px; font-size: 12px; font-weight: bold;}
         
-        /* Price Area */
         .price-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 15px;}
-        .discount { color: #10b981; font-weight: bold; font-size: 18px;}
-        .mrp { text-decoration: line-through; color: #94a3b8; font-size: 16px;}
         .final-price { font-size: 28px; font-weight: bold; color: #000;}
 
-        /* Variant Selector (Flipkart Style) */
+        /* Out of stock tag */
+        .oos-tag { color: #ef4444; font-weight: bold; font-size: 18px; margin-bottom: 10px; display: none;}
+
         .variant-section { margin-top: 15px; }
         .v-title { font-size: 14px; font-weight: bold; color: #64748b; margin-bottom: 10px;}
-        .v-grid { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px;}
-        .v-box { border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px 12px; text-align: center; min-width: 110px; cursor: pointer; transition: 0.2s;}
-        .v-box.active { border: 2px solid #2874f0; background: rgba(40, 116, 240, 0.05);}
+        .v-box { border: 2px solid #2874f0; background: rgba(40, 116, 240, 0.05); border-radius: 6px; padding: 8px 12px; text-align: center; display: inline-block;}
         .v-box .v-ram { font-size: 12px; font-weight: bold; color: #333;}
-        .v-box .v-prc { font-size: 13px; color: #2874f0; margin-top: 3px; font-weight: bold;}
 
-        /* Highlights Section */
         .highlight-box { background: #fff; padding: 20px; margin-bottom: 8px;}
         .h-title { font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #000;}
         .hl-list { list-style: none; }
         .hl-list li { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 15px; font-size: 14px; color: #333;}
         
-        /* Order Form (Hidden initially) */
+        /* Order Form */
         .order-section { background: #fff; padding: 20px; margin-bottom: 20px; display: none;}
         .input-group { margin-bottom: 15px; }
         .input-group input, .input-group textarea, .input-group select { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 5px; outline: none;}
         .btn-confirm { background: #ff9f00; color: #fff; width: 100%; padding: 14px; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer;}
+        .map-box { margin-top: 15px; display: none;}
+        .map-box iframe { width: 100%; height: 200px; border-radius: 8px; border: 1px solid #cbd5e1;}
 
-        /* Buy Button Bottom */
         .bottom-action { position: fixed; bottom: 0; left: 0; width: 100%; display: flex; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); z-index: 100; background: #fff;}
         .btn-cart { flex: 1; background: #fff; color: #000; padding: 18px; text-align: center; font-weight: bold; font-size: 16px; border: none; border-top: 1px solid #ddd; cursor: pointer;}
         .btn-buy { flex: 1; background: #ff9f00; color: #fff; padding: 18px; text-align: center; font-weight: bold; font-size: 16px; border: none; cursor: pointer;}
+        .btn-buy:disabled { background: #94a3b8; cursor: not-allowed; }
     </style>
 </head>
 <body>
@@ -63,43 +64,46 @@
         <button class="share-btn" onclick="shareProduct()">🔗</button>
     </div>
 
-    <div class="img-container">
-        <!-- Broken image fixed here by reading from URL -->
-        <img id="mainImg" src="" alt="Product Image">
+    <div class="slider-wrapper">
+        <button class="nav-btn prev" onclick="changeSlide(-1)">❮</button>
+        <div class="img-container" id="imageSlider">
+            <img src="https://via.placeholder.com/300" class="active" id="fallbackImg">
+        </div>
+        <button class="nav-btn next" onclick="changeSlide(1)">❯</button>
     </div>
 
     <div class="info-box">
-        <div class="rating">4.2 ★</div>
+        <div class="badges">
+            <div class="rating">4.5 ★</div>
+            <div class="condition-badge" id="pCondition">Condition: Unknown</div>
+        </div>
         <div class="p-name" id="pName">Loading Details...</div>
         
+        <div class="oos-tag" id="oosTag">Currently Out of Stock</div>
+
         <div class="price-row">
-            <span class="discount">Best Deal</span>
-            <span class="mrp" style="display:none;" id="pMrp"></span>
             <span class="final-price" id="pPrice">₹0</span>
         </div>
 
-        <!-- Variants Section -->
         <div class="variant-section">
-            <div class="v-title">Variant</div>
-            <div class="v-grid" id="variantBox">
-                <!-- Variants loaded dynamically -->
+            <div class="v-title">Selected Variant</div>
+            <div class="v-box">
+                <div class="v-ram" id="vRamText">Standard</div>
             </div>
         </div>
     </div>
 
-    <!-- Product Highlights -->
     <div class="highlight-box">
         <div class="h-title">Product Highlights</div>
         <ul class="hl-list">
-            <li><span>💾</span> <span id="hlRam">4 GB RAM | 128 GB ROM</span></li>
-            <li><span>⚙️</span> <span>High Performance Octa Core Processor</span></li>
-            <li><span>📸</span> <span>Premium Rear & Front Camera Setup</span></li>
-            <li><span>📱</span> <span>HD+ Cinematic Display</span></li>
+            <li><span>✅</span> <span id="hlQuality">Quality: Tested & Verified</span></li>
+            <li><span>💾</span> <span id="hlRam">RAM & ROM Details</span></li>
+            <li><span>⚙️</span> <span>High Performance Processor</span></li>
+            <li><span>📸</span> <span>Premium Camera Setup</span></li>
             <li><span>🔋</span> <span>Long Lasting Battery</span></li>
         </ul>
     </div>
 
-    <!-- Order Form Section -->
     <div class="order-section" id="orderForm">
         <h3 style="color: #ff9f00; margin-bottom: 15px;">Delivery Details</h3>
         <div class="input-group"><input type="text" id="cName" placeholder="Full Name"></div>
@@ -110,23 +114,31 @@
                 <option value="store">Store Pickup</option>
             </select>
         </div>
+        
         <div id="homeDeliveryBox">
-            <div class="input-group"><textarea id="cAddress" placeholder="Full Address" rows="3"></textarea></div>
-            <div class="input-group"><input type="text" id="cPincode" placeholder="Pincode"></div>
+            <div class="input-group"><textarea id="cAddress" placeholder="Full Address with Pincode" rows="3"></textarea></div>
+            <div class="input-group"><input type="text" id="cLocation" placeholder="Paste Google Map Location Link (Optional)"></div>
         </div>
+
+        <div id="storePickupBox" class="map-box">
+            <p style="font-weight: bold; margin-bottom: 5px; color: #333;">Shop Address:</p>
+            <p id="shopAddressText" style="font-size: 13px; color: #64748b; margin-bottom: 10px;">Loading...</p>
+            <div id="shopMapIframe"></div>
+        </div>
+
         <button class="btn-confirm" onclick="confirmOrder()">Confirm Order</button>
         <p id="orderStatus" style="color: #10b981; text-align: center; display: none; margin-top: 15px; font-weight: bold;">Order Placed Successfully!</p>
     </div>
 
     <div class="bottom-action" id="bottomActionBtns">
         <button class="btn-cart" onclick="alert('Added to Cart!')">Add to Cart</button>
-        <button class="btn-buy" onclick="openOrderForm()">Buy Now</button>
+        <button class="btn-buy" id="buyBtn" onclick="openOrderForm()">Buy Now</button>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, get, push } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBIddmdEKtGl0OI97ky6Q3JJBs2dOzbnbA",
@@ -137,48 +149,95 @@
         const auth = getAuth(app);
         const db = getDatabase(app);
 
-        // Fetch data from URL safely
+        // Get Product ID from URL (Fixed!)
         const urlParams = new URLSearchParams(window.location.search);
-        const pName = decodeURIComponent(urlParams.get('name') || 'Unknown Product');
-        const pPrice = decodeURIComponent(urlParams.get('price') || '0');
-        
-        let pImages = [];
-        try { pImages = JSON.parse(decodeURIComponent(urlParams.get('images'))); } catch(e) {}
+        const pId = urlParams.get('id');
 
-        // Set UI Elements
-        document.getElementById('pName').innerText = pName;
-        document.getElementById('pPrice').innerText = '₹ ' + pPrice;
-        if(pImages.length > 0) {
-            document.getElementById('mainImg').src = pImages[0];
+        let currentSlide = 0;
+        let prodNameForOrder = "Unknown";
+        let prodPriceForOrder = "0";
+        let shopData = {};
+
+        async function loadProductData() {
+            if(!pId) return alert("Product Not Found!");
+
+            // Fetch Product Details directly from Firebase
+            const snapshot = await get(ref(db, `products/${pId}`));
+            if(snapshot.exists()) {
+                const prod = snapshot.val();
+                prodNameForOrder = prod.name;
+                prodPriceForOrder = prod.price;
+
+                document.getElementById('pName').innerText = prod.name;
+                document.getElementById('pPrice').innerText = '₹ ' + prod.price;
+                
+                // Condition & Quality
+                document.getElementById('pCondition').innerText = prod.condition ? `Condition: ${prod.condition}` : 'Condition: New';
+                document.getElementById('hlQuality').innerText = prod.quality ? `Quality: ${prod.quality}` : 'Quality: Tested & Verified';
+
+                if(prod.highlights && prod.highlights.ram) {
+                    let vr = `${prod.highlights.ram} RAM | ${prod.highlights.rom} ROM`;
+                    document.getElementById('vRamText').innerText = vr;
+                    document.getElementById('hlRam').innerText = vr;
+                }
+
+                // Slider Images
+                if(prod.images && prod.images.length > 0) {
+                    const slider = document.getElementById('imageSlider');
+                    slider.innerHTML = '';
+                    prod.images.forEach((url, index) => {
+                        let activeCls = index === 0 ? 'active' : '';
+                        slider.innerHTML += `<img src="${url}" class="${activeCls}">`;
+                    });
+                }
+
+                // Out of Stock Logic
+                if(prod.outOfStock) {
+                    document.getElementById('oosTag').style.display = 'block';
+                    document.getElementById('buyBtn').disabled = true;
+                    document.getElementById('buyBtn').innerText = 'Out of Stock';
+                }
+
+                // Fetch Shop Settings for Pickup
+                const shopSnap = await get(ref(db, 'admin_settings/shop'));
+                if(shopSnap.exists()) {
+                    shopData = shopSnap.val();
+                    document.getElementById('shopAddressText').innerText = shopData.address || 'Address not set.';
+                    if(shopData.map) {
+                        document.getElementById('shopMapIframe').innerHTML = shopData.map;
+                    }
+                }
+            }
         }
 
-        // Auto Extract RAM/ROM for variant if available
-        if(pName.includes('RAM')) {
-            let extracted = pName.split('(')[1].replace(')', '');
-            document.getElementById('hlRam').innerText = extracted;
-            document.getElementById('variantBox').innerHTML = `
-                <div class="v-box active">
-                    <div class="v-ram">${extracted}</div>
-                    <div class="v-prc">₹ ${pPrice}</div>
-                </div>
-            `;
-        } else {
-            document.getElementById('variantBox').innerHTML = `<div class="v-box active"><div class="v-ram">Standard</div><div class="v-prc">₹ ${pPrice}</div></div>`;
+        window.changeSlide = function(direction) {
+            const images = document.getElementById('imageSlider').getElementsByTagName('img');
+            if(images.length <= 1) return;
+            images[currentSlide].classList.remove('active');
+            currentSlide += direction;
+            if(currentSlide >= images.length) currentSlide = 0;
+            if(currentSlide < 0) currentSlide = images.length - 1;
+            images[currentSlide].classList.add('active');
         }
 
         window.openOrderForm = function() {
-            // Error fix: Now "Buy Now" opens the form instead of redirecting
             document.getElementById('orderForm').style.display = 'block';
             document.getElementById('bottomActionBtns').style.display = 'none';
             window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
         }
 
         window.toggleDeliveryOptions = function() {
-            document.getElementById('homeDeliveryBox').style.display = document.getElementById('deliveryType').value === 'home' ? 'block' : 'none';
+            const type = document.getElementById('deliveryType').value;
+            if(type === 'store') {
+                document.getElementById('homeDeliveryBox').style.display = 'none';
+                document.getElementById('storePickupBox').style.display = 'block';
+            } else {
+                document.getElementById('homeDeliveryBox').style.display = 'block';
+                document.getElementById('storePickupBox').style.display = 'none';
+            }
         }
 
         window.confirmOrder = function() {
-            // Check login
             if(!auth.currentUser) {
                 alert("Please go to Home page and Login first to place an order.");
                 window.location.href = "index.html";
@@ -189,39 +248,38 @@
             const cPhone = document.getElementById('cPhone').value;
             const deliveryType = document.getElementById('deliveryType').value;
             const cAddress = document.getElementById('cAddress').value;
+            const cLocation = document.getElementById('cLocation').value;
 
             if(!cName || !cPhone) { alert("Please enter Name and Phone Number!"); return; }
 
-            // Push to Firebase safely
+            let finalAddress = deliveryType === 'home' ? `${cAddress} (Map: ${cLocation})` : 'Store Pickup';
+
             push(ref(db, 'orders'), {
                 userId: auth.currentUser.uid,
-                productName: pName,
-                productPrice: pPrice,
+                productName: prodNameForOrder,
+                productPrice: prodPriceForOrder,
                 customerName: cName,
                 customerPhone: cPhone,
                 deliveryType: deliveryType,
-                address: deliveryType === 'home' ? cAddress : 'Store Pickup',
+                address: finalAddress,
                 status: 'Ordered',
                 date: new Date().toLocaleString()
             }).then(() => {
                 document.getElementById('orderStatus').style.display = 'block';
-                setTimeout(() => { window.location.href = 'profile.html'; }, 2000);
-            }).catch(e => {
-                alert("Error placing order: " + e.message);
+                setTimeout(() => { window.location.href = 'index.html'; }, 2000);
             });
         }
 
         window.shareProduct = function() {
             if (navigator.share) {
-                navigator.share({
-                    title: `Buy ${pName}`,
-                    url: window.location.href
-                });
+                navigator.share({ title: `Buy ${prodNameForOrder}`, url: window.location.href });
             } else {
                 navigator.clipboard.writeText(window.location.href);
-                alert("Product Link copied to clipboard!");
+                alert("Product Link copied!");
             }
         }
+
+        loadProductData();
     </script>
 </body>
 </html>
