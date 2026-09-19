@@ -4,11 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Rittik Mobile Shop</title>
+    
+    <!-- Open Graph for Link Preview (WhatsApp/Facebook Share) -->
+    <meta property="og:title" content="Rittik Mobile Shop">
+    <meta property="og:description" content="Buy and Sell Premium Devices easily.">
+    <meta property="og:image" content="https://samimaktar-hw.github.io/RITTIK/logo.png">
+    
     <meta name="theme-color" content="#0f172a"/>
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
         body { background-color: #0b1121; color: #f8fafc; padding-bottom: 75px; overflow-x: hidden;}
         
+        /* Text-Based Splash Screen Animation */
+        #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0b1121; display: flex; align-items: center; justify-content: center; z-index: 9999; animation: fadeOut 0.5s ease 2s forwards; }
+        .splash-text { font-size: 32px; font-weight: 900; color: #ffffff; letter-spacing: 1px; animation: popIn 0.8s ease forwards; text-shadow: 0 0 15px rgba(0, 229, 255, 0.6); }
+        .splash-text span { color: #00e5ff; }
+        @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes fadeOut { 100% { opacity: 0; visibility: hidden; } }
+
         /* Glassmorphism Header */
         .header { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(10px); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 50; border-bottom: 1px solid rgba(0, 229, 255, 0.3); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); }
         .logo-section { display: flex; align-items: center; text-decoration: none; gap: 12px; }
@@ -25,10 +38,21 @@
         .user-avatar { width: 36px; height: 36px; border-radius: 50%; border: 2px solid #00e5ff; display: none; cursor: pointer; object-fit: cover; box-shadow: 0 0 10px rgba(0,229,255,0.5);}
         .text-avatar { width: 36px; height: 36px; border-radius: 50%; background: #00e5ff; color: #0f172a; font-weight: bold; display: none; align-items: center; justify-content: center; font-size: 15px; cursor: pointer; border: 2px solid #fff; box-shadow: 0 0 10px rgba(0,229,255,0.5);}
 
-        /* Flipkart Style Search Bar */
-        .search-container { padding: 10px 20px; background: rgba(15, 23, 42, 0.95); position: sticky; top: 65px; z-index: 40; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center;}
+        /* Flipkart Style Search Bar & Live Dropdown */
+        .search-container { padding: 10px 20px; background: rgba(15, 23, 42, 0.95); position: sticky; top: 65px; z-index: 40; border-bottom: 1px solid rgba(255,255,255,0.05);}
         .search-box { width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid rgba(0,229,255,0.3); background: rgba(0,0,0,0.3); color: white; outline: none; font-size: 14px; transition: 0.3s;}
         .search-box:focus { border-color: #00e5ff; box-shadow: 0 0 10px rgba(0,229,255,0.2); }
+        .search-dropdown { position: absolute; top: 60px; left: 20px; right: 20px; background: #1e293b; border-radius: 8px; border: 1px solid #334155; max-height: 250px; overflow-y: auto; display: none; z-index: 100; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .search-item { display: flex; align-items: center; padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); cursor: pointer; color: white; text-decoration: none;}
+        .search-item:hover { background: rgba(0, 229, 255, 0.1); }
+        .search-item img { width: 35px; height: 35px; object-fit: contain; margin-right: 15px; border-radius: 4px; background: #fff;}
+
+        /* Scrolling Brands */
+        .brand-scroll { display: flex; overflow-x: auto; padding: 15px 20px; gap: 15px; background: rgba(30, 41, 59, 0.2); border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 10px;}
+        .brand-scroll::-webkit-scrollbar { display: none; }
+        .brand-icon { width: 55px; height: 55px; background: rgba(30, 41, 59, 0.8); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.1); transition: 0.3s; cursor: pointer;}
+        .brand-icon:hover { border-color: #00e5ff; box-shadow: 0 0 10px rgba(0,229,255,0.3);}
+        .brand-icon img { width: 32px; height: 32px; object-fit: contain; }
 
         /* Modern Banner */
         .banner { background: radial-gradient(circle at top right, #0284c7, #0f172a 70%); padding: 35px 20px; text-align: center; border-bottom: 1px solid #1e293b; position: relative;}
@@ -64,7 +88,6 @@
         .p-title { font-size: 14px; font-weight: 700; color: #f1f5f9; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
         .p-price { font-size: 17px; color: #00e5ff; font-weight: 800; margin-bottom: 12px;}
         
-        /* Buy Button (Share moved to details.html) */
         .action-buttons { display: flex; justify-content: center; gap: 8px; }
         .btn-buy { width: 100%; background: #00e5ff; color: #0f172a; border: none; padding: 10px; border-radius: 8px; font-weight: 800; cursor: pointer; font-size: 14px; transition: 0.2s;}
         .btn-buy:hover { background: #06b6d4; }
@@ -87,11 +110,16 @@
 </head>
 <body>
 
+    <!-- Text-Based Splash Screen -->
+    <div id="splashScreen">
+        <div class="splash-text">Rittik <span>Mobile Shop</span></div>
+    </div>
+
     <!-- Header & Logo -->
     <div class="header">
         <a href="index.html" class="logo-section">
             <img src="logo.png" alt="Rittik Mobile Shop Logo" class="logo-img">
-            <h2 class="logo-text">Rittik <span>Mobile</span></h2>
+            <h2 class="logo-text">Rittik <span>Mobile Shop</span></h2>
         </a>
         <div class="header-actions">
             <select class="lang-select" id="langSelect" onchange="changeLanguage()">
@@ -108,6 +136,17 @@
     <!-- Search Bar -->
     <div class="search-container">
         <input type="text" id="searchInput" class="search-box" placeholder="Search mobiles, brands..." onkeyup="searchProducts()">
+        <div id="searchDropdown" class="search-dropdown"></div>
+    </div>
+
+    <!-- Scrolling Brands -->
+    <div class="brand-scroll">
+        <div class="brand-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" style="filter:invert(1);" alt="Apple"></div>
+        <div class="brand-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Samsung_wordmark.svg" style="filter:invert(1);" alt="Samsung"></div>
+        <div class="brand-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/Vivo_mobile_logo.png" alt="Vivo"></div>
+        <div class="brand-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Realme_logo.png" alt="Realme"></div>
+        <div class="brand-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d4/Oppo_logo_2019.png" alt="Oppo"></div>
+        <div class="brand-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/2/29/Xiaomi_logo.svg" alt="Xiaomi"></div>
     </div>
 
     <!-- Banner -->
@@ -218,6 +257,8 @@
         const auth = getAuth(app);
         const db = getDatabase(app);
 
+        let allProducts = [];
+
         // UI Elements
         const loginBtn = document.getElementById('loginBtn');
         const userAvatar = document.getElementById('userAvatar');
@@ -249,6 +290,10 @@
         window.searchProducts = function() {
             let input = document.getElementById('searchInput').value.toLowerCase();
             let cards = document.getElementsByClassName('product-card');
+            let dropdown = document.getElementById('searchDropdown');
+            dropdown.innerHTML = '';
+            
+            // Filter grid cards
             for (let i = 0; i < cards.length; i++) {
                 let title = cards[i].getAttribute('data-title').toLowerCase();
                 if (title.includes(input)) {
@@ -256,6 +301,25 @@
                 } else {
                     cards[i].style.display = "none";
                 }
+            }
+
+            // Populate Dropdown for dynamic products
+            if(input.length > 0) {
+                let hasResult = false;
+                allProducts.forEach(prod => {
+                    if (prod.name.toLowerCase().includes(input)) {
+                        hasResult = true;
+                        dropdown.innerHTML += `
+                            <div class="search-item" onclick="goToDetails('${prod.id}', '${encodeURIComponent(prod.name)}', '${encodeURIComponent(prod.price)}', '${encodeURIComponent(JSON.stringify([prod.image]))}')">
+                                <img src="${prod.image}">
+                                <span>${prod.name}</span>
+                            </div>
+                        `;
+                    }
+                });
+                dropdown.style.display = hasResult ? 'block' : 'none';
+            } else {
+                dropdown.style.display = 'none';
             }
         }
 
@@ -283,6 +347,7 @@
         onValue(ref(db, 'products'), async (snapshot) => {
             const grid = document.getElementById('productGrid');
             const data = snapshot.val();
+            allProducts = []; // Reset for search
             
             let favs = {};
             if(auth.currentUser) {
@@ -301,17 +366,26 @@
                     let isFav = favs[key] ? 'active' : '';
                     let heartIcon = favs[key] ? '❤️' : '♡';
                     let firstImg = prod.images ? prod.images[0] : '';
+                    
+                    // Out of stock logic
+                    let stockBadge = prod.outOfStock ? `<div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); background:rgba(0,0,0,0.7); color:white; padding:5px 10px; border-radius:5px; font-weight:bold; z-index:5;">Out of Stock</div>` : '';
+                    let imgOpacity = prod.outOfStock ? 'opacity: 0.5;' : '';
+
+                    allProducts.push({ id: key, name: prod.name, image: firstImg, price: prod.price });
+
+                    let clickAction = prod.outOfStock ? '' : `goToDetails('${key}', '${encodeURIComponent(prod.name)}', '${encodeURIComponent(prod.price)}', '${encodeURIComponent(JSON.stringify(prod.images))}')`;
 
                     let cardHtml = `
                         <div class="product-card dynamic-card" data-title="${prod.name}">
                             <div class="fav-btn ${isFav}" onclick="toggleFav(event, '${key}', '${prod.name}')">${heartIcon}</div>
-                            <div onclick="goToDetails('${key}', '${encodeURIComponent(prod.name)}', '${encodeURIComponent(prod.price)}', '${encodeURIComponent(JSON.stringify(prod.images))}')">
-                                <div class="slider-container"><img src="${firstImg}" class="active"></div>
+                            ${stockBadge}
+                            <div onclick="${clickAction}">
+                                <div class="slider-container" style="${imgOpacity}"><img src="${firstImg}" class="active"></div>
                                 <div class="p-title">${prod.name}</div>
                                 <div class="p-price">₹ ${prod.price}</div>
                             </div>
                             <div class="action-buttons">
-                                <button class="btn-buy" onclick="goToDetails('${key}', '${encodeURIComponent(prod.name)}', '${encodeURIComponent(prod.price)}', '${encodeURIComponent(JSON.stringify(prod.images))}')">BUY NOW</button>
+                                <button class="btn-buy" onclick="${clickAction}">BUY NOW</button>
                             </div>
                         </div>
                     `;
