@@ -4,80 +4,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Rittik Mobile Shop</title>
+    
+    <!-- Open Graph for Link Preview (WhatsApp/Facebook Share) -->
     <meta property="og:title" content="Rittik Mobile Shop">
     <meta property="og:description" content="Buy and Sell Premium Devices easily.">
     <meta property="og:image" content="https://samimaktar-hw.github.io/RITTIK/logo.png">
+    
     <meta name="theme-color" content="#0f172a"/>
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
         body { background-color: #0b1121; color: #f8fafc; padding-bottom: 75px; overflow-x: hidden;}
         
-        /* Session Based Splash Screen */
+        /* Text-Based Splash Screen Animation */
         #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0b1121; display: flex; align-items: center; justify-content: center; z-index: 9999; }
         .splash-text { font-size: 32px; font-weight: 900; color: #ffffff; letter-spacing: 1px; text-shadow: 0 0 15px rgba(0, 229, 255, 0.6); }
         .splash-text span { color: #00e5ff; }
         
-        /* Rest of Header & UI Styles */
+        /* Glassmorphism Header */
         .header { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(10px); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 50; border-bottom: 1px solid rgba(0, 229, 255, 0.3); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); }
-        .logo-section { display: flex; align-items: center; text-decoration: none; gap: 12px; }
-        .logo-img { height: 40px; width: 40px; object-fit: contain; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 229, 255, 0.5);}
-        .logo-text { color: #ffffff; margin: 0; font-size: 19px; font-weight: 800; letter-spacing: 0.5px;}
+        .logo-section { display: flex; align-items: center; text-decoration: none; gap: 10px; }
+        .logo-img { height: 35px; width: 35px; object-fit: contain; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 229, 255, 0.5);}
+        .logo-text { color: #ffffff; margin: 0; font-size: 18px; font-weight: 800; letter-spacing: 0.5px;}
         .logo-text span { color: #00e5ff; text-shadow: 0 0 10px rgba(0,229,255,0.6);}
-        .header-actions { display: flex; align-items: center; gap: 12px; }
-        .login-btn { background: linear-gradient(90deg, #0284c7, #00e5ff); color: #fff; border: none; padding: 7px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.3s;}
-        .user-avatar { width: 36px; height: 36px; border-radius: 50%; border: 2px solid #00e5ff; display: none; cursor: pointer; object-fit: cover; }
-        .text-avatar { width: 36px; height: 36px; border-radius: 50%; background: #00e5ff; color: #0f172a; font-weight: bold; display: none; align-items: center; justify-content: center; font-size: 15px; cursor: pointer; border: 2px solid #fff; }
+        
+        /* Header Actions Aligned Perfectly */
+        .header-actions { display: flex; align-items: center; gap: 10px; }
+        .lang-select { background: rgba(0, 229, 255, 0.1); color: #00e5ff; border: 1px solid rgba(0,229,255,0.5); padding: 5px 8px; border-radius: 6px; outline: none; font-size: 12px; font-weight: bold; cursor: pointer; appearance: auto;}
+        
+        .login-btn { background: linear-gradient(90deg, #0284c7, #00e5ff); color: #fff; border: none; padding: 6px 14px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 13px;}
+        .user-avatar { width: 34px; height: 34px; border-radius: 50%; border: 2px solid #00e5ff; display: none; cursor: pointer; object-fit: cover; }
+        .text-avatar { width: 34px; height: 34px; border-radius: 50%; background: #00e5ff; color: #0f172a; font-weight: bold; display: none; align-items: center; justify-content: center; font-size: 14px; cursor: pointer; border: 2px solid #fff;}
 
-        .search-container { padding: 10px 20px; background: rgba(15, 23, 42, 0.95); position: sticky; top: 65px; z-index: 40; border-bottom: 1px solid rgba(255,255,255,0.05);}
-        .search-box { width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid rgba(0,229,255,0.3); background: rgba(0,0,0,0.3); color: white; outline: none; font-size: 14px;}
-        .search-dropdown { position: absolute; top: 60px; left: 20px; right: 20px; background: #1e293b; border-radius: 8px; border: 1px solid #334155; max-height: 250px; overflow-y: auto; display: none; z-index: 100; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .search-item { display: flex; align-items: center; padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); cursor: pointer; color: white;}
-        .search-item img { width: 35px; height: 35px; object-fit: contain; margin-right: 15px; border-radius: 4px; background: #fff;}
+        /* Flipkart Style Search Bar */
+        .search-container { padding: 10px 20px; background: rgba(15, 23, 42, 0.95); position: sticky; top: 60px; z-index: 40; border-bottom: 1px solid rgba(255,255,255,0.05);}
+        .search-box { width: 100%; padding: 10px 15px; border-radius: 8px; border: 1px solid rgba(0,229,255,0.3); background: rgba(0,0,0,0.3); color: white; outline: none; font-size: 13px; transition: 0.3s;}
+        .search-box:focus { border-color: #00e5ff; box-shadow: 0 0 10px rgba(0,229,255,0.2); }
+        .search-dropdown { position: absolute; top: 50px; left: 20px; right: 20px; background: #1e293b; border-radius: 8px; border: 1px solid #334155; max-height: 250px; overflow-y: auto; display: none; z-index: 100; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .search-item { display: flex; align-items: center; padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); cursor: pointer; color: white;}
+        .search-item img { width: 30px; height: 30px; object-fit: contain; margin-right: 12px; border-radius: 4px; background: #fff;}
 
+        /* Scrolling Brands (Dynamic) */
         .brand-scroll { display: flex; overflow-x: auto; padding: 15px 20px; gap: 15px; background: rgba(30, 41, 59, 0.2); border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 10px;}
         .brand-scroll::-webkit-scrollbar { display: none; }
-        .brand-icon { width: 55px; height: 55px; background: rgba(30, 41, 59, 0.8); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.1);}
+        .brand-icon { width: 55px; height: 55px; background: rgba(30, 41, 59, 0.8); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.1); cursor: pointer; transition: 0.3s;}
+        .brand-icon:hover { border-color: #00e5ff; box-shadow: 0 0 10px rgba(0,229,255,0.3); transform: translateY(-2px);}
         .brand-icon img { width: 32px; height: 32px; object-fit: contain; }
 
-        .banner { background: radial-gradient(circle at top right, #0284c7, #0f172a 70%); padding: 35px 20px; text-align: center; border-bottom: 1px solid #1e293b; position: relative;}
-        .banner h2 { font-size: 26px; font-weight: 800; margin-bottom: 8px; background: -webkit-linear-gradient(#fff, #00e5ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
-        .banner p { font-size: 15px; color: #94a3b8; font-weight: 500;}
+        /* Modern Banner */
+        .banner { background: radial-gradient(circle at top right, #0284c7, #0f172a 70%); padding: 30px 20px; text-align: center; border-bottom: 1px solid #1e293b; position: relative;}
+        .banner h2 { font-size: 22px; font-weight: 800; margin-bottom: 8px; background: -webkit-linear-gradient(#fff, #00e5ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+        .banner p { font-size: 13px; color: #94a3b8; font-weight: 500;}
 
-        .services-section { padding: 25px 20px 10px 20px; }
-        .section-title { font-size: 18px; margin-bottom: 18px; color: #f8fafc; font-weight: 700; display: flex; align-items: center; gap: 8px;}
-        .section-title::before { content: ''; display: inline-block; width: 4px; height: 18px; background: #00e5ff; border-radius: 4px;}
-        .grid-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; text-align: center; }
-        .service-box { text-decoration: none; color: #cbd5e1; font-size: 12px; font-weight: 600; display: flex; flex-direction: column; align-items: center;}
-        .service-icon { background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px;}
-        .service-icon img { width: 32px; height: 32px; object-fit: contain; }
+        /* Premium Services Grid */
+        .services-section { padding: 20px 20px 10px 20px; }
+        .section-title { font-size: 16px; margin-bottom: 15px; color: #f8fafc; font-weight: 700; display: flex; align-items: center; gap: 8px;}
+        .section-title::before { content: ''; display: inline-block; width: 4px; height: 16px; background: #00e5ff; border-radius: 4px;}
+        .grid-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; text-align: center; }
+        .service-box { text-decoration: none; color: #cbd5e1; font-size: 11px; font-weight: 600; display: flex; flex-direction: column; align-items: center;}
+        .service-icon { background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px;}
+        .service-icon img { width: 28px; height: 28px; object-fit: contain; }
 
+        /* Professional Product Cards */
         .products-section { padding: 10px 20px 30px 20px; }
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 18px; }
-        .product-card { background: rgba(30, 41, 59, 0.6); border-radius: 14px; padding: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.05); position: relative;}
-        .fav-btn { position: absolute; top: 12px; right: 12px; background: rgba(15,23,42,0.7); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; font-size: 18px; color: #fff; border: 1px solid rgba(255,255,255,0.1);}
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
+        .product-card { background: rgba(30, 41, 59, 0.6); border-radius: 12px; padding: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.05); position: relative;}
+        
+        .fav-btn { position: absolute; top: 12px; right: 12px; background: rgba(15,23,42,0.7); width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; font-size: 16px; color: #fff; border: 1px solid rgba(255,255,255,0.1);}
         .fav-btn.active { color: #ef4444; border-color: #ef4444; background: rgba(239, 68, 68, 0.1);}
-        .slider-container { width: 100%; height: 160px; display: flex; justify-content: center; align-items: center; overflow: hidden; margin-bottom: 12px; background: rgba(255,255,255,0.02); border-radius: 10px;}
+        
+        .slider-container { width: 100%; height: 150px; display: flex; justify-content: center; align-items: center; overflow: hidden; margin-bottom: 10px; background: rgba(255,255,255,0.02); border-radius: 8px; position: relative;}
         .slider-img { max-width: 90%; max-height: 90%; object-fit: contain;}
-        .p-title { font-size: 14px; font-weight: 700; color: #f1f5f9; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
-        .p-price { font-size: 17px; color: #00e5ff; font-weight: 800; margin-bottom: 12px;}
-        .btn-buy { width: 100%; background: #00e5ff; color: #0f172a; border: none; padding: 10px; border-radius: 8px; font-weight: 800; cursor: pointer; font-size: 14px;}
+        
+        .p-title { font-size: 13px; font-weight: 700; color: #f1f5f9; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+        .p-price { font-size: 16px; color: #00e5ff; font-weight: 800; margin-bottom: 10px;}
+        
+        .action-buttons { display: flex; justify-content: center; }
+        .btn-buy { width: 100%; background: #00e5ff; color: #0f172a; border: none; padding: 8px; border-radius: 6px; font-weight: 800; cursor: pointer; font-size: 13px;}
 
+        /* Modern Bottom Navigation */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px); display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid rgba(255,255,255,0.1); z-index: 100;}
-        .nav-item { text-align: center; color: #64748b; text-decoration: none; font-size: 12px; font-weight: 600;}
+        .nav-item { text-align: center; color: #64748b; text-decoration: none; font-size: 11px; font-weight: 600;}
         .nav-item.active { color: #00e5ff; }
-        .nav-item img { width: 22px; height: 22px; display: block; margin: 0 auto 4px auto; opacity: 0.5; filter: invert(1);}
+        .nav-item img { width: 20px; height: 20px; display: block; margin: 0 auto 4px auto; opacity: 0.5; filter: invert(1);}
         .nav-item.active img { opacity: 1; filter: invert(70%) sepia(45%) saturate(3000%) hue-rotate(150deg); }
 
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); justify-content: center; align-items: center; }
-        .modal-content { background: #1e293b; padding: 30px; border-radius: 16px; width: 90%; max-width: 400px; border: 1px solid rgba(0,229,255,0.3); text-align: center; position: relative;}
-        .close-modal { position: absolute; top: 15px; right: 20px; color: #94a3b8; font-size: 24px; font-weight: bold; cursor: pointer; }
-        .auth-input { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; outline: none;}
-        .auth-btn { width: 100%; background: #00e5ff; color: #0f172a; padding: 12px; border: none; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; margin-bottom: 15px;}
+        /* Auth Modal */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); align-items: center; justify-content: center; }
+        .modal-content { background: #1e293b; padding: 25px; border-radius: 12px; width: 90%; max-width: 400px; border: 1px solid rgba(0,229,255,0.3); text-align: center; position: relative;}
+        .close-modal { position: absolute; top: 10px; right: 15px; color: #94a3b8; font-size: 24px; font-weight: bold; cursor: pointer; }
+        .auth-input { width: 100%; padding: 10px; margin-bottom: 12px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: white; outline: none;}
+        .auth-btn { width: 100%; background: #00e5ff; color: #0f172a; padding: 10px; border: none; border-radius: 6px; font-weight: bold; font-size: 15px; cursor: pointer; margin-bottom: 15px;}
+        .toggle-text { color: #94a3b8; font-size: 13px; cursor: pointer; text-decoration: underline;}
     </style>
 </head>
 <body>
 
-    <!-- Splash Screen (Only shows once per session) -->
+    <!-- Splash Screen -->
     <div id="splashScreen" style="display: none;">
         <div class="splash-text">Rittik <span>Mobile Shop</span></div>
     </div>
@@ -86,29 +108,28 @@
     <div class="header">
         <a href="index.html" class="logo-section">
             <img src="logo.png" alt="Logo" class="logo-img">
-            <h2 class="logo-text">Rittik <span>Mobile Shop</span></h2>
+            <h2 class="logo-text">Rittik <span>Mobile</span></h2>
         </a>
         <div class="header-actions">
+            <select class="lang-select">
+                <option value="en">English</option>
+                <option value="bn">বাংলা</option>
+            </select>
             <button class="login-btn" id="loginBtn" onclick="openAuthModal()">Login</button>
-            <img src="" class="user-avatar" id="userAvatar" onclick="window.location.href='profile.html'">
+            <img src="" alt="Profile" class="user-avatar" id="userAvatar" onclick="window.location.href='profile.html'">
             <div class="text-avatar" id="textAvatar" onclick="window.location.href='profile.html'"></div>
         </div>
     </div>
 
-    <!-- Search Bar -->
+    <!-- Live Search Bar -->
     <div class="search-container">
         <input type="text" id="searchInput" class="search-box" placeholder="Search mobiles, brands..." onkeyup="searchProducts()">
         <div id="searchDropdown" class="search-dropdown"></div>
     </div>
 
-    <!-- Scrolling Brands -->
-    <div class="brand-scroll">
-        <div class="brand-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" style="filter:invert(1);"></div>
-        <div class="brand-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Samsung_wordmark.svg" style="filter:invert(1);"></div>
-        <div class="brand-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/Vivo_mobile_logo.png"></div>
-        <div class="brand-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Realme_logo.png"></div>
-        <div class="brand-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d4/Oppo_logo_2019.png"></div>
-        <div class="brand-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/2/29/Xiaomi_logo.svg"></div>
+    <!-- Dynamic Scrolling Brands -->
+    <div class="brand-scroll" id="brandList">
+        <!-- Brands will load here dynamically -->
     </div>
 
     <!-- Banner -->
@@ -140,29 +161,7 @@
     <div class="products-section">
         <h2 class="section-title">Latest Gadgets</h2>
         <div class="product-grid" id="productGrid">
-            
-            <!-- Dummy Test Product 1 -->
-            <div class="product-card" data-title="iPhone 14 Pro Max">
-                <div class="fav-btn" onclick="toggleFav(event, 'test_1', 'iPhone 14 Pro Max')">♡</div>
-                <div onclick="goToDetails('test_1', 'iPhone 14 Pro Max', '85000', encodeURIComponent(JSON.stringify(['https://s3ng.cashify.in/cashify/product/img/xxhdpi/e87178f4-0773.jpg'])))">
-                    <div class="slider-container"><img src="https://s3ng.cashify.in/cashify/product/img/xxhdpi/e87178f4-0773.jpg" class="slider-img active"></div>
-                    <div class="p-title">iPhone 14 Pro Max</div>
-                    <div class="p-price">₹ 85,000</div>
-                </div>
-                <div class="action-buttons"><button class="btn-buy" onclick="goToDetails('test_1', 'iPhone 14 Pro Max', '85000', encodeURIComponent(JSON.stringify(['https://s3ng.cashify.in/cashify/product/img/xxhdpi/e87178f4-0773.jpg'])))">BUY NOW</button></div>
-            </div>
-
-            <!-- Dummy Test Product 2 -->
-            <div class="product-card" data-title="Samsung Galaxy S23 Ultra">
-                <div class="fav-btn" onclick="toggleFav(event, 'test_2', 'Samsung Galaxy S23 Ultra')">♡</div>
-                <div onclick="goToDetails('test_2', 'Samsung Galaxy S23 Ultra', '75000', encodeURIComponent(JSON.stringify(['https://s3ng.cashify.in/cashify/product/img/xxhdpi/cd2da442-a50c.jpg'])))">
-                    <div class="slider-container"><img src="https://s3ng.cashify.in/cashify/product/img/xxhdpi/cd2da442-a50c.jpg" class="slider-img active"></div>
-                    <div class="p-title">Samsung Galaxy S23 Ultra</div>
-                    <div class="p-price">₹ 75,000</div>
-                </div>
-                <div class="action-buttons"><button class="btn-buy" onclick="goToDetails('test_2', 'Samsung Galaxy S23 Ultra', '75000', encodeURIComponent(JSON.stringify(['https://s3ng.cashify.in/cashify/product/img/xxhdpi/cd2da442-a50c.jpg'])))">BUY NOW</button></div>
-            </div>
-
+            <p style="color:#94a3b8; width: 100%; text-align: center;">Loading Products...</p>
         </div>
     </div>
 
@@ -170,7 +169,7 @@
     <div id="authModal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeAuthModal()">&times;</span>
-            <h3 id="authTitle" style="color:#fff;">Create Account</h3>
+            <h3 id="authTitle" style="color:#fff; margin-bottom: 15px;">Create Account</h3>
             <input type="text" id="authName" class="auth-input" placeholder="Full Name">
             <input type="email" id="authEmail" class="auth-input" placeholder="Email Address">
             <input type="password" id="authPass" class="auth-input" placeholder="Password">
@@ -193,7 +192,7 @@
         import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { getDatabase, ref, onValue, set, remove, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // Splash Screen Logic (Run Once)
+        // Splash Screen Logic (Once per session)
         if (!sessionStorage.getItem('splashShown')) {
             const splash = document.getElementById('splashScreen');
             splash.style.display = 'flex';
@@ -216,6 +215,7 @@
         let allProducts = [];
         let isLoginMode = false;
 
+        // Auth Logic
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 document.getElementById('loginBtn').style.display = 'none';
@@ -223,11 +223,10 @@
                     document.getElementById('userAvatar').src = user.photoURL;
                     document.getElementById('userAvatar').style.display = 'block';
                 } else {
-                    const name = user.displayName || user.email || "User";
+                    const name = user.displayName || user.email || "US";
                     document.getElementById('textAvatar').innerText = name.substring(0, 2).toUpperCase();
                     document.getElementById('textAvatar').style.display = 'flex';
                 }
-                closeAuthModal();
             } else {
                 document.getElementById('loginBtn').style.display = 'block';
                 document.getElementById('userAvatar').style.display = 'none';
@@ -235,6 +234,33 @@
             }
         });
 
+        // Load Brands (Dynamic + Fallback for broken images)
+        const defaultBrands = [
+            { name: 'Apple', img: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg', filter: 'filter:invert(1);' },
+            { name: 'Samsung', img: 'https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg', filter: 'filter:invert(1);' },
+            { name: 'Vivo', img: 'https://upload.wikimedia.org/wikipedia/commons/e/e5/Vivo_mobile_logo.png', filter: '' },
+            { name: 'Realme', img: 'https://upload.wikimedia.org/wikipedia/commons/c/c5/Realme_logo.svg', filter: '' },
+            { name: 'Oppo', img: 'https://upload.wikimedia.org/wikipedia/commons/b/b8/OPPO_Logo.svg', filter: '' },
+            { name: 'Xiaomi', img: 'https://upload.wikimedia.org/wikipedia/commons/2/29/Xiaomi_logo.svg', filter: '' }
+        ];
+
+        onValue(ref(db, 'brands'), (snapshot) => {
+            const brandBox = document.getElementById('brandList');
+            brandBox.innerHTML = '';
+            if(snapshot.exists()) {
+                const data = snapshot.val();
+                Object.keys(data).forEach(key => {
+                    let b = data[key];
+                    brandBox.innerHTML += `<div class="brand-icon" onclick="window.location.href='brand.html?name=${encodeURIComponent(b.name)}'"><img src="${b.image}" alt="${b.name}"></div>`;
+                });
+            } else {
+                defaultBrands.forEach(b => {
+                    brandBox.innerHTML += `<div class="brand-icon" onclick="window.location.href='brand.html?name=${encodeURIComponent(b.name)}'"><img src="${b.img}" style="${b.filter}" alt="${b.name}"></div>`;
+                });
+            }
+        });
+
+        // Search Products
         window.searchProducts = function() {
             let input = document.getElementById('searchInput').value.toLowerCase();
             let cards = document.getElementsByClassName('product-card');
@@ -252,7 +278,7 @@
                     if (prod.name.toLowerCase().includes(input)) {
                         hasResult = true;
                         dropdown.innerHTML += `
-                            <div class="search-item" onclick="goToDetails('${prod.id}', '${encodeURIComponent(prod.name)}', '${encodeURIComponent(prod.price)}', '${encodeURIComponent(JSON.stringify([prod.image]))}')">
+                            <div class="search-item" onclick="goToDetails('${prod.id}')">
                                 <img src="${prod.image}"> <span>${prod.name}</span>
                             </div>
                         `;
@@ -264,27 +290,28 @@
             }
         }
 
+        // Toggle Fav
         window.toggleFav = async function(event, prodId, prodName) {
             event.stopPropagation();
-            if(!auth.currentUser) return openAuthModal();
+            if(!auth.currentUser) return document.getElementById('authModal').style.display = 'flex';
             const btn = event.currentTarget;
             const favRef = ref(db, `users/${auth.currentUser.uid}/favorites/${prodId}`);
             const snapshot = await get(favRef);
             if(snapshot.exists()) {
                 remove(favRef);
-                btn.innerHTML = '♡';
-                btn.classList.remove('active');
+                btn.innerHTML = '♡'; btn.classList.remove('active');
             } else {
                 set(favRef, { name: prodName, addedAt: Date.now() });
-                btn.innerHTML = '❤️';
-                btn.classList.add('active');
+                btn.innerHTML = '❤️'; btn.classList.add('active');
             }
         }
 
+        // Load Products
         onValue(ref(db, 'products'), async (snapshot) => {
             const grid = document.getElementById('productGrid');
             const data = snapshot.val();
             allProducts = []; 
+            grid.innerHTML = ''; // Clear dummies
             
             let favs = {};
             if(auth.currentUser) {
@@ -293,42 +320,43 @@
             }
 
             if (data) {
-                document.querySelectorAll('.dynamic-card').forEach(e => e.remove());
                 Object.keys(data).reverse().forEach(key => {
                     const prod = data[key];
                     if(prod.status !== 'approved' && prod.type !== 'admin') return; 
 
                     let isFav = favs[key] ? 'active' : '';
                     let heartIcon = favs[key] ? '❤️' : '♡';
-                    let firstImg = prod.images ? prod.images[0] : '';
-                    let stockBadge = prod.outOfStock ? `<div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); background:rgba(0,0,0,0.7); color:white; padding:5px 10px; border-radius:5px; font-weight:bold; z-index:5;">Out of Stock</div>` : '';
+                    let firstImg = prod.images ? prod.images[0] : 'https://via.placeholder.com/150';
+                    let stockBadge = prod.outOfStock ? `<div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); background:rgba(0,0,0,0.8); color:white; padding:5px 10px; border-radius:5px; font-weight:bold; z-index:5;">Out of Stock</div>` : '';
                     let imgOpacity = prod.outOfStock ? 'opacity: 0.5;' : '';
 
                     allProducts.push({ id: key, name: prod.name, image: firstImg, price: prod.price });
-                    let clickAction = prod.outOfStock ? '' : `goToDetails('${key}', '${encodeURIComponent(prod.name)}', '${encodeURIComponent(prod.price)}', '${encodeURIComponent(JSON.stringify(prod.images))}')`;
 
-                    grid.insertAdjacentHTML('beforeend', `
-                        <div class="product-card dynamic-card" data-title="${prod.name}">
+                    grid.innerHTML += `
+                        <div class="product-card" data-title="${prod.name}">
                             <div class="fav-btn ${isFav}" onclick="toggleFav(event, '${key}', '${prod.name}')">${heartIcon}</div>
                             ${stockBadge}
-                            <div onclick="${clickAction}">
-                                <div class="slider-container" style="${imgOpacity}"><img src="${firstImg}" class="active"></div>
+                            <div onclick="goToDetails('${key}')">
+                                <div class="slider-container" style="${imgOpacity}"><img src="${firstImg}"></div>
                                 <div class="p-title">${prod.name}</div>
                                 <div class="p-price">₹ ${prod.price}</div>
                             </div>
                             <div class="action-buttons">
-                                <button class="btn-buy" onclick="${clickAction}">BUY NOW</button>
+                                <button class="btn-buy" onclick="goToDetails('${key}')">BUY NOW</button>
                             </div>
                         </div>
-                    `);
+                    `;
                 });
+            } else {
+                grid.innerHTML = '<p style="color:#94a3b8; width:100%; text-align:center;">No Products Found.</p>';
             }
         });
 
-        window.goToDetails = function(id, name, price, images) {
-            window.location.href = `details.html?id=${id}&name=${name}&price=${price}&images=${images}`;
+        window.goToDetails = function(id) {
+            window.location.href = `details.html?id=${id}`;
         }
 
+        // Modal Auth Handling
         window.openAuthModal = () => { document.getElementById('authModal').style.display = 'flex'; }
         window.closeAuthModal = () => { document.getElementById('authModal').style.display = 'none'; }
         window.checkAuth = function(event) { if (!auth.currentUser) { event.preventDefault(); openAuthModal(); return false; } return true; }
@@ -345,7 +373,6 @@
         window.handleEmailAuth = () => {
             const email = document.getElementById('authEmail').value;
             const pass = document.getElementById('authPass').value;
-            
             if(isLoginMode) {
                 signInWithEmailAndPassword(auth, email, pass).then(() => { alert("Login Successful!"); }).catch(e => alert(e.message));
             } else {
