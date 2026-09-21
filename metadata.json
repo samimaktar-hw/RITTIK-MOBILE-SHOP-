@@ -1,6 +1,0 @@
-{
-  "name": "Rittik Mobile Shop",
-  "description": "All-in-one e-commerce mobile shop for buying and selling premium smartphones, tracking orders, cart, and wishlist.",
-  "requestFramePermissions": ["geolocation"],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
